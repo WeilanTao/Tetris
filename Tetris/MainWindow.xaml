@@ -9,7 +9,7 @@
         Title="Tetris" Height="640" Width="960" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
     <Grid>
-        <views:MainMenuView/>
+        <views:MainMenuView DataContext="{Binding CurrentViewModel}"/>
     </Grid>
 
 </Window>

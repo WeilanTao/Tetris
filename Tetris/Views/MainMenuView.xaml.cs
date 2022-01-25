@@ -24,5 +24,7 @@ namespace Tetris.Views
         {
             InitializeComponent();
         }
+
+        
     }
 }

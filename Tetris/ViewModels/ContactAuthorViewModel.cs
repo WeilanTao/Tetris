@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Tetris.ViewModels
 {
-    internal class ContactAuthorViewModel:ViewModelBase
+    public class ContactAuthorViewModel:ViewModelBase
     {
         public ICommand MainMenuNavCommand { get; }
 

@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Tetris.ViewModels
 {
-    internal class MainViewModel:ViewModelBase
+    public class MainViewModel:ViewModelBase
     {
-        //public ViewModelBase CurrentViewModel { get; }
+        public ViewModelBase CurrentViewModel { get; }
+
 
         public MainViewModel()
         {
+            CurrentViewModel = new MainMenuViewModel();
         }
 
     }
