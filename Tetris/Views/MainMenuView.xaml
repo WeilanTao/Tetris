@@ -28,12 +28,15 @@
 
         <Button x:Name="StartButton" Content="Start"
                 Grid.Row="1"
+                Command="{Binding StartCommand}"
                 />
         <Button x:Name="ContactButton" Content="Contact Author"
                 Grid.Row="2"
+                Command="{Binding ContactAuthorCommand}"
                 />
         <Button x:Name="ExitButton" Content="Exit" 
                 Grid.Row="3"
+                Command="{Binding ExitCommand}"
                 />
 
         <TextBlock x:Name="CopyRightLabel" Height="30" Width ="300"

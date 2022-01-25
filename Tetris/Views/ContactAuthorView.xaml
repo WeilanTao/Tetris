@@ -8,6 +8,6 @@
                 d:DesignHeight="640" d:DesignWidth="960">
     <Grid Background="LightYellow">
         <Button Content="Back"
-                />
+                Command="{Binding MainMenuNavCommand}"/>
     </Grid>
 </UserControl>

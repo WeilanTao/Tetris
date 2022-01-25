@@ -46,9 +46,9 @@
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="StopButton" Grid.Row="1" Content="Stop"/>
-            <Button x:Name="ResumeButton" Grid.Row="2" Content="Resume"/>
-            <Button x:Name="ExitButton" Grid.Row="3" Content="Exit"/>
+            <Button x:Name="StopButton" Grid.Row="1" Content="Stop" Command="{Binding StopCommand}"/>
+            <Button x:Name="ResumeButton" Grid.Row="2" Content="Resume" Command="{Binding ResumeCommand}"/>
+            <Button x:Name="ExitButton" Grid.Row="3" Content="Exit" Command="{Binding ExitMainMenuCommand}"/>
         </Grid>
 
         <Grid Grid.Column="2">

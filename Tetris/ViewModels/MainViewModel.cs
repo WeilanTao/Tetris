@@ -8,7 +8,7 @@ namespace Tetris.ViewModels
 {
     internal class MainViewModel:ViewModelBase
     {
-        public ViewModelBase CurrentViewModel { get; }
+        //public ViewModelBase CurrentViewModel { get; }
 
         public MainViewModel()
         {

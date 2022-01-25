@@ -24,7 +24,6 @@ namespace Tetris
         public MainWindow()
         {
             InitializeComponent();
-            //trace.writeline("hihihi====================");
         }
 
 
