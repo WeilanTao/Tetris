@@ -9,9 +9,6 @@
             <Setter Property="Width" Value="100"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
-        <!--<Style TargetType="TextBlock">
-            <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="Height" Value=""
-        </Style>-->
+
     </Application.Resources>
 </Application>

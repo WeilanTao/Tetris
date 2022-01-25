@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace Tetris
 {
@@ -23,7 +24,7 @@ namespace Tetris
         public MainWindow()
         {
             InitializeComponent();
-
+            //trace.writeline("hihihi====================");
         }
 
 

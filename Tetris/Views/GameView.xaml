@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Tetris.Views"
+             xmlns:local="clr-namespace:Tetris.Views" xmlns:viewmodels="clr-namespace:Tetris.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:GameViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="640" d:DesignWidth="960">
     <Grid Background="LightBlue">
@@ -25,13 +25,13 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
-                <Label x:Name="ScoreLabel" Content="Score"/>
-                <Label x:Name="ScoreText" />
+                <Label x:Name="ScoreLabel" Width ="50" Content="Score"/>
+                <Label x:Name="ScoreText" Content="{Binding Score}"/>
 
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
-                <Label x:Name="LineLabel" Content="Line"/>
-                <Label x:Name="LineText" />
+                <Label x:Name="LineLabel" Width ="50" Content="Line"/>
+                <Label x:Name="LineText" Content="{Binding Line}"/>
             </StackPanel>
 
             <Label x:Name="NextLabel" Grid.Row="3" Content="Next"/>

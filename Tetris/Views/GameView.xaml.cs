@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tetris.ViewModels;
 
 namespace Tetris.Views
 {
@@ -23,9 +24,7 @@ namespace Tetris.Views
         public GameView()
         {
             InitializeComponent();
-
-            this.ScoreText.Content = "5";
-            this.LineText.Content = "6";
+            this.DataContext = new GameViewModel();
         }
     }
 }
