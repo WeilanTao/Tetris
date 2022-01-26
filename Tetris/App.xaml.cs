@@ -25,7 +25,7 @@ namespace Tetris
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = new MainMenuViewModel(_navigationStore);
+            _navigationStore.CurrentViewModel = CreateManMenuViweModel();
 
             MainWindow = new MainWindow()
             {
@@ -35,6 +35,19 @@ namespace Tetris
             MainWindow.Show();
 
             base.OnStartup(e);
+
+            
+        }
+
+        private ContactAuthorViewModel CreateContactAuthorViewModel()
+        {
+            return new ContactAuthorViewModel(_navigationStore, CreateManMenuViweModel);
+
+        }
+
+        private MainMenuViewModel CreateManMenuViweModel()
+        {
+            return new MainMenuViewModel(_navigationStore, CreateContactAuthorViewModel);
         }
     }
 }

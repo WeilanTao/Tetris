@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Tetris.Commands;
+using Tetris.Stores;
 
 namespace Tetris.ViewModels
 {
@@ -11,9 +13,9 @@ namespace Tetris.ViewModels
     {
         public ICommand MainMenuNavCommand { get; }
 
-        public ContactAuthorViewModel()
+        public ContactAuthorViewModel(NavigationStore navigationStore, Func<MainMenuViewModel> createMainMenuViewModel)
         {
-
+            MainMenuNavCommand = new NavigateCommand(navigationStore, createMainMenuViewModel);
         }
     }
 }

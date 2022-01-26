@@ -12,13 +12,13 @@ namespace Tetris.ViewModels
     public class MainMenuViewModel: ViewModelBase
     {
         public ICommand StartCommand { get; }
-        public ICommand NavigateCommand { get; }
+        public ICommand ContactAuthorCommand { get; }
         public ICommand ExitCommand { get; }
 
        
-        public MainMenuViewModel(NavigationStore navigationStore)
+        public MainMenuViewModel(NavigationStore navigationStore, Func<ContactAuthorViewModel> createContactAuthorViewModel)
         {
-            NavigateCommand = new NavigateCommand(navigationStore);
+            ContactAuthorCommand = new NavigateCommand(navigationStore, createContactAuthorViewModel);
 
         }
     }
