@@ -7,6 +7,9 @@ using Tetris.Models;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
+using System.Windows.Input;
+using Tetris.Services;
+using Tetris.Commands;
 
 namespace Tetris.ViewModels
 {
@@ -15,12 +18,14 @@ namespace Tetris.ViewModels
         private int _vmscore;
         private int _vmline;
 
-        public GameViewModel()
+        public ICommand MainMenuCommand { get; }
+
+        public GameViewModel(NavigationService mainMenuNavigationService)
         {
             Game game = new Game();
             _vmscore = game.Score;
             _vmline = game.Line;
-            Trace.WriteLine("HIHIHI====================");
+            MainMenuCommand =new NavigateCommand(mainMenuNavigationService);
         }
 
 

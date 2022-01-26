@@ -28,7 +28,7 @@
 
         <Button x:Name="StartButton" Content="Start"
                 Grid.Row="1"
-                Command="{Binding StartCommand}" />
+                Command="{Binding StartGameCommand}" />
         <Button x:Name="ContactButton" Content="Contact Author"
                 Grid.Row="2"
                 Command="{Binding ContactAuthorCommand}"/>

@@ -24,7 +24,6 @@ namespace Tetris.Views
         public GameView()
         {
             InitializeComponent();
-            this.DataContext = new GameViewModel();
         }
     }
 }

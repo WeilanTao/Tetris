@@ -48,7 +48,12 @@ namespace Tetris
 
         private MainMenuViewModel CreateMainMenuViweModel()
         {
-            return new MainMenuViewModel(new NavigationService(_navigationStore, CreateContactAuthorViewModel));
+            return new MainMenuViewModel(new NavigationService(_navigationStore, CreateContactAuthorViewModel), new NavigationService(_navigationStore,CreateGameViewMode));
+        }
+
+        private GameViewModel CreateGameViewMode()
+        {
+            return new GameViewModel(new NavigationService(_navigationStore, CreateMainMenuViweModel));
         }
     }
 }
