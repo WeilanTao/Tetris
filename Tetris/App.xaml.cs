@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Tetris.Services;
 using Tetris.Stores;
 using Tetris.ViewModels;
 
@@ -25,7 +26,7 @@ namespace Tetris
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = CreateManMenuViweModel();
+            _navigationStore.CurrentViewModel = CreateMainMenuViweModel();
 
             MainWindow = new MainWindow()
             {
@@ -41,13 +42,13 @@ namespace Tetris
 
         private ContactAuthorViewModel CreateContactAuthorViewModel()
         {
-            return new ContactAuthorViewModel(_navigationStore, CreateManMenuViweModel);
+            return new ContactAuthorViewModel(new NavigationService(_navigationStore, CreateMainMenuViweModel));
 
         }
 
-        private MainMenuViewModel CreateManMenuViweModel()
+        private MainMenuViewModel CreateMainMenuViweModel()
         {
-            return new MainMenuViewModel(_navigationStore, CreateContactAuthorViewModel);
+            return new MainMenuViewModel(new NavigationService(_navigationStore, CreateContactAuthorViewModel));
         }
     }
 }

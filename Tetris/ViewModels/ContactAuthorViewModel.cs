@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Tetris.Commands;
+using Tetris.Services;
 using Tetris.Stores;
 
 namespace Tetris.ViewModels
@@ -13,9 +14,9 @@ namespace Tetris.ViewModels
     {
         public ICommand MainMenuNavCommand { get; }
 
-        public ContactAuthorViewModel(NavigationStore navigationStore, Func<MainMenuViewModel> createMainMenuViewModel)
+        public ContactAuthorViewModel(NavigationService mainMenuService)
         {
-            MainMenuNavCommand = new NavigateCommand(navigationStore, createMainMenuViewModel);
+            MainMenuNavCommand = new NavigateCommand(mainMenuService);
         }
     }
 }
