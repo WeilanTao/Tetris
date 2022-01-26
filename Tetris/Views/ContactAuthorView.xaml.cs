@@ -23,7 +23,7 @@ namespace Tetris.Views
         public ContactAuthorView()
         {
             InitializeComponent();
-            this.DataContext = new ContactAuthorView();
+            //this.DataContext = new ContactAuthorView();
         }
     }
 }

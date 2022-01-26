@@ -5,11 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tetris"
         xmlns:views="clr-namespace:Tetris.Views"
+        xmlns:vms="clr-namespace:Tetris.ViewModels"
         mc:Ignorable="d"
         Title="Tetris" Height="640" Width="960" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
     <Grid>
-        <views:MainMenuView DataContext="{Binding CurrentViewModel}"/>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:MainMenuViewModel}">
+                <views:MainMenuView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:GameViewModel}">
+                <views:GameView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ContactAuthorViewModel}">
+                <views:ContactAuthorView/>
+            </DataTemplate>
+        </Grid.Resources>
+
+        <ContentControl Content="{Binding CurrentViewModel}"/>
+
     </Grid>
 
 </Window>
