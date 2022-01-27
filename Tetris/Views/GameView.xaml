@@ -52,9 +52,28 @@
         </Grid>
 
         <Grid Grid.Column="2">
-            <Canvas x:Name="GridCanvas" Width = "300" Height = "600" Background="White" >
+            <ItemsControl x:Name="ic" ItemsSource="{Binding Blocks}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas Width="300" Height="600" Background="White"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Background="{Binding Color}" Width="30" Height="30">
+                          
+                        </Grid>
+                    </DataTemplate>
+                    
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Canvas.Left" Value="{Binding X}" />
+                        <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
 
-            </Canvas>
+            </ItemsControl>
         </Grid>
 
 
