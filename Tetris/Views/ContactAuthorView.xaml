@@ -7,7 +7,14 @@
              mc:Ignorable="d" 
                 d:DesignHeight="640" d:DesignWidth="960">
     <Grid Background="LightYellow">
-        <Button Content="Back"
+        <StackPanel>
+            <TextBlock TextAlignment="Center" Padding="120" FontSize="30">
+            Github: https://github.com/WeilanTao   <LineBreak/><LineBreak/>
+            Email: Twlemily@hotmail.com  <LineBreak/><LineBreak/>
+            LinkedIn: https://www.linkedin.com/in/emily-weilan-tao/  <LineBreak/>
+            </TextBlock>
+            <Button Content="Back"
                 Command="{Binding MainMenuNavCommand}"/>
+        </StackPanel>
     </Grid>
 </UserControl>
