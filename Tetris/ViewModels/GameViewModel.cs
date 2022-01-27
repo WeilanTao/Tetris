@@ -29,17 +29,24 @@ namespace Tetris.ViewModels
             _vmline = game.Line;
 
             Blocks = new ObservableCollection<Block>();
-            Blocks.Add(new Block { Color = "red", X = "0", Y = "0" });
-            Blocks.Add(new Block { Color = "green", X = "30", Y = "30" });
-            Blocks.Add(new Block { Color = "yellow", X = "60", Y = "60" });
 
 
+            initializeGrid();
 
             MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
         }
 
 
-
+        private void initializeGrid()
+        {
+            for (int i = 0; i < 10; i++) //row
+            {
+                for (int j = 0; j < 20; j++)//col
+                {
+                    Blocks.Add(new Block { Color="Black", X= i*30 , Y=j*30});
+                }
+            }
+        }
 
 
         public String Score
@@ -65,8 +72,8 @@ namespace Tetris.ViewModels
     {
 
         public String Color { get; set; }
-        public String X { get; set; }
-        public String Y { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
     }
 
 

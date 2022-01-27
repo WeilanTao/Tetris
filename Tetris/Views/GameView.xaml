@@ -61,7 +61,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Background="{Binding Color}" Width="30" Height="30">
-                          
+                            <Border BorderBrush="Wheat" BorderThickness="1"/>
                         </Grid>
                     </DataTemplate>
                     
