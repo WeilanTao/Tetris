@@ -33,6 +33,7 @@ namespace Tetris.ViewModels
 
             initializeGrid();
 
+            removeTest();
             MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
         }
 
@@ -40,12 +41,15 @@ namespace Tetris.ViewModels
         private void initializeGrid()
         {
             for (int i = 0; i < 10; i++) //row
-            {
                 for (int j = 0; j < 20; j++)//col
-                {
-                    Blocks.Add(new Block { Color="Black", X= i*30 , Y=j*30});
-                }
-            }
+                    Blocks.Add(new Block { Color = "darkblue", X = i * 30, Y = j * 30 });
+
+        }
+
+        private void removeTest()
+        {
+            Blocks.RemoveAt(19);
+            OnPropertyChanged("Blocks");
         }
 
 
