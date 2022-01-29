@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Tetris.Services;
 using Tetris.Commands;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Tetris.ViewModels
 {
@@ -19,9 +20,13 @@ namespace Tetris.ViewModels
         private int _vmscore;
         private int _vmline;
 
-        public ICommand MainMenuCommand { get; }
+        public ICommand MainMenuCommand { get; private set; }
         public ObservableCollection<Block> Blocks { get; set; }
 
+        public ICommand KeyD { get; private set; }
+        public ICommand KeyA { get; private set; }   
+
+        int i = 0;
         public GameViewModel(NavigationService mainMenuNavigationService)
         {
             Game game = new Game();
@@ -33,10 +38,18 @@ namespace Tetris.ViewModels
 
             initializeGrid();
 
-            removeTest();
-            Add();
+            //removeTest();
+            //Add();
+            
+
             MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
+            KeyD = new KeyCommand(Add);
+            KeyA = new KeyCommand(removeTest);
         }
+
+
+   
+    
 
 
         private void initializeGrid()
@@ -47,11 +60,10 @@ namespace Tetris.ViewModels
 
         }
 
-        private void Add()
+        public void Add()
         {
-            Blocks.Add(new Block{ Color = "wheat", X =  30, Y =  30, Border = 1 } );
-            Blocks.Add(new Block { Color = "wheat", X = 30, Y = 60, Border = 1 });
-            Blocks.Add(new Block { Color = "wheat", X = 30, Y = 90, Border = 1 });
+            Blocks.Add(new Block{ Color = "wheat", X =  30*i, Y =  30*i, Border = 1 } );
+            i++;
             OnPropertyChanged("Blocks");
         }
         private void removeTest()

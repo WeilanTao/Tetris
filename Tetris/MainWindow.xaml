@@ -9,6 +9,8 @@
         mc:Ignorable="d"
         Title="Tetris" Height="640" Width="960" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
+
+    
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:MainMenuViewModel}">

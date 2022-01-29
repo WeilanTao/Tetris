@@ -27,8 +27,5 @@ namespace Tetris
             InitializeComponent();
         }
 
-
-
-
     }
 }

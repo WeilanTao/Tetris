@@ -6,6 +6,16 @@
              xmlns:local="clr-namespace:Tetris.Views" xmlns:viewmodels="clr-namespace:Tetris.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:GameViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="640" d:DesignWidth="960">
+
+    <UserControl.InputBindings>
+        <KeyBinding Key="D" Command="{Binding KeyD}"/>
+        <KeyBinding Key="A" Command="{Binding KeyA}"/>
+        <KeyBinding Key="Left" Command="{Binding Print}"/>
+        <KeyBinding Key="Right" Command="{Binding Print}"/>
+        <KeyBinding Key="Down" Command="{Binding Print}"/>
+        <KeyBinding Key="Space" Command="{Binding Print}"/>
+    </UserControl.InputBindings>
+    
     <Grid Background="LightBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30"/>
@@ -50,6 +60,8 @@
             <Button x:Name="ResumeButton" Grid.Row="2" Content="Resume" Command="{Binding ResumeCommand}"/>
             <Button x:Name="ExitMainButton" Grid.Row="3" Content="Main Menu" Command="{Binding MainMenuCommand}"/>
         </Grid>
+
+       
 
         <Grid Grid.Column="2">
             <ItemsControl x:Name="ic" ItemsSource="{Binding Blocks}">

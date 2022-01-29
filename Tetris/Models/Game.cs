@@ -8,8 +8,8 @@ namespace Tetris.Models
 {
     public class Game
     {
-        private int _score = 30;
-        private int _line = 40;
+        private int _score = 0;
+        private int _line = 0;
 
         public int Score
         {

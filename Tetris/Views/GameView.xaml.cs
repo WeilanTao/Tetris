@@ -24,6 +24,8 @@ namespace Tetris.Views
         public GameView()
         {
             InitializeComponent();
+            Focusable = true;
+            Loaded += (s, e) => Keyboard.Focus(this);
         }
     }
 }
