@@ -34,6 +34,7 @@ namespace Tetris.ViewModels
             initializeGrid();
 
             removeTest();
+            Add();
             MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
         }
 
@@ -42,10 +43,17 @@ namespace Tetris.ViewModels
         {
             for (int i = 0; i < 10; i++) //row
                 for (int j = 0; j < 20; j++)//col
-                    Blocks.Add(new Block { Color = "darkblue", X = i * 30, Y = j * 30 });
+                    Blocks.Add(new Block { Color = "darkblue", X = i * 30, Y = j * 30 , Border = 0 });
 
         }
 
+        private void Add()
+        {
+            Blocks.Add(new Block{ Color = "wheat", X =  30, Y =  30, Border = 1 } );
+            Blocks.Add(new Block { Color = "wheat", X = 30, Y = 60, Border = 1 });
+            Blocks.Add(new Block { Color = "wheat", X = 30, Y = 90, Border = 1 });
+            OnPropertyChanged("Blocks");
+        }
         private void removeTest()
         {
             Blocks.RemoveAt(19);
@@ -76,6 +84,8 @@ namespace Tetris.ViewModels
     {
 
         public String Color { get; set; }
+
+        public int Border { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
     }
