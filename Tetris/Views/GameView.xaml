@@ -10,10 +10,10 @@
     <UserControl.InputBindings>
         <KeyBinding Key="D" Command="{Binding KeyD}"/>
         <KeyBinding Key="A" Command="{Binding KeyA}"/>
-        <KeyBinding Key="Left" Command="{Binding Print}"/>
-        <KeyBinding Key="Right" Command="{Binding Print}"/>
-        <KeyBinding Key="Down" Command="{Binding Print}"/>
-        <KeyBinding Key="Space" Command="{Binding Print}"/>
+        <KeyBinding Key="Left" Command="{Binding KeyLeft}"/>
+        <KeyBinding Key="Right" Command="{Binding KeyRight}"/>
+        <KeyBinding Key="Down" Command="{Binding KeyDown}"/>
+        <KeyBinding Key="Space" Command="{Binding KeySpace}"/>
     </UserControl.InputBindings>
     
     <Grid Background="LightBlue">

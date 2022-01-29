@@ -19,12 +19,15 @@ namespace Tetris.ViewModels
     {
         private int _vmscore;
         private int _vmline;
-
-        public ICommand MainMenuCommand { get; private set; }
         public ObservableCollection<Block> Blocks { get; set; }
 
+        public ICommand MainMenuCommand { get; private set; }
         public ICommand KeyD { get; private set; }
-        public ICommand KeyA { get; private set; }   
+        public ICommand KeyA { get; private set; }
+        public ICommand KeyLeft { get; private set; }
+        public ICommand KeyRight { get; private set; }
+        public ICommand KeyDown { get; private set; }
+        public ICommand KeySpace { get; private set; }
 
         int i = 0;
         public GameViewModel(NavigationService mainMenuNavigationService)
@@ -40,39 +43,57 @@ namespace Tetris.ViewModels
 
             //removeTest();
             //Add();
-            
+
 
             MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
-            KeyD = new KeyCommand(Add);
-            KeyA = new KeyCommand(removeTest);
+            KeyD = new KeyCommand(RotateRight);
+            KeyA = new KeyCommand(RotateLeft);
+            KeyLeft = new KeyCommand(Left);
+            KeyRight = new KeyCommand(Right);
+            KeyDown = new KeyCommand(Down);
+            KeySpace = new KeyCommand(HardDrop);
+
         }
 
+        private void HardDrop()
+        {
+            throw new NotImplementedException();
+        }
 
-   
-    
+        private void Down()
+        {
+            throw new NotImplementedException();
+        }
 
+        private void Right()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Left()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void RotateLeft()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void RotateRight()
+        {
+            throw new NotImplementedException();
+        }
 
         private void initializeGrid()
         {
             for (int i = 0; i < 10; i++) //row
                 for (int j = 0; j < 20; j++)//col
-                    Blocks.Add(new Block { Color = "darkblue", X = i * 30, Y = j * 30 , Border = 0 });
+                    Blocks.Add(new Block { Color = "darkblue", X = i * 30, Y = j * 30, Border = 0 });
 
         }
 
-        public void Add()
-        {
-            Blocks.Add(new Block{ Color = "wheat", X =  30*i, Y =  30*i, Border = 1 } );
-            i++;
-            OnPropertyChanged("Blocks");
-        }
-        private void removeTest()
-        {
-            Blocks.RemoveAt(19);
-            OnPropertyChanged("Blocks");
-        }
-
-
+       
         public String Score
         {
             get { return _vmscore.ToString(); }
