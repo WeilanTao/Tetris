@@ -22,5 +22,39 @@ namespace Tetris.Models
             get { return _line; }
             set { _line = value; }
         }
+
+        internal Tetramino GenerateRandom()
+        {
+            return null;
+        }
+
+        public void HardDrop() { 
+        
+        }
+        
+        public void Down() { }
+
+        public void Right() { }
+
+        public void Left() { } 
+
+        public void RotateLeft() { }
+
+        public void RotateRight() { }   
+
+        public void CheckWallCollision() { 
+        }
+
+        public void CheckStackCollision() { }
+
+        private int ScoreUpdate()
+        {
+            return 0;
+        }
+
+        private int LineUpdate()
+        {
+            return 0;
+        }
     }
 }

@@ -29,6 +29,11 @@ namespace Tetris.ViewModels
         public ICommand KeyDown { get; private set; }
         public ICommand KeySpace { get; private set; }
 
+        private int _gameState { get; set; } = 0; //0 for start, 1 for end, 2 for stop
+
+        private Tetramino currentTetramino { get; set; }
+
+
         int i = 0;
         public GameViewModel(NavigationService mainMenuNavigationService)
         {
@@ -41,10 +46,6 @@ namespace Tetris.ViewModels
 
             initializeGrid();
 
-            //removeTest();
-            //Add();
-
-
             MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
             KeyD = new KeyCommand(RotateRight);
             KeyA = new KeyCommand(RotateLeft);
@@ -53,6 +54,36 @@ namespace Tetris.ViewModels
             KeyDown = new KeyCommand(Down);
             KeySpace = new KeyCommand(HardDrop);
 
+        }
+
+       
+        private void gameLoop()
+        {
+            while (_gameState == 0)
+            {
+                #region get a new random tetramino
+
+                #endregion
+
+                #region tetramino keeps falling down 5s until check stack collision is dected
+
+                #endregion
+
+                #region update the ui
+
+                #endregion
+            }
+
+        }
+
+        private void initializeGrid()
+        {
+            for (int i = 0; i < 10; i++) //col
+                for (int j = 0; j < 22; j++)//row
+
+                    Blocks.Add(new Block { Color = j < 2 ? "lightblue" : "darkblue", X = i * 30, Y = j * 30, Border = 0 });
+
+            //gameLoop();
         }
 
         private void HardDrop()
@@ -85,15 +116,6 @@ namespace Tetris.ViewModels
             throw new NotImplementedException();
         }
 
-        private void initializeGrid()
-        {
-            for (int i = 0; i < 10; i++) //row
-                for (int j = 0; j < 20; j++)//col
-                    Blocks.Add(new Block { Color = "darkblue", X = i * 30, Y = j * 30, Border = 0 });
-
-        }
-
-       
         public String Score
         {
             get { return _vmscore.ToString(); }
