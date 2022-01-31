@@ -66,18 +66,19 @@ namespace Tetris.ViewModels
         private void gameLoop()
         {
             //Thread.Sleep(1000);
-            currentTetramino = new Tetramino();
-            Blocks.Add(currentTetramino.Block1);
-            Blocks.Add(currentTetramino.Block2);
-            Blocks.Add(currentTetramino.Block3);
-            Blocks.Add(currentTetramino.Block4);
-
-            OnPropertyChanged("Blocks");
+            
 
             while (_gameState == 0)
             {
                 #region get a new random tetramino
+                currentTetramino = new Tetramino();
+                Blocks.Add(currentTetramino.Block1);
+                Blocks.Add(currentTetramino.Block2);
+                Blocks.Add(currentTetramino.Block3);
+                Blocks.Add(currentTetramino.Block4);
 
+                OnPropertyChanged("Blocks");
+                _gameState = 1;
                 #endregion
 
                 #region tetramino keeps falling down 5s until check stack collision is dected
