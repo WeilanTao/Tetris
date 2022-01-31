@@ -59,31 +59,43 @@ namespace Tetris.ViewModels
        
         private void gameLoop()
         {
-            while (_gameState == 0)
-            {
-                #region get a new random tetramino
+            currentTetramino = new Tetramino();
 
-                #endregion
+   
+            Blocks.Add(currentTetramino.Block1);
+            //OnPropertyChanged("Blocks");
+            Blocks.Add(currentTetramino.Block2);
+            //OnPropertyChanged("Blocks");
+            Blocks.Add(currentTetramino.Block3);
+            //OnPropertyChanged("Blocks");
+            Blocks.Add(currentTetramino.Block4);
 
-                #region tetramino keeps falling down 5s until check stack collision is dected
+            OnPropertyChanged("Blocks");
+            //while (_gameState == 0)
+            //{
+            //    #region get a new random tetramino
 
-                #endregion
+            //    #endregion
 
-                #region update the ui
+            //    #region tetramino keeps falling down 5s until check stack collision is dected
 
-                #endregion
-            }
+            //    #endregion
+
+            //    #region update the ui
+
+            //    #endregion
+            //}
 
         }
 
         private void initializeGrid()
         {
-            for (int i = 0; i < 10; i++) //col
-                for (int j = 0; j < 22; j++)//row
+            for (int i = 0; i < 22; i++) //row
+                for (int j = 0; j < 10; j++)//col
 
-                    Blocks.Add(new Block (j<2? "lightblue": "darkblue", i * 30, j * 30, 0 ));
+                    Blocks.Add(new Block (i<2? "lightblue": "darkblue", i * 30, j * 30, 0 ));
 
-            //gameLoop();
+            gameLoop();
         }
 
         private void HardDrop()
