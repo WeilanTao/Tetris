@@ -12,6 +12,7 @@ using Tetris.Services;
 using Tetris.Commands;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Threading;
 
 namespace Tetris.ViewModels
 {
@@ -54,49 +55,42 @@ namespace Tetris.ViewModels
             KeyDown = new KeyCommand(Down);
             KeySpace = new KeyCommand(HardDrop);
 
+            Thread thread = new Thread(gameLoop);
+            //thread.IsBackground = true;
+            thread.Start();
+
+            //gameLoop();
         }
 
-       
+
         private void gameLoop()
         {
+            //Thread.Sleep(1000);
             currentTetramino = new Tetramino();
-
-   
             Blocks.Add(currentTetramino.Block1);
-            //OnPropertyChanged("Blocks");
             Blocks.Add(currentTetramino.Block2);
-            //OnPropertyChanged("Blocks");
             Blocks.Add(currentTetramino.Block3);
-            //OnPropertyChanged("Blocks");
             Blocks.Add(currentTetramino.Block4);
 
             OnPropertyChanged("Blocks");
-            //while (_gameState == 0)
-            //{
-            //    #region get a new random tetramino
 
-            //    #endregion
+            while (_gameState == 0)
+            {
+                #region get a new random tetramino
 
-            //    #region tetramino keeps falling down 5s until check stack collision is dected
+                #endregion
 
-            //    #endregion
+                #region tetramino keeps falling down 5s until check stack collision is dected
 
-            //    #region update the ui
+                #endregion
 
-            //    #endregion
-            //}
+                #region update the ui
+
+                #endregion
+            }
 
         }
 
-        private void initializeGrid()
-        {
-            for (int i = 0; i < 22; i++) //row
-                for (int j = 0; j < 10; j++)//col
-
-                    Blocks.Add(new Block (i<2? "lightblue": "darkblue", i * 30, j * 30, 0 ));
-
-            gameLoop();
-        }
 
         private void HardDrop()
         {
@@ -127,6 +121,15 @@ namespace Tetris.ViewModels
         {
             throw new NotImplementedException();
         }
+
+        private void initializeGrid()
+        {
+            for (int i = 0; i < 22; i++) //row
+                for (int j = 0; j < 10; j++)//col
+
+                    Blocks.Add(new Block(i < 2 ? "lightblue" : "darkblue", i * 30, j * 30, 0));
+        }
+
 
         public String Score
         {
