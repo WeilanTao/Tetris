@@ -81,7 +81,7 @@ namespace Tetris.ViewModels
             for (int i = 0; i < 10; i++) //col
                 for (int j = 0; j < 22; j++)//row
 
-                    Blocks.Add(new Block ("darkblue", X = i * 30, Y = j * 30, Border = 0 ));
+                    Blocks.Add(new Block (j<2? "lightblue": "darkblue", i * 30, j * 30, 0 ));
 
             //gameLoop();
         }

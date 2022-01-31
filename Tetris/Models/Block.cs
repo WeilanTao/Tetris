@@ -9,13 +9,26 @@ namespace Tetris.Models
     public class Block
     {
 
-        public String Color { get; set; }
+        private String _color { get; set; }
 
-        public int Border { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
+        private int _border { get; set; }
+        private int _x { get; set; }
+        private int _y { get; set; }
 
-        
+        public Block(String Color, int x, int y, int Border)
+        {
+            _color = Color;
+            _x = x;
+            _y = y;
+            _border = Border;
+
+        }
+
+        public String Color { get { return _color; } set { _color = value; } }
+        public int Border { get { return _border; } set { _border = value; } }
+        public int X { get { return _x; } set { _x = value; } }
+        public int Y { get { return _y; } set { _y = value; } }
+
     }
 
 }
