@@ -18,8 +18,8 @@ namespace Tetris.ViewModels
 {
     public class GameViewModel : ViewModelBase
     {
-        private int _vmscore;
-        private int _vmline;
+        private int _vmscore { get; set; } = 0;
+        private int _vmline { get; set; } = 0;
         public ObservableCollection<Block> Blocks { get; set; }
 
         public ICommand MainMenuCommand { get; private set; }
@@ -34,11 +34,12 @@ namespace Tetris.ViewModels
 
         private Tetramino currentTetramino { get; set; }
 
+        private Game game { get; set; }
 
         int i = 0;
-        public GameViewModel(NavigationService mainMenuNavigationService)
+        public  GameViewModel(NavigationService mainMenuNavigationService)
         {
-            Game game = new Game();
+            game = new Game();
             _vmscore = game.Score;
             _vmline = game.Line;
 
@@ -55,32 +56,47 @@ namespace Tetris.ViewModels
             KeyDown = new KeyCommand(Down);
             KeySpace = new KeyCommand(HardDrop);
 
-            Thread thread = new Thread(gameLoop);
+            //Thread thread = new Thread(gameLoop);
             //thread.IsBackground = true;
-            thread.Start();
-
-            //gameLoop();
+            //thread.Start();
+             gameRun();
+        }
+    
+        private async void gameRun()
+        {
+            await gameLoop();
+            //await gameLoop();
         }
 
-
-        private void gameLoop()
+        private async Task gameLoop()
         {
             //Thread.Sleep(1000);
-            
+            currentTetramino = new Tetramino();
+            Blocks.Add(currentTetramino.Block1);
+            Blocks.Add(currentTetramino.Block2);
+            Blocks.Add(currentTetramino.Block3);
+            Blocks.Add(currentTetramino.Block4);
+            OnPropertyChanged("Blocks");
 
             while (_gameState == 0)
             {
-                #region get a new random tetramino
-                currentTetramino = new Tetramino();
-                Blocks.Add(currentTetramino.Block1);
-                Blocks.Add(currentTetramino.Block2);
-                Blocks.Add(currentTetramino.Block3);
-                Blocks.Add(currentTetramino.Block4);
+             
+                Down();
 
+                await Task.Delay(20);
                 OnPropertyChanged("Blocks");
-                _gameState = 1;
-                #endregion
+                //MessageBox.Show(_vmscore.ToString());
 
+                if (i == 10)
+                {
+                    _gameState = 1;
+
+                }
+
+                i++;
+
+                #region get a new random tetramino
+                #endregion
                 #region tetramino keeps falling down 5s until check stack collision is dected
 
                 #endregion
@@ -92,13 +108,17 @@ namespace Tetris.ViewModels
 
         }
 
-
-        private void HardDrop()
+        private void Down()
         {
-            throw new NotImplementedException();
+            Suite suite = new Suite(currentTetramino, Score, Line);
+            game.Down(suite);
+            _vmscore = suite.Score;
+            Blocks.Add(currentTetramino.Block1);
+            //MessageBox.Show(currentTetramino.Block1.X.ToString());
+
         }
 
-        private void Down()
+        private void HardDrop()
         {
             throw new NotImplementedException();
         }
@@ -132,20 +152,22 @@ namespace Tetris.ViewModels
         }
 
 
-        public String Score
+        public int Score
         {
-            get { return _vmscore.ToString(); }
-            //set { _vmscore = value;
-            //}
+            get { return _vmscore; }
+            set
+            {
+                _vmscore = value;
+            }
         }
 
-        public String Line
+        public int Line
         {
-            get { return _vmline.ToString(); }
-            //set
-            //{
-            //    _vmline = value;
-            //}
+            get { return _vmline; }
+            set
+            {
+                _vmline = value;
+            }
         }
 
 

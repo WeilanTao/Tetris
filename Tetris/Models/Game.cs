@@ -31,8 +31,21 @@ namespace Tetris.Models
         public void HardDrop() { 
         
         }
-        
-        public void Down() { }
+         
+        public  void Down( Suite suite) {
+            
+            suite.Tetramino.Block1.X+=30;
+            suite.Tetramino.Block2.X+=30;
+            suite.Tetramino.Block3.X+=30;
+            suite.Tetramino.Block4.X+=30;
+            suite.Score++;
+
+            #region check collision
+            #endregion
+
+            //return suite;
+
+        }
 
         public void Right() { }
 

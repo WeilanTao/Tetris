@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tetris.Models
 {
-    internal class Suite
+    public class Suite
     {
         private Tetramino _tetramino { get; set; }
         private int _score { get; set; } = 0;
