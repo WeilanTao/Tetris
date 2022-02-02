@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tetris.Models
 {
-    public class Block
-    {
+    public class Block { 
 
         private String _color { get; set; }
 
@@ -32,6 +31,7 @@ namespace Tetris.Models
         public int Y { get { return _y; } set { _y = value; } }
         public bool IsOccupied { get { return _isOccupied; } set { _isOccupied = value; } }
 
+      
     }
 
 }

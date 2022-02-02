@@ -8,7 +8,7 @@ using System.Windows;
 namespace Tetris.Models
 {
 
-    public class Tetramino
+    public class Tetramino 
     {
         private enum TetraminoEnum
         {
@@ -25,16 +25,20 @@ namespace Tetris.Models
         private Block _block2 { get; set; }
         private Block _block3 { get; set; }
         private Block _block4 { get; set; }
-
+        private int _border { get; set; }
+        private String _color { get; set; }
         public Block Block1 { get { return _block1; } set { _block1 = value; } }
         public Block Block2 { get { return _block2; } set { _block2 = value; } }
         public Block Block3 { get { return _block3; } set { _block3 = value; } }
         public Block Block4 { get { return _block4; } set { _block4 = value; } }
 
-        private String _color { get; set; }
+       
         public String Color { get { return _color; } set { _color = value; } }
 
-        private static int border { get; } = 1; //const?
+        private const int colorBorder  = 1; //const?
+
+     
+
         public Tetramino()
         {
             Random random = new Random();
@@ -49,59 +53,59 @@ namespace Tetris.Models
             if (value == TetraminoEnum.Z)
             {
                 _color = "green";
-                _block1 = new Block(Color, 0, 3, border);//row, col
-                _block2 = new Block(Color, 0, 4, border);
-                _block3 = new Block(Color, 1, 4, border);
-                _block4 = new Block(Color, 1, 5, border);
+                _block1 = new Block(Color, 0, 3, colorBorder);//row, col
+                _block2 = new Block(Color, 0, 4, colorBorder);
+                _block3 = new Block(Color, 1, 4, colorBorder);
+                _block4 = new Block(Color, 1, 5, colorBorder);
             }
             else if (value == TetraminoEnum.S)
             {
                 _color = "pink";
-                _block1 = new Block(Color, 0, 5, border);
-                _block2 = new Block(Color, 0, 4, border);
-                _block3 = new Block(Color, 1, 4, border);
-                _block4 = new Block(Color, 1, 3, border);
+                _block1 = new Block(Color, 0, 5, colorBorder);
+                _block2 = new Block(Color, 0, 4, colorBorder);
+                _block3 = new Block(Color, 1, 4, colorBorder);
+                _block4 = new Block(Color, 1, 3, colorBorder);
 
             }
             else if (value == TetraminoEnum.T)
             {
                 _color = "cyan";
-                _block1 = new Block(Color, 1, 3, border);
-                _block2 = new Block(Color, 1, 4, border);
-                _block3 = new Block(Color, 1, 5, border);
-                _block4 = new Block(Color, 0, 4, border);
+                _block1 = new Block(Color, 1, 3, colorBorder);
+                _block2 = new Block(Color, 1, 4, colorBorder);
+                _block3 = new Block(Color, 1, 5, colorBorder);
+                _block4 = new Block(Color, 0, 4, colorBorder);
             }
             else if (value == TetraminoEnum.L)
             {
                 _color = "orange";
-                _block1 = new Block(Color, 0, 5, border);
-                _block2 = new Block(Color, 1, 3, border);
-                _block3 = new Block(Color, 1, 4, border);
-                _block4 = new Block(Color, 1, 5, border);
+                _block1 = new Block(Color, 0, 5, colorBorder);
+                _block2 = new Block(Color, 1, 3, colorBorder);
+                _block3 = new Block(Color, 1, 4, colorBorder);
+                _block4 = new Block(Color, 1, 5, colorBorder);
             }
             else if (value == TetraminoEnum.I)
             {
                 _color = "red";
-                _block1 = new Block(Color, 1, 3, border);
-                _block2 = new Block(Color, 1, 4, border);
-                _block3 = new Block(Color, 1, 5, border);
-                _block4 = new Block(Color, 1, 6, border);
+                _block1 = new Block(Color, 1, 3, colorBorder);
+                _block2 = new Block(Color, 1, 4, colorBorder);
+                _block3 = new Block(Color, 1, 5, colorBorder);
+                _block4 = new Block(Color, 1, 6, colorBorder);
             }
             else if (value == TetraminoEnum.J)
             {
                 _color = "blue";
-                _block1 = new Block(Color, 0, 3, border);
-                _block2 = new Block(Color, 1, 3, border);
-                _block3 = new Block(Color, 1, 4, border);
-                _block4 = new Block(Color, 1, 5, border);
+                _block1 = new Block(Color, 0, 3, colorBorder);
+                _block2 = new Block(Color, 1, 3, colorBorder);
+                _block3 = new Block(Color, 1, 4, colorBorder);
+                _block4 = new Block(Color, 1, 5, colorBorder);
             }
             else if (value == TetraminoEnum.O)
             {
                 _color = "yellow";
-                _block1 = new Block(Color, 0, 4, border);
-                _block2 = new Block(Color, 0, 5, border);
-                _block3 = new Block(Color, 1, 4, border);
-                _block4 = new Block(Color, 1, 5, border);
+                _block1 = new Block(Color, 0, 4, colorBorder);
+                _block2 = new Block(Color, 0, 5, colorBorder);
+                _block3 = new Block(Color, 1, 4, colorBorder);
+                _block4 = new Block(Color, 1, 5, colorBorder);
             }
 
         }

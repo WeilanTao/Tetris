@@ -11,7 +11,7 @@ namespace Tetris.Models
 
     public class Game
     {
-        private const int baseline = 21;
+        private const int baseline = 22;
 
         private int _score = 0;
         private int _line = 0;
