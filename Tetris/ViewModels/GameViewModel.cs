@@ -13,14 +13,16 @@ using Tetris.Commands;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Threading;
+using System.Collections;
 
 namespace Tetris.ViewModels
 {
     public class GameViewModel : ViewModelBase
     {
-        private int _vmscore { get; set; } = 0;
-        private int _vmline { get; set; } = 0;
+        private int _score { get; set; } = 0;
+        private int _line { get; set; } = 0;
         public ObservableCollection<Block> Blocks { get; set; }
+        //public Stack<Block> TetriminoSet = new Stack<Block>();
 
         public ICommand MainMenuCommand { get; private set; }
         public ICommand KeyD { get; private set; }
@@ -36,12 +38,14 @@ namespace Tetris.ViewModels
 
         private Game game { get; set; }
 
+        private Suite suite { get; set; }
+
         int i = 0;
-        public  GameViewModel(NavigationService mainMenuNavigationService)
+        public GameViewModel(NavigationService mainMenuNavigationService)
         {
             game = new Game();
-            _vmscore = game.Score;
-            _vmline = game.Line;
+            _score = game.Score;
+            _line = game.Line;
 
             Blocks = new ObservableCollection<Block>();
 
@@ -56,36 +60,34 @@ namespace Tetris.ViewModels
             KeyDown = new KeyCommand(Down);
             KeySpace = new KeyCommand(HardDrop);
 
-            //Thread thread = new Thread(gameLoop);
-            //thread.IsBackground = true;
-            //thread.Start();
-             gameRun();
+            gameRun();
         }
-    
+
         private async void gameRun()
         {
             await gameLoop();
-            //await gameLoop();
+            //Blocks.RemoveAt(20);
+            OnPropertyChanged("Blocks");
         }
 
         private async Task gameLoop()
         {
-            //Thread.Sleep(1000);
             currentTetramino = new Tetramino();
-            Blocks.Add(currentTetramino.Block1);
-            Blocks.Add(currentTetramino.Block2);
-            Blocks.Add(currentTetramino.Block3);
-            Blocks.Add(currentTetramino.Block4);
+            //Thread.Sleep(1000);
+            Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, 1);
+            Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, 1);
+            Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, 1);
+            Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, 1);
+
             OnPropertyChanged("Blocks");
 
             while (_gameState == 0)
             {
-             
-                Down();
 
-                await Task.Delay(20);
+                //Down();
+
+                await Task.Delay(2);
                 OnPropertyChanged("Blocks");
-                //MessageBox.Show(_vmscore.ToString());
 
                 if (i == 10)
                 {
@@ -108,20 +110,36 @@ namespace Tetris.ViewModels
 
         }
 
+        //TODO: need to find a proper way to remove / add tetriminos onto the canvas 
         private void Down()
         {
-            Suite suite = new Suite(currentTetramino, Score, Line);
+            suite = new Suite(currentTetramino, Score, Line, Blocks);
             game.Down(suite);
-            _vmscore = suite.Score;
-            Blocks.Add(currentTetramino.Block1);
-            //MessageBox.Show(currentTetramino.Block1.X.ToString());
-
+            //_vmscore = suite.Score;
+            //_vmline = suite.Line;
+            MessageBox.Show(suite.CanUpdate.ToString());
+            if (suite.CanUpdate)
+            {
+                updateGrid();
+            }
         }
 
-        private void HardDrop()
+        private void updateGrid()
         {
-            throw new NotImplementedException();
+            //change perivious position to background block
+            Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y - 10] = new Block("darkblue", (currentTetramino.Block1.X - 1) * 30, currentTetramino.Block1.Y * 30, 0);
+            Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y - 10] = new Block("darkblue", (currentTetramino.Block2.X - 1) * 30, currentTetramino.Block2.Y * 30, 0);
+            Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y - 10] = new Block("darkblue", (currentTetramino.Block3.X - 1) * 30, currentTetramino.Block3.Y * 30, 0);
+            Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y - 10] = new Block("darkblue", (currentTetramino.Block4.X - 1) * 30, currentTetramino.Block4.Y * 30, 0);
+
+            //update the current position
+            Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, 1);
+            Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, 1);
+            Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, 1);
+            Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, 1);
+
         }
+
 
         private void Right()
         {
@@ -142,7 +160,10 @@ namespace Tetris.ViewModels
         {
             throw new NotImplementedException();
         }
-
+        private void HardDrop()
+        {
+            throw new NotImplementedException();
+        }
         private void initializeGrid()
         {
             for (int i = 0; i < 22; i++) //row
@@ -154,21 +175,29 @@ namespace Tetris.ViewModels
 
         public int Score
         {
-            get { return _vmscore; }
+            get { return _score; }
             set
             {
-                _vmscore = value;
+                _score = value;
             }
         }
 
         public int Line
         {
-            get { return _vmline; }
+            get { return _line; }
             set
             {
-                _vmline = value;
+                _line = value;
             }
         }
+
+        public Suite Suite
+        {
+            get { return suite; }
+
+            set { suite = value; }
+        }
+
 
 
     }

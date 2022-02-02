@@ -49,59 +49,59 @@ namespace Tetris.Models
             if (value == TetraminoEnum.Z)
             {
                 _color = "green";
-                _block1 = new Block(Color, 0 * 30, 3 * 30, border);//row, col
-                _block2 = new Block(Color, 0 * 30, 4 * 30, border);
-                _block3 = new Block(Color, 1 * 30, 4 * 30, border);
-                _block4 = new Block(Color, 1 * 30, 5 * 30, border);
+                _block1 = new Block(Color, 0, 3, border);//row, col
+                _block2 = new Block(Color, 0, 4, border);
+                _block3 = new Block(Color, 1, 4, border);
+                _block4 = new Block(Color, 1, 5, border);
             }
             else if (value == TetraminoEnum.S)
             {
                 _color = "pink";
-                _block1 = new Block(Color, 0 * 30, 5 * 30, border);
-                _block2 = new Block(Color, 0 * 30, 4 * 30, border);
-                _block3 = new Block(Color, 1 * 30, 4 * 30, border);
-                _block4 = new Block(Color, 1 * 30, 3 * 30, border);
+                _block1 = new Block(Color, 0, 5, border);
+                _block2 = new Block(Color, 0, 4, border);
+                _block3 = new Block(Color, 1, 4, border);
+                _block4 = new Block(Color, 1, 3, border);
 
             }
             else if (value == TetraminoEnum.T)
             {
                 _color = "cyan";
-                _block1 = new Block(Color, 1 * 30, 3 * 30, border);
-                _block2 = new Block(Color, 1 * 30, 4 * 30, border);
-                _block3 = new Block(Color, 1 * 30, 5 * 30, border);
-                _block4 = new Block(Color, 0 * 30, 4 * 30, border);
+                _block1 = new Block(Color, 1, 3, border);
+                _block2 = new Block(Color, 1, 4, border);
+                _block3 = new Block(Color, 1, 5, border);
+                _block4 = new Block(Color, 0, 4, border);
             }
             else if (value == TetraminoEnum.L)
             {
                 _color = "orange";
-                _block1 = new Block(Color, 0 * 30, 5 * 30, border);
-                _block2 = new Block(Color, 1 * 30, 3 * 30, border);
-                _block3 = new Block(Color, 1 * 30, 4 * 30, border);
-                _block4 = new Block(Color, 1 * 30, 5 * 30, border);
+                _block1 = new Block(Color, 0, 5, border);
+                _block2 = new Block(Color, 1, 3, border);
+                _block3 = new Block(Color, 1, 4, border);
+                _block4 = new Block(Color, 1, 5, border);
             }
             else if (value == TetraminoEnum.I)
             {
                 _color = "red";
-                _block1 = new Block(Color, 1 * 30, 3 * 30, border);
-                _block2 = new Block(Color, 1 * 30, 4 * 30, border);
-                _block3 = new Block(Color, 1 * 30, 5 * 30, border);
-                _block4 = new Block(Color, 1 * 30, 6 * 30, border);
+                _block1 = new Block(Color, 1, 3, border);
+                _block2 = new Block(Color, 1, 4, border);
+                _block3 = new Block(Color, 1, 5, border);
+                _block4 = new Block(Color, 1, 6, border);
             }
             else if (value == TetraminoEnum.J)
             {
                 _color = "blue";
-                _block1 = new Block(Color, 0 * 30, 3 * 30, border);
-                _block2 = new Block(Color, 1 * 30, 3 * 30, border);
-                _block3 = new Block(Color, 1 * 30, 4 * 30, border);
-                _block4 = new Block(Color, 1 * 30, 5 * 30, border);
+                _block1 = new Block(Color, 0, 3, border);
+                _block2 = new Block(Color, 1, 3, border);
+                _block3 = new Block(Color, 1, 4, border);
+                _block4 = new Block(Color, 1, 5, border);
             }
             else if (value == TetraminoEnum.O)
             {
                 _color = "yellow";
-                _block1 = new Block(Color, 0 * 30, 4 * 30, border);
-                _block2 = new Block(Color, 0 * 30, 5 * 30, border);
-                _block3 = new Block(Color, 1 * 30, 4 * 30, border);
-                _block4 = new Block(Color, 1 * 30, 5 * 30, border);
+                _block1 = new Block(Color, 0, 4, border);
+                _block2 = new Block(Color, 0, 5, border);
+                _block3 = new Block(Color, 1, 4, border);
+                _block4 = new Block(Color, 1, 5, border);
             }
 
         }
