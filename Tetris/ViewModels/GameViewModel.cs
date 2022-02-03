@@ -108,7 +108,7 @@ namespace Tetris.ViewModels
                 else
                 {
                     Down();
-                    await Task.Delay(500);
+                    await Task.Delay(2000);
                 }
 
             }
@@ -134,10 +134,13 @@ namespace Tetris.ViewModels
         {
             suite = new Suite(currentTetramino, Score, Line, Blocks);
             game.Right(suite);
-
             updateGrid();
-           
-
+        }
+        private void Left()
+        {
+            suite = new Suite(currentTetramino, Score, Line, Blocks);
+            game.Left(suite);
+            updateGrid();
         }
 
         private void updateGrid()
@@ -164,10 +167,7 @@ namespace Tetris.ViewModels
             recordY4 = currentTetramino.Block4.Y;
         }
 
-        private void Left()
-        {
-            throw new NotImplementedException();
-        }
+
 
         private void RotateLeft()
         {
