@@ -11,7 +11,9 @@ namespace Tetris.Models
 
     public class Game
     {
-        private const int baseline = 21;
+        private const int bottomline = 21;
+        private const int leftbase = 0;
+        private const int rightbase = 10;
 
         private int _score = 0;
         private int _line = 0;
@@ -64,8 +66,21 @@ namespace Tetris.Models
 
         }
 
-        public void Right(Suite suite) { 
-        
+        public void Right(Suite suite) {
+
+            suite.Tetramino.Block1.Y += 1;
+            suite.Tetramino.Block2.Y += 1;
+            suite.Tetramino.Block3.Y += 1;
+            suite.Tetramino.Block4.Y += 1;
+
+            if(IsWallCollision(suite.Tetramino, suite.Blocks))
+            {
+                suite.Tetramino.Block1.Y -= 1;
+                suite.Tetramino.Block2.Y -= 1;
+                suite.Tetramino.Block3.Y -= 1;
+                suite.Tetramino.Block4.Y -= 1;
+            }
+          
         }
 
         public void Left() { }
@@ -74,18 +89,30 @@ namespace Tetris.Models
 
         public void RotateRight() { }
 
-        private bool IsWallCollision()
+        private bool IsWallCollision(Tetramino tetramino, ObservableCollection<Block> blockslist)
         {
+            if(tetramino.Block1.Y <= leftbase ||
+                tetramino.Block2.Y <= leftbase ||
+                tetramino.Block3.Y <= leftbase ||
+                tetramino.Block4.Y <= leftbase ||
+                tetramino.Block1.Y >= rightbase ||
+                tetramino.Block2.Y >= rightbase ||
+                tetramino.Block3.Y >= rightbase ||
+                tetramino.Block4.Y >= rightbase
 
-            return true;
+                )
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool IsStackCollision(Tetramino tetramino, ObservableCollection<Block> blockslist)
         {
-            if (tetramino.Block1.X >= baseline ||
-                tetramino.Block2.X >= baseline ||
-                tetramino.Block3.X >= baseline ||
-                tetramino.Block4.X >= baseline ||
+            if (tetramino.Block1.X >= bottomline ||
+                tetramino.Block2.X >= bottomline ||
+                tetramino.Block3.X >= bottomline ||
+                tetramino.Block4.X >= bottomline ||
                 blockslist[(tetramino.Block1.X + 1) * 10 + tetramino.Block1.Y].IsOccupied ||
                 blockslist[(tetramino.Block2.X + 1) * 10 + tetramino.Block2.Y].IsOccupied ||
                 blockslist[(tetramino.Block3.X + 1) * 10 + tetramino.Block3.Y].IsOccupied ||

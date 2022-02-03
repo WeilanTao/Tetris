@@ -98,10 +98,10 @@ namespace Tetris.ViewModels
                     Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, 1);
                     newTetrinimo = false;
                     OnPropertyChanged("Blocks");
-                    
+
                     for (int i = 0; i < 10; i++)
                     {
-                        if (Blocks[i+20].IsOccupied == true)
+                        if (Blocks[i + 20].IsOccupied == true)
                             _gameState = 1;
                     }
                 }
@@ -132,16 +132,21 @@ namespace Tetris.ViewModels
         }
         private void Right()
         {
-            
+            suite = new Suite(currentTetramino, Score, Line, Blocks);
+            game.Right(suite);
+
+            updateGrid();
+           
+
         }
 
         private void updateGrid()
         {
             //change perivious position to background block
-            Blocks[recordX1 * 10 + recordY1] = new Block(recordX1 < 2 ? bgname : fgColor, recordX1 * 30, recordY1 * 30, 0);
-            Blocks[recordX2 * 10 + recordY2] = new Block(recordX2 < 2 ? bgname : fgColor, recordX2 * 30, recordY2 * 30, 0);
-            Blocks[recordX3 * 10 + recordY3] = new Block(recordX3 < 2 ? bgname : fgColor, recordX3 * 30, recordY3 * 30, 0);
-            Blocks[recordX4 * 10 + recordY4] = new Block(recordX4 < 2 ? bgname : fgColor, recordX4 * 30, recordY4 * 30, 0);
+            Blocks[recordX1 * 10 + recordY1] = new Block(recordX1 < 2 ? bgname : fgColor, recordX1 * 30, recordY1 * 30, 0, false);
+            Blocks[recordX2 * 10 + recordY2] = new Block(recordX2 < 2 ? bgname : fgColor, recordX2 * 30, recordY2 * 30, 0, false);
+            Blocks[recordX3 * 10 + recordY3] = new Block(recordX3 < 2 ? bgname : fgColor, recordX3 * 30, recordY3 * 30, 0, false);
+            Blocks[recordX4 * 10 + recordY4] = new Block(recordX4 < 2 ? bgname : fgColor, recordX4 * 30, recordY4 * 30, 0, false);
 
             //update the current position
             Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, 1, !suite.CanUpdate ? true : false);
