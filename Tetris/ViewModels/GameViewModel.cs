@@ -19,11 +19,11 @@ namespace Tetris.ViewModels
 {
     public class GameViewModel : ViewModelBase
     {
-        private const String bgColor = "darkblue";
+        private const string bgname = "lightblue";
+        private const String fgColor = "darkblue";
         private int _score { get; set; } = 0;
         private int _line { get; set; } = 0;
         public ObservableCollection<Block> Blocks { get; set; }
-        //public Stack<Block> TetriminoSet = new Stack<Block>();
 
         public ICommand MainMenuCommand { get; private set; }
         public ICommand KeyD { get; private set; }
@@ -32,7 +32,6 @@ namespace Tetris.ViewModels
         public ICommand KeyRight { get; private set; }
         public ICommand KeyDown { get; private set; }
         public ICommand KeySpace { get; private set; }
-
         private int _gameState { get; set; } = 0; //0 for start, 1 for end, 2 for stop
 
         private Tetramino currentTetramino { get; set; }
@@ -47,10 +46,11 @@ namespace Tetris.ViewModels
         private int recordY4 { get; set; }
 
         private Game game { get; set; }
-
         private Suite suite { get; set; }
 
-        int i = 0;
+        private bool newTetrinimo { get; set; } = true;
+        //int i = 0;
+
         public GameViewModel(NavigationService mainMenuNavigationService)
         {
             game = new Game();
@@ -76,61 +76,47 @@ namespace Tetris.ViewModels
         private async void gameRun()
         {
             await gameLoop();
-            //Blocks.RemoveAt(20);
-            OnPropertyChanged("Blocks");
+            //OnPropertyChanged("Blocks");
         }
 
         private async Task gameLoop()
         {
-            currentTetramino = new Tetramino();
-            //TODO: I have to shallow copy the onjects, recursively; and it was suggested that I have to use Reflection
-            recordX1 = currentTetramino.Block1.X;
-            recordX2 = currentTetramino.Block2.X;
-            recordX3 = currentTetramino.Block3.X;
-            recordX4 = currentTetramino.Block4.X;
-            recordY1 = currentTetramino.Block1.Y;
-            recordY2 = currentTetramino.Block2.Y;
-            recordY3 = currentTetramino.Block3.Y;
-            recordY4 = currentTetramino.Block4.Y;
+            while (_gameState == 0)
+            {
+                if (newTetrinimo)
+                {
+                    currentTetramino = new Tetramino();
+                    recordX1 = currentTetramino.Block1.X;
+                    recordX2 = currentTetramino.Block2.X;
+                    recordX3 = currentTetramino.Block3.X;
+                    recordX4 = currentTetramino.Block4.X;
+                    recordY1 = currentTetramino.Block1.Y;
+                    recordY2 = currentTetramino.Block2.Y;
+                    recordY3 = currentTetramino.Block3.Y;
+                    recordY4 = currentTetramino.Block4.Y;
+                    Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, 1);
+                    Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, 1);
+                    Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, 1);
+                    Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, 1);
+                    newTetrinimo = false;
+                    OnPropertyChanged("Blocks");
+                    
+                    for (int i = 0; i < 10; i++)
+                    {
+                        if (Blocks[i+20].IsOccupied == true)
+                            _gameState = 1;
+                    }
+                }
+                else
+                {
+                    Down();
+                    await Task.Delay(500);
+                }
 
-            //Thread.Sleep(1000);
-            Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, 1);
-            Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, 1);
-            Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, 1);
-            Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, 1);
-
-            OnPropertyChanged("Blocks");
-
-            //while (_gameState == 0)
-            //{
-
-            //    //Down();
-
-            //    await Task.Delay(2);
-            //    OnPropertyChanged("Blocks");
-
-            //    if (i == 10)
-            //    {
-            //        _gameState = 1;
-
-            //    }
-
-            //    i++;
-
-            //    #region get a new random tetramino
-            //    #endregion
-            //    #region tetramino keeps falling down 5s until check stack collision is dected
-
-            //    #endregion
-
-            //    #region update the ui
-
-            //    #endregion
-            //}
+            }
 
         }
 
-        //TODO: need to find a proper way to remove / add tetriminos onto the canvas 
         private void Down()
         {
             suite = new Suite(currentTetramino, Score, Line, Blocks);
@@ -138,28 +124,28 @@ namespace Tetris.ViewModels
             //_vmscore = suite.Score;
             //_vmline = suite.Line;
             //MessageBox.Show(suite.CanUpdate.ToString());
-            if (suite.CanUpdate)
+            updateGrid();
+            if (!suite.CanUpdate)
             {
-                updateGrid();
+                //MessageBox.Show(Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y].IsOccupied.ToString());
+                newTetrinimo = true;
             }
-           
+
         }
 
         private void updateGrid()
         {
             //change perivious position to background block
-            //MessageBox.Show(ecordTetramino.Block1.X.toString());
-            Blocks[recordX1 * 10 + recordY1] = new Block(bgColor, recordX1 * 30, recordY1 * 30, 0);
-            Blocks[recordX2 * 10 + recordY2] = new Block(bgColor, recordX2 * 30, recordY2 * 30, 0);
-            Blocks[recordX3 * 10 + recordY3] = new Block(bgColor, recordX3 * 30, recordY3 * 30, 0);
-            Blocks[recordX4 * 10 + recordY4] = new Block(bgColor, recordX4 * 30, recordY4 * 30, 0);
-
+            Blocks[recordX1 * 10 + recordY1] = new Block(recordX1 < 2 ? bgname : fgColor, recordX1 * 30, recordY1 * 30, 0);
+            Blocks[recordX2 * 10 + recordY2] = new Block(recordX2 < 2 ? bgname : fgColor, recordX2 * 30, recordY2 * 30, 0);
+            Blocks[recordX3 * 10 + recordY3] = new Block(recordX3 < 2 ? bgname : fgColor, recordX3 * 30, recordY3 * 30, 0);
+            Blocks[recordX4 * 10 + recordY4] = new Block(recordX4 < 2 ? bgname : fgColor, recordX4 * 30, recordY4 * 30, 0);
 
             //update the current position
-            Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, 1);
-            Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, 1);
-            Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, 1);
-            Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, 1);
+            Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, 1, !suite.CanUpdate ? true : false);
+            Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, 1, !suite.CanUpdate ? true : false);
+            Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, 1, !suite.CanUpdate ? true : false);
+            Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, 1, !suite.CanUpdate ? true : false);
 
             recordX1 = currentTetramino.Block1.X;
             recordX2 = currentTetramino.Block2.X;
@@ -200,7 +186,7 @@ namespace Tetris.ViewModels
             for (int i = 0; i < 22; i++) //row
                 for (int j = 0; j < 10; j++)//col
 
-                    Blocks.Add(new Block(i < 2 ? "lightblue" : bgColor, i * 30, j * 30, 0));
+                    Blocks.Add(new Block(i < 2 ? bgname : fgColor, i * 30, j * 30, 0));
         }
 
 
