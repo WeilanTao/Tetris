@@ -59,7 +59,7 @@ namespace Tetris.ViewModels
             Blocks = new ObservableCollection<Block>();
 
 
-            initializeGrid();
+            InitializeGrid();
 
             MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
             KeyD = new KeyCommand(RotateRight);
@@ -135,7 +135,7 @@ namespace Tetris.ViewModels
             suite = new Suite(currentTetramino, Score, Line, Blocks);
             game.Down(suite);
            
-            updateGrid();
+            UpdateGrid();
             if (!suite.CanLock)
             {
                 newTetrinimo = true;
@@ -146,16 +146,16 @@ namespace Tetris.ViewModels
         {
             suite = new Suite(currentTetramino, Score, Line, Blocks);
             game.Right(suite);
-            updateGrid();
+            UpdateGrid();
         }
         private void Left()
         {
             suite = new Suite(currentTetramino, Score, Line, Blocks);
             game.Left(suite);
-            updateGrid();
+            UpdateGrid();
         }
 
-        private void updateGrid()
+        private void UpdateGrid()
         {
              //change perivious position to background block
             Blocks[recordX1 * 10 + recordY1] = new Block(recordX1 < 2 ? bgname : fgColor, recordX1 * 30, recordY1 * 30, 0);
@@ -195,7 +195,7 @@ namespace Tetris.ViewModels
             throw new NotImplementedException();
         }
 
-        private void initializeGrid()
+        private void InitializeGrid()
         {
             for (int i = 0; i < 22; i++) //row
                 for (int j = 0; j < 10; j++)//col
