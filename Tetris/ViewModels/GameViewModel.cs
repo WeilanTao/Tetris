@@ -132,6 +132,10 @@ namespace Tetris.ViewModels
             }
 
         }
+        private void Right()
+        {
+            
+        }
 
         private void updateGrid()
         {
@@ -157,12 +161,6 @@ namespace Tetris.ViewModels
             recordY4 = currentTetramino.Block4.Y;
         }
 
-
-        private void Right()
-        {
-            throw new NotImplementedException();
-        }
-
         private void Left()
         {
             throw new NotImplementedException();
@@ -181,6 +179,7 @@ namespace Tetris.ViewModels
         {
             throw new NotImplementedException();
         }
+
         private void initializeGrid()
         {
             for (int i = 0; i < 22; i++) //row

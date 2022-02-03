@@ -28,11 +28,6 @@ namespace Tetris.Models
             set { _line = value; }
         }
 
-        internal Tetramino GenerateRandom()
-        {
-            return null;
-        }
-
         public void HardDrop()
         {
 
@@ -69,7 +64,9 @@ namespace Tetris.Models
 
         }
 
-        public void Right() { }
+        public void Right(Suite suite) { 
+        
+        }
 
         public void Left() { }
 
@@ -77,7 +74,7 @@ namespace Tetris.Models
 
         public void RotateRight() { }
 
-        public bool IsWallCollision()
+        private bool IsWallCollision()
         {
 
             return true;
@@ -110,12 +107,7 @@ namespace Tetris.Models
         }
 
         
-        private int ScoreUpdate()
-        {
-            return 0;
-        }
-
-        private int LineUpdate()
+        private int LineRemoveUpdate(int score, int line)
         {
             return 0;
         }
