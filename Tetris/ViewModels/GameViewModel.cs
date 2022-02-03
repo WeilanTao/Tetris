@@ -21,8 +21,8 @@ namespace Tetris.ViewModels
     {
         private const string bgname = "lightblue";
         private const String fgColor = "darkblue";
-        private int _score { get; set; } = 0;
-        private int _line { get; set; } = 0;
+        private int score { get; set; } = 0;
+        private int line { get; set; } = 0;
         public ObservableCollection<Block> Blocks { get; set; }
 
         public ICommand MainMenuCommand { get; private set; }
@@ -53,8 +53,8 @@ namespace Tetris.ViewModels
         public GameViewModel(NavigationService mainMenuNavigationService)
         {
             game = new Game();
-            _score = game.Score;
-            _line = game.Line;
+            score = game.Score;
+            line = game.Line;
 
             Blocks = new ObservableCollection<Block>();
 
@@ -206,19 +206,19 @@ namespace Tetris.ViewModels
 
         public int Score
         {
-            get { return _score; }
+            get { return score; }
             set
             {
-                _score = value;
+                score = value;
             }
         }
 
         public int Line
         {
-            get { return _line; }
+            get { return line; }
             set
             {
-                _line = value;
+                line = value;
             }
         }
 
