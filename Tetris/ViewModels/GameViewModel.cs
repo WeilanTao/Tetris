@@ -21,6 +21,8 @@ namespace Tetris.ViewModels
     {
         private const string bgname = "lightblue";
         private const String fgColor = "darkblue";
+        private const int bgborder = 1;
+        private const int fgorder = 1;
         private int score { get; set; } = 0;
         private int line { get; set; } = 0;
         public ObservableCollection<Block> Blocks { get; set; }
@@ -92,10 +94,10 @@ namespace Tetris.ViewModels
                     recordY2 = currentTetramino.Block2.Y;
                     recordY3 = currentTetramino.Block3.Y;
                     recordY4 = currentTetramino.Block4.Y;
-                    Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, 1);
-                    Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, 1);
-                    Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, 1);
-                    Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, 1);
+                    Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, fgorder);
+                    Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgorder);
+                    Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgorder);
+                    Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgorder);
                     newTetrinimo = false;
                     OnPropertyChanged("Blocks");
 
@@ -107,16 +109,16 @@ namespace Tetris.ViewModels
                 }
                 else
                 {
-                    Down();
-                    await Task.Delay(900);
+                    //Down();
+                    await Task.Delay(90000);
                     //if keyright/keyleft/keyrotation is after the keydown...
                     if(game.IsStackCollision(currentTetramino, Blocks))
                     {
                         //if after the keyright/keyleft/keyrotation, the tetraminio reaches its button position...
-                        Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, 1, true);
-                        Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, 1, true);
-                        Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, 1, true);
-                        Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, 1, true);
+                        Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, fgorder, true);
+                        Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgorder, true);
+                        Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgorder, true);
+                        Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgorder, true);
                     }
                     else
                     {
@@ -155,19 +157,32 @@ namespace Tetris.ViewModels
             UpdateGrid();
         }
 
+        private void RotateLeft()
+        {
+            suite = new Suite(currentTetramino, Score, Line, Blocks);
+            game.RotateLeft(suite);
+            UpdateGrid();
+        }
+
+        private void RotateRight()
+        {
+            throw new NotImplementedException();
+        }
+
+
         private void UpdateGrid()
         {
              //change perivious position to background block
-            Blocks[recordX1 * 10 + recordY1] = new Block(recordX1 < 2 ? bgname : fgColor, recordX1 * 30, recordY1 * 30, 0);
-            Blocks[recordX2 * 10 + recordY2] = new Block(recordX2 < 2 ? bgname : fgColor, recordX2 * 30, recordY2 * 30, 0);
-            Blocks[recordX3 * 10 + recordY3] = new Block(recordX3 < 2 ? bgname : fgColor, recordX3 * 30, recordY3 * 30, 0);
-            Blocks[recordX4 * 10 + recordY4] = new Block(recordX4 < 2 ? bgname : fgColor, recordX4 * 30, recordY4 * 30, 0);
+            Blocks[recordX1 * 10 + recordY1] = new Block(recordX1 < 2 ? bgname : fgColor, recordX1 * 30, recordY1 * 30, bgborder);
+            Blocks[recordX2 * 10 + recordY2] = new Block(recordX2 < 2 ? bgname : fgColor, recordX2 * 30, recordY2 * 30, bgborder);
+            Blocks[recordX3 * 10 + recordY3] = new Block(recordX3 < 2 ? bgname : fgColor, recordX3 * 30, recordY3 * 30, bgborder);
+            Blocks[recordX4 * 10 + recordY4] = new Block(recordX4 < 2 ? bgname : fgColor, recordX4 * 30, recordY4 * 30, bgborder);
 
             //update the current position
-            Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, 1, !suite.CanLock ? true : false);
-            Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, 1, !suite.CanLock ? true : false);
-            Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, 1, !suite.CanLock ? true : false);
-            Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, 1, !suite.CanLock ? true : false);
+            Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, fgorder, !suite.CanLock ? true : false);
+            Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgorder, !suite.CanLock ? true : false);
+            Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgorder, !suite.CanLock ? true : false);
+            Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgorder, !suite.CanLock ? true : false);
 
             recordX1 = currentTetramino.Block1.X;
             recordX2 = currentTetramino.Block2.X;
@@ -181,15 +196,7 @@ namespace Tetris.ViewModels
 
 
 
-        private void RotateLeft()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void RotateRight()
-        {
-            throw new NotImplementedException();
-        }
+       
         private void HardDrop()
         {
             throw new NotImplementedException();
@@ -200,7 +207,7 @@ namespace Tetris.ViewModels
             for (int i = 0; i < 22; i++) //row
                 for (int j = 0; j < 10; j++)//col
 
-                    Blocks.Add(new Block(i < 2 ? bgname : fgColor, i * 30, j * 30, 0));
+                    Blocks.Add(new Block(i < 2 ? bgname : fgColor, i * 30, j * 30, bgborder));
         }
 
 

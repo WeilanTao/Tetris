@@ -57,6 +57,7 @@ namespace Tetris.Models
         {
             bool recordOccupancy = suite.Tetramino.Block1.IsOccupied;
 
+            //we only get the position of the destination; so the occupancy of the currentTetramino won't affect the check of the occupation collision
             suite.Tetramino.Block1.Y += 1;
             suite.Tetramino.Block2.Y += 1;
             suite.Tetramino.Block3.Y += 1;
@@ -90,9 +91,11 @@ namespace Tetris.Models
 
         }
 
-        public void RotateLeft() { }
+        public void RotateLeft(Suite suite) { 
+        
+        }
 
-        public void RotateRight() { }
+        public void RotateRight(Suite suite) { }
 
         private bool IsWallCollision(Tetramino tetramino, ObservableCollection<Block> blockslist)
         {
