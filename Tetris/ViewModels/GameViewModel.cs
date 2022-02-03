@@ -115,12 +115,13 @@ namespace Tetris.ViewModels
                         Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, 1, true);
                         Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, 1, true);
                         Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, 1, true);
-
+                        //OnPropertyChanged("Blocks");
                     }
                     else
                     {
-
+                        newTetrinimo = false;
                     }
+                   
 
                 }
 
