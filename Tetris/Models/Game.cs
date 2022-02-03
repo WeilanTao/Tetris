@@ -51,15 +51,6 @@ namespace Tetris.Models
                 suite.CanLock = !IsStackCollision(suite.Tetramino, suite.Blocks);
             }
 
-            if (!suite.CanLock)
-            {
-
-                #region update score and line
-                //suite.Score++;
-                //suite.Line++;
-                #endregion
-            }
-
         }
 
         public void Right(Suite suite)
@@ -80,8 +71,6 @@ namespace Tetris.Models
                 suite.Tetramino.Block4.Y -= 1;
             }
 
-            IsStackCollision(suite.Tetramino, suite.Blocks);
-
         }
 
         public void Left(Suite suite)
@@ -99,7 +88,6 @@ namespace Tetris.Models
                 suite.Tetramino.Block4.Y += 1;
             }
 
-            //suite.CanLock = !IsStackCollision(suite.Tetramino, suite.Blocks);
         }
 
         public void RotateLeft() { }
@@ -118,13 +106,12 @@ namespace Tetris.Models
                 tetramino.Block3.Y > rightbase ||
                 tetramino.Block4.Y > rightbase
 
-                || blockslist[(tetramino.Block1.X) * 10 + tetramino.Block1.Y].IsOccupied ||
-                blockslist[(tetramino.Block2.X) * 10 + tetramino.Block2.Y].IsOccupied ||
-                blockslist[(tetramino.Block3.X) * 10 + tetramino.Block3.Y].IsOccupied ||
-                blockslist[(tetramino.Block4.X) * 10 + tetramino.Block4.Y].IsOccupied
+                || blockslist[(tetramino.Block1.X) * 10 + tetramino.Block1.Y].IsOccupied
+                || blockslist[(tetramino.Block2.X) * 10 + tetramino.Block2.Y].IsOccupied
+                || blockslist[(tetramino.Block3.X) * 10 + tetramino.Block3.Y].IsOccupied
+                || blockslist[(tetramino.Block4.X) * 10 + tetramino.Block4.Y].IsOccupied
                 )
             {
-
                 return true;
             }
             return false;
@@ -142,8 +129,6 @@ namespace Tetris.Models
                 blockslist[(tetramino.Block4.X + 1) * 10 + tetramino.Block4.Y].IsOccupied
                 )
             {
-
-
                 return true;
             }
 
