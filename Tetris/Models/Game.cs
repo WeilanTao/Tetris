@@ -107,7 +107,7 @@ namespace Tetris.Models
         }
 
         
-        private int LineRemoveUpdate(int score, int line)
+        private int LineRemoveCheck(int score, int line)
         {
             return 0;
         }

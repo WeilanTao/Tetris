@@ -49,7 +49,6 @@ namespace Tetris.ViewModels
         private Suite suite { get; set; }
 
         private bool newTetrinimo { get; set; } = true;
-        //int i = 0;
 
         public GameViewModel(NavigationService mainMenuNavigationService)
         {
@@ -76,7 +75,6 @@ namespace Tetris.ViewModels
         private async void gameRun()
         {
             await gameLoop();
-            //OnPropertyChanged("Blocks");
         }
 
         private async Task gameLoop()
