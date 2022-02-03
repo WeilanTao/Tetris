@@ -39,7 +39,7 @@ namespace Tetris.Models
         {
             if (IsStackCollision(suite.Tetramino, suite.Blocks))
             {
-                suite.CanUpdate = false;
+                suite.CanLock = false;
             }
             else
             {
@@ -48,10 +48,10 @@ namespace Tetris.Models
                 suite.Tetramino.Block3.X += 1;
                 suite.Tetramino.Block4.X += 1;
 
-                suite.CanUpdate = !IsStackCollision(suite.Tetramino, suite.Blocks);
+                suite.CanLock = !IsStackCollision(suite.Tetramino, suite.Blocks);
             }
 
-            if (!suite.CanUpdate)
+            if (!suite.CanLock)
             {
 
                 #region update score and line
@@ -70,9 +70,7 @@ namespace Tetris.Models
             suite.Tetramino.Block2.Y += 1;
             suite.Tetramino.Block3.Y += 1;
             suite.Tetramino.Block4.Y += 1;
-           
 
-         
 
             if (IsWallCollision(suite.Tetramino, suite.Blocks))
             {
@@ -80,13 +78,9 @@ namespace Tetris.Models
                 suite.Tetramino.Block2.Y -= 1;
                 suite.Tetramino.Block3.Y -= 1;
                 suite.Tetramino.Block4.Y -= 1;
-                
             }
-           
-            
-            suite.CanUpdate = !IsStackCollision(suite.Tetramino, suite.Blocks);
 
-            
+            IsStackCollision(suite.Tetramino, suite.Blocks);
 
         }
 
@@ -104,7 +98,8 @@ namespace Tetris.Models
                 suite.Tetramino.Block3.Y += 1;
                 suite.Tetramino.Block4.Y += 1;
             }
-            suite.CanUpdate = !IsStackCollision(suite.Tetramino, suite.Blocks);
+
+            //suite.CanLock = !IsStackCollision(suite.Tetramino, suite.Blocks);
         }
 
         public void RotateLeft() { }
@@ -121,29 +116,21 @@ namespace Tetris.Models
                 tetramino.Block1.Y > rightbase ||
                 tetramino.Block2.Y > rightbase ||
                 tetramino.Block3.Y > rightbase ||
-                tetramino.Block4.Y > rightbase 
+                tetramino.Block4.Y > rightbase
 
-                //check collision with other tetramino
-                //blockslist[(tetramino.Block1.X) * 10 + tetramino.Block1.Y].IsOccupied ||
-                //blockslist[(tetramino.Block2.X) * 10 + tetramino.Block2.Y].IsOccupied ||
-                //blockslist[(tetramino.Block3.X) * 10 + tetramino.Block3.Y].IsOccupied ||
-                //blockslist[(tetramino.Block4.X) * 10 + tetramino.Block4.Y].IsOccupied
+                || blockslist[(tetramino.Block1.X) * 10 + tetramino.Block1.Y].IsOccupied ||
+                blockslist[(tetramino.Block2.X) * 10 + tetramino.Block2.Y].IsOccupied ||
+                blockslist[(tetramino.Block3.X) * 10 + tetramino.Block3.Y].IsOccupied ||
+                blockslist[(tetramino.Block4.X) * 10 + tetramino.Block4.Y].IsOccupied
                 )
             {
-               // MessageBox.Show("Block1.X is " + tetramino.Block1.X + " tetramino.Block2.X is " + tetramino.Block2.X +
-               //" tetramino.Block3.X is " + tetramino.Block3.X + " tetramino.Block4.X is" + tetramino.Block4.X +
-               //" tetramino.Block1.IsOccupied is" + blockslist[(tetramino.Block1.X) * 10 + tetramino.Block1.Y].IsOccupied +
-               //" tetramino.Block2.IsOccupied is" + blockslist[(tetramino.Block2.X) * 10 + tetramino.Block2.Y].IsOccupied +
-               //" tetramino.Block3.IsOccupied is" + blockslist[(tetramino.Block3.X) * 10 + tetramino.Block3.Y].IsOccupied +
-               //" tetramino.Block4.IsOccupied is" + blockslist[(tetramino.Block4.X) * 10 + tetramino.Block4.Y].IsOccupied);
-
 
                 return true;
             }
             return false;
         }
 
-        private bool IsStackCollision(Tetramino tetramino, ObservableCollection<Block> blockslist)
+        public bool IsStackCollision(Tetramino tetramino, ObservableCollection<Block> blockslist)
         {
             if (tetramino.Block1.X >= bottomline ||
                 tetramino.Block2.X >= bottomline ||
@@ -155,12 +142,7 @@ namespace Tetris.Models
                 blockslist[(tetramino.Block4.X + 1) * 10 + tetramino.Block4.Y].IsOccupied
                 )
             {
-                // MessageBox.Show("Block1.X is " + tetramino.Block1.X + " tetramino.Block2.X is " + tetramino.Block2.X +
-                //" tetramino.Block3.X is " + tetramino.Block3.X + " tetramino.Block4.X is" + tetramino.Block4.X +
-                //" tetramino.Block1.IsOccupied is" + blockslist[tetramino.Block1.X + 1].IsOccupied +
-                //" tetramino.Block2.IsOccupied is" + blockslist[tetramino.Block2.X + 1].IsOccupied +
-                //" tetramino.Block3.IsOccupied is" + blockslist[tetramino.Block3.X + 1].IsOccupied +
-                //" tetramino.Block4.IsOccupied is" + blockslist[tetramino.Block4.X + 1].IsOccupied);
+
 
                 return true;
             }
@@ -168,7 +150,6 @@ namespace Tetris.Models
 
             return false;
         }
-
 
         private int LineRemoveCheck(int score, int line)
         {

@@ -24,7 +24,7 @@ namespace Tetris.Models
             _blocks = blocks;
         }
 
-        public bool CanUpdate { get { return _canUpdate; } set { _canUpdate = value; } }
+        public bool CanLock { get { return _canUpdate; } set { _canUpdate = value; } }
         public int Score { get { return _score; } set { _score = value; } }
 
         public int Line { get { return _line; } set { _line = value; } }
