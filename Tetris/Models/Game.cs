@@ -93,12 +93,12 @@ namespace Tetris.Models
         }
 
         public void RotateCCW(Suite suite) {
-            VectorUtil.CCWTransfer(suite.Tetramino);
+            VectorUtil.Transfer(suite.Tetramino,false);
 
         }
 
         public void RotateCW(Suite suite) {
-            VectorUtil.CWTransfer(suite.Tetramino);
+            VectorUtil.Transfer(suite.Tetramino, true);
         }
 
         private bool IsWallCollision(Tetramino tetramino, ObservableCollection<Block> blockslist)

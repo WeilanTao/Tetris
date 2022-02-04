@@ -24,31 +24,55 @@ namespace Tetris.Utils
 
         //private int[,] offset { get; set; }
 
-        public static void CWTransfer(Tetramino tetramino)
+        public static void Transfer(Tetramino tetramino, bool isCW)
         {
             //  Convert the Tetramino to Matrix
             int[,] Matrix = TetraminoToMatrix(tetramino);
 
             int[] offset = new int[2] { tetramino.Block3.X, tetramino.Block3.Y };
             //Do the calculation
-            DoCWTransfer(Matrix, offset);
+            DoTransfer(Matrix, offset, isCW);
 
             //Convert the Matrix back to Tetramino
             MatrixToTetramino(Matrix, tetramino);
         }
-
-        public static void CCWTransfer(Tetramino tetramino)
+        private static void DoTransfer(int[,] Matrix, int[] Offset, bool isCW)
         {
-            //  Convert the Tetramino to Matrix
-            int[,] Matrix = TetraminoToMatrix(tetramino);
+            //substract the offset
+            for (int i = 0; i < rowLen; i++)
+            {
+                Matrix[i, 0] -= Offset[0];
+                Matrix[i, 1] -= Offset[1];
+            }
 
-            int[] offset = new int[2] { tetramino.Block3.X, tetramino.Block3.Y };
-            //Do the calculation
-            DoCCWTransfer(Matrix, offset);
+            //do the multiplication
+            int[,] resMatrix = new int[4, 2];
 
-            //Convert the Matrix back to Tetramino
-            MatrixToTetramino(Matrix, tetramino);
+            resMatrix[0, 0] = Matrix[0, 0] * (isCW ? CWMatrix[0, 0] : CCWMatrix[0, 0]) + Matrix[0, 1] * (isCW ? CWMatrix[1, 0] : CCWMatrix[1, 0]);
+            resMatrix[1, 0] = Matrix[1, 0] * (isCW ? CWMatrix[0, 0] : CCWMatrix[0, 0]) + Matrix[1, 1] * (isCW ? CWMatrix[1, 0] : CCWMatrix[1, 0]);
+            resMatrix[2, 0] = Matrix[2, 0] * (isCW ? CWMatrix[0, 0] : CCWMatrix[0, 0]) + Matrix[2, 1] * (isCW ? CWMatrix[1, 0] : CCWMatrix[1, 0]);
+            resMatrix[3, 0] = Matrix[3, 0] * (isCW ? CWMatrix[0, 0] : CCWMatrix[0, 0]) + Matrix[3, 1] * (isCW ? CWMatrix[1, 0] : CCWMatrix[1, 0]);
+
+            resMatrix[0, 1] = Matrix[0, 0] * (isCW ? CWMatrix[0, 1] : CCWMatrix[0, 1]) + Matrix[0, 1] * (isCW ? CWMatrix[1, 1] : CCWMatrix[1, 1]);
+            resMatrix[1, 1] = Matrix[1, 0] * (isCW ? CWMatrix[0, 1] : CCWMatrix[0, 1]) + Matrix[1, 1] * (isCW ? CWMatrix[1, 1] : CCWMatrix[1, 1]);
+            resMatrix[2, 1] = Matrix[2, 0] * (isCW ? CWMatrix[0, 1] : CCWMatrix[0, 1]) + Matrix[2, 1] * (isCW ? CWMatrix[1, 1] : CCWMatrix[1, 1]);
+            resMatrix[3, 1] = Matrix[3, 0] * (isCW ? CWMatrix[0, 1] : CCWMatrix[0, 1]) + Matrix[3, 1] * (isCW ? CWMatrix[1, 1] : CCWMatrix[1, 1]);
+
+
+            //add the offset
+            for (int i = 0; i < rowLen; i++)
+            {
+                resMatrix[i, 0] += Offset[0];
+                resMatrix[i, 1] += Offset[1];
+
+                Matrix[i, 0] = resMatrix[i, 0];
+                Matrix[i, 1] = resMatrix[i, 1];
+            }
+
+
         }
+
+
 
         private static int[,] TetraminoToMatrix(Tetramino tetramino)
         {
@@ -83,74 +107,5 @@ namespace Tetris.Utils
 
         }
 
-        private static void DoCWTransfer(int[,] Matrix, int[] Offset)
-        {
-            //substract the offset
-            for (int i = 0; i < rowLen; i++)
-            {
-                Matrix[i, 0] -= Offset[0];
-                Matrix[i, 1] -= Offset[1];
-            }
-
-            //do the multiplication
-            int[,] resMatrix = new int[4, 2];
-
-            resMatrix[0, 0] = Matrix[0, 0] * CWMatrix[0, 0] + Matrix[0, 1] * CWMatrix[1, 0];
-            resMatrix[1, 0] = Matrix[1, 0] * CWMatrix[0, 0] + Matrix[1, 1] * CWMatrix[1, 0];
-            resMatrix[2, 0] = Matrix[2, 0] * CWMatrix[0, 0] + Matrix[2, 1] * CWMatrix[1, 0];
-            resMatrix[3, 0] = Matrix[3, 0] * CWMatrix[0, 0] + Matrix[3, 1] * CWMatrix[1, 0];
-
-            resMatrix[0, 1] = Matrix[0, 0] * CWMatrix[0, 1] + Matrix[0, 1] * CWMatrix[1, 1];
-            resMatrix[1, 1] = Matrix[1, 0] * CWMatrix[0, 1] + Matrix[1, 1] * CWMatrix[1, 1];
-            resMatrix[2, 1] = Matrix[2, 0] * CWMatrix[0, 1] + Matrix[2, 1] * CWMatrix[1, 1];
-            resMatrix[3, 1] = Matrix[3, 0] * CWMatrix[0, 1] + Matrix[3, 1] * CWMatrix[1, 1];
-
-
-            //add the offset
-            for (int i = 0; i < rowLen; i++)
-            {
-                resMatrix[i, 0] += Offset[0];
-                resMatrix[i, 1] += Offset[1];
-
-                Matrix[i, 0] = resMatrix[i, 0];
-                Matrix[i, 1] = resMatrix[i, 1];
-            }
-
-
-        }
-
-        private static void DoCCWTransfer(int[,] Matrix, int[] Offset)
-        {
-            //substract the offset
-            for (int i = 0; i < rowLen; i++)
-            {
-                Matrix[i, 0] -= Offset[0];
-                Matrix[i, 1] -= Offset[1];
-            }
-
-            //do the multiplication
-            int[,] resMatrix = new int[4, 2];
-
-            resMatrix[0, 0] = Matrix[0, 0] * CCWMatrix[0, 0] + Matrix[0, 1] * CCWMatrix[1, 0];
-            resMatrix[1, 0] = Matrix[1, 0] * CCWMatrix[0, 0] + Matrix[1, 1] * CCWMatrix[1, 0];
-            resMatrix[2, 0] = Matrix[2, 0] * CCWMatrix[0, 0] + Matrix[2, 1] * CCWMatrix[1, 0];
-            resMatrix[3, 0] = Matrix[3, 0] * CCWMatrix[0, 0] + Matrix[3, 1] * CCWMatrix[1, 0];
-
-            resMatrix[0, 1] = Matrix[0, 0] * CCWMatrix[0, 1] + Matrix[0, 1] * CCWMatrix[1, 1];
-            resMatrix[1, 1] = Matrix[1, 0] * CCWMatrix[0, 1] + Matrix[1, 1] * CCWMatrix[1, 1];
-            resMatrix[2, 1] = Matrix[2, 0] * CCWMatrix[0, 1] + Matrix[2, 1] * CCWMatrix[1, 1];
-            resMatrix[3, 1] = Matrix[3, 0] * CCWMatrix[0, 1] + Matrix[3, 1] * CCWMatrix[1, 1];
-
-
-            //add the offset
-            for (int i = 0; i < rowLen; i++)
-            {
-                resMatrix[i, 0] += Offset[0];
-                resMatrix[i, 1] += Offset[1];
-
-                Matrix[i, 0] = resMatrix[i, 0];
-                Matrix[i, 1] = resMatrix[i, 1];
-            }
-        }
     }
 }
