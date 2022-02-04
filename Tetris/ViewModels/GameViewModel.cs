@@ -21,7 +21,7 @@ namespace Tetris.ViewModels
     {
         private const string bgname = "lightblue";
         private const String fgColor = "darkblue";
-        private const int bgborder = 1;
+        private const int bgborder = 0;
         private const int fgorder = 1;
         private int score { get; set; } = 0;
         private int line { get; set; } = 0;
@@ -37,6 +37,7 @@ namespace Tetris.ViewModels
         private int _gameState { get; set; } = 0; //0 for start, 1 for end, 2 for stop
 
         private Tetramino currentTetramino { get; set; }
+        //private Tetramino shadowTetramino { get; set; }
 
         private int recordX1 { get; set; }
         private int recordX2 { get; set; }
@@ -50,7 +51,7 @@ namespace Tetris.ViewModels
         private Game game { get; set; }
         private Suite suite { get; set; }
 
-        private bool newTetrinimo { get; set; } = true;
+        private bool newTetrinimo { get; set; } = true; 
 
         public GameViewModel(NavigationService mainMenuNavigationService)
         {
@@ -98,6 +99,9 @@ namespace Tetris.ViewModels
                     Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgorder);
                     Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgorder);
                     Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgorder);
+
+                       
+                    
                     newTetrinimo = false;
                     OnPropertyChanged("Blocks");
 
@@ -109,10 +113,10 @@ namespace Tetris.ViewModels
                 }
                 else
                 {
-                    //Down();
-                    await Task.Delay(90000);
+                    Down();
+                    await Task.Delay(1000);
                     //if keyright/keyleft/keyrotation is after the keydown...
-                    if(game.IsStackCollision(currentTetramino, Blocks))
+                    if (game.IsStackCollision(currentTetramino, Blocks))
                     {
                         //if after the keyright/keyleft/keyrotation, the tetraminio reaches its button position...
                         Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, fgorder, true);
@@ -178,6 +182,26 @@ namespace Tetris.ViewModels
             }
         }
 
+        //private void UpDateShadow()
+        //{
+
+        //}
+
+        private void HardDrop()
+        {
+            suite = new Suite(currentTetramino, Score, Line, Blocks);
+            Tetramino t = game.HardDrop(suite);
+            currentTetramino.Block1.X = t.Block1.X;
+            currentTetramino.Block2.X = t.Block2.X; 
+            currentTetramino.Block3.X = t.Block3.X;
+            currentTetramino.Block4.X = t.Block4.X;
+            currentTetramino.Block1.Y = t.Block1.Y;
+            currentTetramino.Block2.Y = t.Block2.Y;
+            currentTetramino.Block3.Y = t.Block3.Y;
+            currentTetramino.Block4.Y = t.Block4.Y;
+            UpdateGrid();
+            newTetrinimo = true;
+        }
 
         private void UpdateGrid()
         {
@@ -201,14 +225,6 @@ namespace Tetris.ViewModels
             recordY2 = currentTetramino.Block2.Y;
             recordY3 = currentTetramino.Block3.Y;
             recordY4 = currentTetramino.Block4.Y;
-        }
-
-
-
-       
-        private void HardDrop()
-        {
-            throw new NotImplementedException();
         }
 
         private void InitializeGrid()

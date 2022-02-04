@@ -40,7 +40,12 @@ namespace Tetris.Models
         private char _type { get; set; }
 
         public char Type { get { return _type; } set { _type = value; } }
-     
+
+
+        //public Tetramino ShallowCopy()
+        //{
+        //    return (Tetramino)this.MemberwiseClone();
+        //}
 
         public Tetramino()
         {

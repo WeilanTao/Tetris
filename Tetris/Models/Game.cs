@@ -31,9 +31,30 @@ namespace Tetris.Models
             set { _line = value; }
         }
 
-        public void HardDrop()
-        {
 
+        public Tetramino HardDrop(Suite suite)
+        {
+            Tetramino t = new Tetramino();
+            t.Block1.X = suite.Tetramino.Block1.X;
+            t.Block2.X = suite.Tetramino.Block2.X;
+            t.Block3.X = suite.Tetramino.Block3.X;
+            t.Block4.X = suite.Tetramino.Block4.X;
+            t.Block1.Y = suite.Tetramino.Block1.Y;
+            t.Block2.Y = suite.Tetramino.Block2.Y;
+            t.Block3.Y = suite.Tetramino.Block3.Y;
+            t.Block4.Y = suite.Tetramino.Block4.Y;
+            t.Color = suite.Tetramino.Color;
+            t.Type = suite.Tetramino.Type;
+
+            while (!IsStackCollision(t, suite.Blocks))
+            {
+                t.Block1.X += 1;
+                t.Block2.X += 1;
+                t.Block3.X += 1;
+                t.Block4.X += 1;
+            }
+
+            return t;
         }
 
         public void Down(Suite suite)
@@ -56,8 +77,6 @@ namespace Tetris.Models
 
         public void Right(Suite suite)
         {
-            bool recordOccupancy = suite.Tetramino.Block1.IsOccupied;
-
             //we only get the position of the destination; so the occupancy of the currentTetramino won't affect the check of the occupation collision
             suite.Tetramino.Block1.Y += 1;
             suite.Tetramino.Block2.Y += 1;
@@ -95,10 +114,19 @@ namespace Tetris.Models
         public void RotateCCW(Suite suite) {
             VectorUtil.Transfer(suite.Tetramino,false);
 
+            if(IsStackCollision(suite.Tetramino,suite.Blocks) || IsWallCollision(suite.Tetramino, suite.Blocks))
+            {
+                VectorUtil.Transfer(suite.Tetramino, true);
+            }
+
         }
 
         public void RotateCW(Suite suite) {
             VectorUtil.Transfer(suite.Tetramino, true);
+            if (IsStackCollision(suite.Tetramino, suite.Blocks) || IsWallCollision(suite.Tetramino, suite.Blocks))
+            {
+                VectorUtil.Transfer(suite.Tetramino, false);
+            }
         }
 
         private bool IsWallCollision(Tetramino tetramino, ObservableCollection<Block> blockslist)
