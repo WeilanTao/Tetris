@@ -37,6 +37,9 @@ namespace Tetris.Models
 
         private const int colorBorder  = 1; //const?
 
+        private char _type { get; set; }
+
+        public char Type { get { return _type; } set { _type = value; } }
      
 
         public Tetramino()
@@ -57,6 +60,7 @@ namespace Tetris.Models
                 _block2 = new Block(Color, 0, 4, colorBorder);
                 _block3 = new Block(Color, 1, 4, colorBorder);
                 _block4 = new Block(Color, 1, 5, colorBorder);
+                _type = 'Z';
             }
             else if (value == TetraminoEnum.S)
             {
@@ -65,15 +69,16 @@ namespace Tetris.Models
                 _block2 = new Block(Color, 0, 4, colorBorder);
                 _block3 = new Block(Color, 1, 4, colorBorder);
                 _block4 = new Block(Color, 1, 3, colorBorder);
-
+                _type = 'S';
             }
             else if (value == TetraminoEnum.T)
             {
                 _color = "cyan";
                 _block1 = new Block(Color, 1, 3, colorBorder);
-                _block2 = new Block(Color, 1, 4, colorBorder);
-                _block3 = new Block(Color, 1, 5, colorBorder);
+                _block3 = new Block(Color, 1, 4, colorBorder);
+                _block2 = new Block(Color, 1, 5, colorBorder);
                 _block4 = new Block(Color, 0, 4, colorBorder);
+                _type = 'T';
             }
             else if (value == TetraminoEnum.L)
             {
@@ -82,6 +87,7 @@ namespace Tetris.Models
                 _block2 = new Block(Color, 1, 3, colorBorder);
                 _block3 = new Block(Color, 1, 4, colorBorder);
                 _block4 = new Block(Color, 1, 5, colorBorder);
+                _type = 'L';
             }
             else if (value == TetraminoEnum.I)
             {
@@ -90,6 +96,7 @@ namespace Tetris.Models
                 _block2 = new Block(Color, 1, 4, colorBorder);
                 _block3 = new Block(Color, 1, 5, colorBorder);
                 _block4 = new Block(Color, 1, 6, colorBorder);
+                _type = 'I';
             }
             else if (value == TetraminoEnum.J)
             {
@@ -98,6 +105,7 @@ namespace Tetris.Models
                 _block2 = new Block(Color, 1, 3, colorBorder);
                 _block3 = new Block(Color, 1, 4, colorBorder);
                 _block4 = new Block(Color, 1, 5, colorBorder);
+                _type = 'J';
             }
             else if (value == TetraminoEnum.O)
             {
@@ -106,6 +114,7 @@ namespace Tetris.Models
                 _block2 = new Block(Color, 0, 5, colorBorder);
                 _block3 = new Block(Color, 1, 4, colorBorder);
                 _block4 = new Block(Color, 1, 5, colorBorder);
+                _type = 'O';
             }
 
         }

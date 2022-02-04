@@ -64,8 +64,8 @@ namespace Tetris.ViewModels
             InitializeGrid();
 
             MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
-            KeyD = new KeyCommand(RotateRight);
-            KeyA = new KeyCommand(RotateLeft);
+            KeyA = new KeyCommand(RotateCW);
+            KeyD = new KeyCommand(RotateCCW);
             KeyLeft = new KeyCommand(Left);
             KeyRight = new KeyCommand(Right);
             KeyDown = new KeyCommand(Down);
@@ -157,16 +157,25 @@ namespace Tetris.ViewModels
             UpdateGrid();
         }
 
-        private void RotateLeft()
+        private void RotateCCW()
         {
-            suite = new Suite(currentTetramino, Score, Line, Blocks);
-            game.RotateLeft(suite);
-            UpdateGrid();
+            if (currentTetramino.Type != 'O')
+            {
+                suite = new Suite(currentTetramino, Score, Line, Blocks);
+                game.RotateCCW(suite);
+                UpdateGrid();
+            }
+          
         }
 
-        private void RotateRight()
+        private void RotateCW()
         {
-            throw new NotImplementedException();
+            if (currentTetramino.Type != 'O')
+            {
+                suite = new Suite(currentTetramino, Score, Line, Blocks);
+                game.RotateCW(suite);
+                UpdateGrid();
+            }
         }
 
 

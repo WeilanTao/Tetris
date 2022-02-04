@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Tetris.Utils;
 
 namespace Tetris.Models
 {
@@ -91,11 +92,14 @@ namespace Tetris.Models
 
         }
 
-        public void RotateLeft(Suite suite) { 
-        
+        public void RotateCCW(Suite suite) {
+            VectorUtil.CCWTransfer(suite.Tetramino);
+
         }
 
-        public void RotateRight(Suite suite) { }
+        public void RotateCW(Suite suite) {
+            VectorUtil.CWTransfer(suite.Tetramino);
+        }
 
         private bool IsWallCollision(Tetramino tetramino, ObservableCollection<Block> blockslist)
         {
