@@ -49,7 +49,6 @@ namespace Tetris.ViewModels
         private Tetramino shadowRecord { get; set; }
 
         private Tetramino nextTetramino { get; set; }
-
         private bool initialize { get; set; }
 
         private Game game { get; set; }
@@ -111,6 +110,14 @@ namespace Tetris.ViewModels
                     TetraminoQ.Enqueue(new Tetramino());
 
                     nextTetramino = Tetramino.NextHoldTetraminTransfer(nextTetramino);
+
+                    for(int i = 0; i<4; i++)
+                    {
+                        for(int j = 0; j < 4; j++)
+                        {
+                            Next[i*4 + j] = new Block(fgColor, i * 30, j * 30, bgborder);
+                        }
+                    }
                     Next[nextTetramino.Block1.X * 4 + nextTetramino.Block1.Y] = new Block(nextTetramino.Color, nextTetramino.Block1.X * 30, nextTetramino.Block1.Y * 30, fgborder);
                     Next[nextTetramino.Block2.X * 4 + nextTetramino.Block2.Y] = new Block(nextTetramino.Color, nextTetramino.Block2.X * 30, nextTetramino.Block2.Y * 30, fgborder);
                     Next[nextTetramino.Block3.X * 4 + nextTetramino.Block3.Y] = new Block(nextTetramino.Color, nextTetramino.Block3.X * 30, nextTetramino.Block3.Y * 30, fgborder);
