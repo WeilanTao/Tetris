@@ -15,7 +15,7 @@
         <KeyBinding Key="Down" Command="{Binding KeyDown}"/>
         <KeyBinding Key="Space" Command="{Binding KeySpace}"/>
     </UserControl.InputBindings>
-    
+
     <Grid Background="LightBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30"/>
@@ -31,7 +31,8 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="150"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
@@ -51,10 +52,43 @@
 
             </StackPanel>
 
-            <Label x:Name="NextLabel" Grid.Row="5" Content="Next"/>
+            <Grid Grid.Column="1" Grid.Row="5">
+                <Label x:Name="NextLabel" Content="Next"/>
+                <Grid>
+                    <ItemsControl x:Name="icnext" ItemsSource="{Binding Next}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas Width="120" Height="120" Background="White" VerticalAlignment="top"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Background="{Binding Color}" Width="30" Height="30">
+                                    <Border BorderBrush="{Binding BorderColor}" BorderThickness="{Binding Border}"/>
+
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+
+                    </ItemsControl>
+                </Grid>
+            </Grid>
+
+            <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
+                <Label x:Name="HoldLabel" Content="Hold"/>
+
+            </StackPanel>
 
 
         </Grid>
+
+
         <Grid Grid.Column="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -68,10 +102,9 @@
             <Button x:Name="ExitMainButton" Grid.Row="3" Content="Main Menu" Command="{Binding MainMenuCommand}"/>
         </Grid>
 
-       
 
         <Grid Grid.Column="2">
-            <ItemsControl x:Name="ic" ItemsSource="{Binding Blocks}">
+            <ItemsControl x:Name="icblocks" ItemsSource="{Binding Blocks}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas Width="300" Height="660" Background="White" VerticalAlignment="top"/>
@@ -84,7 +117,7 @@
 
                         </Grid>
                     </DataTemplate>
-                    
+
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemContainerStyle>
                     <Style>

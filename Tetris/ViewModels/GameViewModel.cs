@@ -21,8 +21,8 @@ namespace Tetris.ViewModels
 {
     public class GameViewModel : ViewModelBase
     {
-        private const string bgname = "lightblue";
-        private const String fgColor = "darkblue";
+        private const String bgname = "lightblue";
+        private const String fgColor = "black";
         private const int bgborder = 0;
         private const int fgborder = 1;
         private int score { get; set; } = 0;
@@ -30,6 +30,8 @@ namespace Tetris.ViewModels
         private int level { get; set; } = 0;
 
         public ObservableCollection<Block> Blocks { get; set; }
+
+        public ObservableCollection<Block> Next { get; set; }
 
         public ICommand MainMenuCommand { get; private set; }
         public ICommand KeyD { get; private set; }
@@ -46,6 +48,8 @@ namespace Tetris.ViewModels
         private Tetramino shadowTetramino { get; set; }
         private Tetramino shadowRecord { get; set; }
 
+        private Tetramino nextTetramino { get; set; }
+
         private bool initialize { get; set; }
 
         private Game game { get; set; }
@@ -54,6 +58,9 @@ namespace Tetris.ViewModels
         private bool newTetrinimo { get; set; } = true;
 
         private bool canMove { get; set; }
+
+        private Queue<Tetramino> TetraminoQ;
+
         public GameViewModel(NavigationService mainMenuNavigationService)
         {
             game = new Game();
@@ -64,8 +71,10 @@ namespace Tetris.ViewModels
             initialize = true;
 
             Blocks = new ObservableCollection<Block>();
+            Next = new ObservableCollection<Block>();
 
-            InitializeGrid();
+            InitializeGrid(22, 10, Blocks, true);
+            InitializeGrid(4, 4, Next, false);
 
             MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
             KeyA = new KeyCommand(RotateCW);
@@ -74,6 +83,10 @@ namespace Tetris.ViewModels
             KeyRight = new KeyCommand(Right);
             KeyDown = new KeyCommand(Down);
             KeySpace = new KeyCommand(HardDrop);
+
+            TetraminoQ = new Queue<Tetramino>();
+            TetraminoQ.Enqueue(new Tetramino());
+            TetraminoQ.Enqueue(new Tetramino());
 
             gameRun();
         }
@@ -90,10 +103,20 @@ namespace Tetris.ViewModels
                 if (newTetrinimo)
                 {
                     await LineCancellation();
-                   
 
                     canMove = true;
-                    currentTetramino = new Tetramino();
+
+                    currentTetramino = Clone.CloneObject(TetraminoQ.Dequeue()) as Tetramino;
+                    nextTetramino = Clone.CloneObject(TetraminoQ.Peek()) as Tetramino;
+                    TetraminoQ.Enqueue(new Tetramino());
+
+                    nextTetramino = Tetramino.NextHoldTetraminTransfer(nextTetramino);
+                    Next[nextTetramino.Block1.X * 4 + nextTetramino.Block1.Y] = new Block(nextTetramino.Color, nextTetramino.Block1.X * 30, nextTetramino.Block1.Y * 30, fgborder);
+                    Next[nextTetramino.Block2.X * 4 + nextTetramino.Block2.Y] = new Block(nextTetramino.Color, nextTetramino.Block2.X * 30, nextTetramino.Block2.Y * 30, fgborder);
+                    Next[nextTetramino.Block3.X * 4 + nextTetramino.Block3.Y] = new Block(nextTetramino.Color, nextTetramino.Block3.X * 30, nextTetramino.Block3.Y * 30, fgborder);
+                    Next[nextTetramino.Block4.X * 4 + nextTetramino.Block4.Y] = new Block(nextTetramino.Color, nextTetramino.Block4.X * 30, nextTetramino.Block4.Y * 30, fgborder);
+
+
                     recordTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
                     shadowTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
                     shadowRecord = Clone.CloneObject(currentTetramino) as Tetramino;
@@ -125,7 +148,7 @@ namespace Tetris.ViewModels
                 else
                 {
                     Down();
-                    await Task.Delay(1000);
+                    await Task.Delay(900);
                     //if keyright/keyleft/keyrotation is after the keydown...
                     if (game.IsStackCollision(currentTetramino, Blocks))
                     {
@@ -194,7 +217,7 @@ namespace Tetris.ViewModels
 
             line += count;
 
-            switch (line)
+            switch (count)
             {
                 case 1:
                     score += 20 * (level + 1);
@@ -209,13 +232,12 @@ namespace Tetris.ViewModels
                     score += 150 * (level + 1);
                     break;
                 default:
-                    score = score;
                     break;
             }
 
             level = line / 10;
 
-           await clearLine(firstCancel, count);
+            await clearLine(firstCancel, count);
         }
 
         private async Task clearLine(int firstCancel, int count)
@@ -261,6 +283,19 @@ namespace Tetris.ViewModels
             }
         }
 
+        private void HardDrop()
+        {
+            suite = new Suite(currentTetramino, Score, Line, Blocks);
+            Tetramino t = game.TetraminoMapping(suite);
+            currentTetramino = Clone.CloneObject(t) as Tetramino;
+            suite = new Suite(currentTetramino, Score, Line, Blocks);
+
+            recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
+
+            canMove = false;
+            newTetrinimo = true;
+        }
+
         private void UpdateShadow()
         {
             shadowTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
@@ -275,14 +310,12 @@ namespace Tetris.ViewModels
 
         }
 
-
         private void Right()
         {
             if (canMove)
             {
                 suite = new Suite(currentTetramino, Score, Line, Blocks);
                 game.Right(suite);
-
 
                 recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
                 UpdateShadow();
@@ -326,19 +359,6 @@ namespace Tetris.ViewModels
             }
         }
 
-        private void HardDrop()
-        {
-            suite = new Suite(currentTetramino, Score, Line, Blocks);
-            Tetramino t = game.TetraminoMapping(suite);
-            currentTetramino = Clone.CloneObject(t) as Tetramino;
-            suite = new Suite(currentTetramino, Score, Line, Blocks);
-
-            recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
-
-            canMove = false;
-            newTetrinimo = true;
-        }
-
         private Tetramino UpdateGrid(Tetramino record, Suite s)
         {
             //change perivious position to background block
@@ -358,14 +378,13 @@ namespace Tetris.ViewModels
             return res;
         }
 
-        private void InitializeGrid()
+        private void InitializeGrid(int row, int col, ObservableCollection<Block> o, bool isGridField)
         {
-            for (int i = 0; i < 22; i++) //row
-                for (int j = 0; j < 10; j++)//col
+            for (int i = 0; i < row; i++) //row 22
+                for (int j = 0; j < col; j++)//col 10
 
-                    Blocks.Add(new Block(i < 2 ? bgname : fgColor, i * 30, j * 30, bgborder));
+                    o.Add(new Block((i < 2 && isGridField) ? bgname : fgColor, i * 30, j * 30, bgborder));
         }
-
 
         public int Score
         {

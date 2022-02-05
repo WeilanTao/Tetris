@@ -34,10 +34,10 @@ namespace Tetris.Models
         public Block Block3 { get { return _block3; } set { _block3 = value; } }
         public Block Block4 { get { return _block4; } set { _block4 = value; } }
 
-       
+
         public String Color { get { return _color; } set { _color = value; } }
 
-        private const int colorBorder  = 1; //const?
+        private const int colorBorder = 1; //const?
 
         private char _type { get; set; }
 
@@ -74,6 +74,95 @@ namespace Tetris.Models
                 }
                 return null;
             }
+        }
+
+        public static Tetramino NextHoldTetraminTransfer(Tetramino t)
+        {
+            char Type = t.Type;
+
+            if (Type == 'Z')
+            {
+                t.Block1.X = 1;
+                t.Block1.Y = 1;
+                t.Block2.X = 2;
+                t.Block2.Y = 1;
+                t.Block3.X = 2;
+                t.Block3.Y = 2;
+                t.Block4.X = 3;
+                t.Block4.Y = 2;
+            }
+            else if (Type == 'S')
+            {
+                t.Block1.X = 1;
+                t.Block1.Y = 2;
+                t.Block2.X = 2;
+                t.Block2.Y = 2;
+                t.Block3.X = 2;
+                t.Block3.Y = 1;
+                t.Block4.X = 3;
+                t.Block4.Y = 1;
+
+            }
+            else if (Type == 'T')
+            {
+                t.Block1.X = 2;
+                t.Block1.Y = 1;
+                t.Block2.X = 1;
+                t.Block2.Y = 2;
+                t.Block3.X = 2;
+                t.Block3.Y = 2;
+                t.Block4.X = 3;
+                t.Block4.Y = 2;
+
+            }
+            else if (Type == 'L')
+            {
+                t.Block1.X = 2;
+                t.Block1.Y = 0;
+                t.Block2.X = 2;
+                t.Block2.Y = 1;
+                t.Block3.X = 2;
+                t.Block3.Y = 2;
+                t.Block4.X = 3;
+                t.Block4.Y = 2;
+            }
+            else if (Type == 'I')
+            {
+                t.Block1.X = 2;
+                t.Block1.Y = 0;
+                t.Block2.X = 2;
+                t.Block2.Y = 1;
+                t.Block3.X = 2;
+                t.Block3.Y = 2;
+                t.Block4.X = 2;
+                t.Block4.Y = 3;
+
+            }
+            else if (Type == 'J')
+            {
+                t.Block1.X = 2;
+                t.Block1.Y = 0;
+                t.Block2.X = 2;
+                t.Block2.Y = 1;
+                t.Block3.X = 2;
+                t.Block3.Y = 2;
+                t.Block4.X = 1;
+                t.Block4.Y = 2;
+            }
+            else if (Type == 'O')
+            {
+                t.Block1.X = 1;
+                t.Block1.Y = 1;
+                t.Block2.X = 2;
+                t.Block2.Y = 1;
+                t.Block3.X = 1;
+                t.Block3.Y = 2;
+                t.Block4.X = 2;
+                t.Block4.Y = 2;
+
+            }
+
+            return t;
         }
 
         public Tetramino()
