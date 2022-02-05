@@ -89,11 +89,8 @@ namespace Tetris.ViewModels
             {
                 if (newTetrinimo)
                 {
-                    ScoreAndLineUpDate();
-                    OnPropertyChanged("Score");
-                    OnPropertyChanged("Line");
-                    OnPropertyChanged("Level");
-                    OnPropertyChanged("Blocks");
+                    await LineCancellation();
+                   
 
                     canMove = true;
                     currentTetramino = new Tetramino();
@@ -137,9 +134,6 @@ namespace Tetris.ViewModels
                         Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgborder, true);
                         Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgborder, true);
                         Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgborder, true);
-
-                      
-
                     }
                     else
                     {
@@ -149,13 +143,23 @@ namespace Tetris.ViewModels
 
                 }
 
-           
+
 
             }
 
         }
 
-        private void ScoreAndLineUpDate()
+        private async Task LineCancellation()
+        {
+            await ScoreAndLineUpDate();
+            OnPropertyChanged("Score");
+            OnPropertyChanged("Line");
+            OnPropertyChanged("Level");
+            OnPropertyChanged("Blocks");
+
+        }
+
+        private async Task ScoreAndLineUpDate()
         {
             int firstCancel = 0;
             bool isFirstCancel = true;
@@ -211,18 +215,33 @@ namespace Tetris.ViewModels
 
             level = line / 10;
 
-            clearLine(firstCancel, count);
+           await clearLine(firstCancel, count);
         }
 
-        private void clearLine(int firstCancel, int count)
+        private async Task clearLine(int firstCancel, int count)
         {
 
             int lastCancel = firstCancel - count;
-            for(int i = firstCancel; i > lastCancel; i--)
+            for (int i = firstCancel; i > lastCancel; i--)
             {
-                for(int j = 0; j<10; j++)
+                for (int j = 0; j < 10; j++)
                 {
-                    Blocks[i*10+j] = new Block(fgColor, i * 30, j * 30, bgborder);
+                    Blocks[i * 10 + j] = new Block(fgColor, i * 30, j * 30, bgborder);
+
+                }
+            }
+
+            for (int i = lastCancel; i > 2; i--)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    if (Blocks[i * 10 + j].IsOccupied)
+                    {
+                        Block t = Blocks[i * 10 + j];
+                        Blocks[(i + count) * 10 + j] = new Block(t.Color, (i + count) * 30, j * 30, fgborder, true);
+                        Blocks[i * 10 + j] = new Block(fgColor, i * 30, j * 30, bgborder, false);
+
+                    }
 
                 }
             }
