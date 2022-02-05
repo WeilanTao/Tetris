@@ -178,14 +178,7 @@ namespace Tetris.ViewModels
         {
             suite = new Suite(currentTetramino, Score, Line, Blocks);
             Tetramino t = game.HardDrop(suite);
-            currentTetramino.Block1.X = t.Block1.X;
-            currentTetramino.Block2.X = t.Block2.X;
-            currentTetramino.Block3.X = t.Block3.X;
-            currentTetramino.Block4.X = t.Block4.X;
-            currentTetramino.Block1.Y = t.Block1.Y;
-            currentTetramino.Block2.Y = t.Block2.Y;
-            currentTetramino.Block3.Y = t.Block3.Y;
-            currentTetramino.Block4.Y = t.Block4.Y;
+            currentTetramino = CloneUtil.CloneObject(t) as Tetramino;
             UpdateGrid();
             newTetrinimo = true;
         }
