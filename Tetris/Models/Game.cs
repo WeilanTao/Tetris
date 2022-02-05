@@ -32,7 +32,7 @@ namespace Tetris.Models
         }
 
 
-        public Tetramino HardDrop(Suite suite)
+        public Tetramino TetraminoMapping(Suite suite)
         {
             Tetramino t = Clone.CloneObject(suite.Tetramino) as Tetramino;
 

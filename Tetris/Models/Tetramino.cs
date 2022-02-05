@@ -43,6 +43,24 @@ namespace Tetris.Models
 
         public char Type { get { return _type; } set { _type = value; } }
 
+
+        public static void StyleTetramino(Tetramino t, String BlockColor, String BorderColor)
+        {
+            t.Color = BlockColor;
+
+            t.Block1.Color = BlockColor;
+            t.Block2.Color = BlockColor;
+            t.Block3.Color = BlockColor;
+            t.Block4.Color = BlockColor;
+
+            t.Block1.BorderColor = BorderColor;
+            t.Block2.BorderColor = BorderColor;
+            t.Block3.BorderColor = BorderColor;
+            t.Block4.BorderColor = BorderColor;
+
+
+        }
+
         public object Clone()
         {
             using (MemoryStream stream = new MemoryStream())
