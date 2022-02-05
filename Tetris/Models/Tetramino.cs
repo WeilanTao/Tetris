@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Tetris.Utils;
 
 namespace Tetris.Models
 {
@@ -76,8 +77,10 @@ namespace Tetris.Models
             }
         }
 
-        public static Tetramino NextHoldTetraminTransfer(Tetramino t)
+        public static Tetramino NextHoldTetraminTransfer(Tetramino tetraino)
         {
+            Tetramino t = Tetris.Utils.Clone.CloneObject(tetraino) as Tetramino;
+
             char Type = t.Type;
 
             if (Type == 'Z')

@@ -14,6 +14,7 @@
         <KeyBinding Key="Right" Command="{Binding KeyRight}"/>
         <KeyBinding Key="Down" Command="{Binding KeyDown}"/>
         <KeyBinding Key="Space" Command="{Binding KeySpace}"/>
+        <KeyBinding Key="W" Command="{Binding KeyW}"/>
     </UserControl.InputBindings>
 
     <Grid Background="LightBlue">
@@ -55,7 +56,7 @@
             <Grid Grid.Column="1" Grid.Row="5">
                 <Label x:Name="NextLabel" Content="Next"/>
                 <Grid>
-                    <ItemsControl x:Name="icnext" ItemsSource="{Binding Next}">
+                    <ItemsControl x:Name="icnext" ItemsSource="{Binding NextList}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Width="120" Height="120" Background="White" VerticalAlignment="top"/>
@@ -80,10 +81,34 @@
                 </Grid>
             </Grid>
 
-            <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
+      
+            <Grid Grid.Column="1" Grid.Row="6">
                 <Label x:Name="HoldLabel" Content="Hold"/>
+                <Grid>
+                    <ItemsControl x:Name="ichold" ItemsSource="{Binding HoldList}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas Width="120" Height="120" Background="White" VerticalAlignment="top"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Background="{Binding Color}" Width="30" Height="30">
+                                    <Border BorderBrush="{Binding BorderColor}" BorderThickness="{Binding Border}"/>
 
-            </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+
+                    </ItemsControl>
+                </Grid>
+            </Grid>
 
 
         </Grid>

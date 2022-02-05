@@ -31,7 +31,9 @@ namespace Tetris.ViewModels
 
         public ObservableCollection<Block> Blocks { get; set; }
 
-        public ObservableCollection<Block> Next { get; set; }
+        public ObservableCollection<Block> NextList { get; set; }
+        public ObservableCollection<Block> HoldList { get; set; }
+
 
         public ICommand MainMenuCommand { get; private set; }
         public ICommand KeyD { get; private set; }
@@ -40,6 +42,7 @@ namespace Tetris.ViewModels
         public ICommand KeyRight { get; private set; }
         public ICommand KeyDown { get; private set; }
         public ICommand KeySpace { get; private set; }
+        public ICommand KeyW { get; private set; }
         private int _gameState { get; set; } = 0; //0 for start, 1 for end, 2 for stop
 
         private Tetramino currentTetramino { get; set; }
@@ -70,10 +73,13 @@ namespace Tetris.ViewModels
             initialize = true;
 
             Blocks = new ObservableCollection<Block>();
-            Next = new ObservableCollection<Block>();
+            NextList = new ObservableCollection<Block>();
+            HoldList = new ObservableCollection<Block>();
 
             InitializeGrid(22, 10, Blocks, true);
-            InitializeGrid(4, 4, Next, false);
+            InitializeGrid(4, 4, NextList, false);
+            InitializeGrid(4, 4, HoldList, false);
+
 
             MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
             KeyA = new KeyCommand(RotateCW);
@@ -82,8 +88,10 @@ namespace Tetris.ViewModels
             KeyRight = new KeyCommand(Right);
             KeyDown = new KeyCommand(Down);
             KeySpace = new KeyCommand(HardDrop);
+            KeyW = new KeyCommand(Hold);
 
             TetraminoQ = new Queue<Tetramino>();
+            TetraminoQ.Enqueue(new Tetramino());
             TetraminoQ.Enqueue(new Tetramino());
             TetraminoQ.Enqueue(new Tetramino());
 
@@ -111,17 +119,7 @@ namespace Tetris.ViewModels
 
                     nextTetramino = Tetramino.NextHoldTetraminTransfer(nextTetramino);
 
-                    for(int i = 0; i<4; i++)
-                    {
-                        for(int j = 0; j < 4; j++)
-                        {
-                            Next[i*4 + j] = new Block(fgColor, i * 30, j * 30, bgborder);
-                        }
-                    }
-                    Next[nextTetramino.Block1.X * 4 + nextTetramino.Block1.Y] = new Block(nextTetramino.Color, nextTetramino.Block1.X * 30, nextTetramino.Block1.Y * 30, fgborder);
-                    Next[nextTetramino.Block2.X * 4 + nextTetramino.Block2.Y] = new Block(nextTetramino.Color, nextTetramino.Block2.X * 30, nextTetramino.Block2.Y * 30, fgborder);
-                    Next[nextTetramino.Block3.X * 4 + nextTetramino.Block3.Y] = new Block(nextTetramino.Color, nextTetramino.Block3.X * 30, nextTetramino.Block3.Y * 30, fgborder);
-                    Next[nextTetramino.Block4.X * 4 + nextTetramino.Block4.Y] = new Block(nextTetramino.Color, nextTetramino.Block4.X * 30, nextTetramino.Block4.Y * 30, fgborder);
+                    drawNextHoldTetramino(NextList, nextTetramino);
 
 
                     recordTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
@@ -179,6 +177,35 @@ namespace Tetris.ViewModels
 
         }
 
+        private void Hold()
+        {
+            TetraminoQ.Enqueue(currentTetramino);
+            Tetramino holdTetramino = Tetramino.NextHoldTetraminTransfer(currentTetramino);
+            drawNextHoldTetramino(HoldList, holdTetramino);
+
+            cleanHolded();
+        }
+
+        private void drawNextHoldTetramino(ObservableCollection<Block> o, Tetramino t)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    o[i * 4 + j] = new Block(fgColor, i * 30, j * 30, bgborder);
+                }
+            }
+            o[t.Block1.X * 4 + t.Block1.Y] = new Block(t.Color, t.Block1.X * 30, t.Block1.Y * 30, fgborder);
+            o[t.Block2.X * 4 + t.Block2.Y] = new Block(t.Color, t.Block2.X * 30, t.Block2.Y * 30, fgborder);
+            o[t.Block3.X * 4 + t.Block3.Y] = new Block(t.Color, t.Block3.X * 30, t.Block3.Y * 30, fgborder);
+            o[t.Block4.X * 4 + t.Block4.Y] = new Block(t.Color, t.Block4.X * 30, t.Block4.Y * 30, fgborder);
+
+        }
+
+        private void cleanHolded()
+        {
+           
+        }
         private async Task LineCancellation()
         {
             await ScoreAndLineUpDate();
