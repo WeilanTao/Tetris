@@ -41,7 +41,9 @@ namespace Tetris.ViewModels
         private Tetramino currentTetramino { get; set; }
         private Tetramino recordTetramino { get; set; }
 
-        //private Tetramino shadowTetramino { get; set; }
+        private Tetramino shadowTetramino { get; set; }
+        private Tetramino shadowRecord { get; set; }
+
 
         private Game game { get; set; }
         private Suite suite { get; set; }
@@ -55,7 +57,6 @@ namespace Tetris.ViewModels
             line = game.Line;
 
             Blocks = new ObservableCollection<Block>();
-
 
             InitializeGrid();
 
@@ -130,7 +131,7 @@ namespace Tetris.ViewModels
             suite = new Suite(currentTetramino, Score, Line, Blocks);
             game.Down(suite);
 
-            UpdateGrid();
+            recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
             if (!suite.CanLock)
             {
                 newTetrinimo = true;
@@ -141,13 +142,13 @@ namespace Tetris.ViewModels
         {
             suite = new Suite(currentTetramino, Score, Line, Blocks);
             game.Right(suite);
-            UpdateGrid();
+            recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
         }
         private void Left()
         {
             suite = new Suite(currentTetramino, Score, Line, Blocks);
             game.Left(suite);
-            UpdateGrid();
+            recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
         }
 
         private void RotateCCW()
@@ -156,7 +157,7 @@ namespace Tetris.ViewModels
             {
                 suite = new Suite(currentTetramino, Score, Line, Blocks);
                 game.RotateCCW(suite);
-                UpdateGrid();
+                recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
             }
 
         }
@@ -167,39 +168,40 @@ namespace Tetris.ViewModels
             {
                 suite = new Suite(currentTetramino, Score, Line, Blocks);
                 game.RotateCW(suite);
-                UpdateGrid();
+                recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
             }
         }
-
-        //private void UpDateShadow()
-        //{
-
-        //}
 
         private void HardDrop()
         {
             suite = new Suite(currentTetramino, Score, Line, Blocks);
             Tetramino t = game.HardDrop(suite);
             currentTetramino = Clone.CloneObject(t) as Tetramino;
-            UpdateGrid();
+            suite = new Suite(currentTetramino, Score, Line, Blocks);
+
+            recordTetramino  = Clone.CloneObject(UpdateGrid(recordTetramino , suite)) as Tetramino;
+
+
             newTetrinimo = true;
         }
 
-        private void UpdateGrid()
+        private Tetramino UpdateGrid(Tetramino record, Suite s)
         {
             //change perivious position to background block
-            Blocks[recordTetramino.Block1.X * 10 + recordTetramino.Block1.Y] = new Block(recordTetramino.Block1.X < 2 ? bgname : fgColor, recordTetramino.Block1.X * 30, recordTetramino.Block1.Y * 30, bgborder);
-            Blocks[recordTetramino.Block2.X * 10 + recordTetramino.Block2.Y] = new Block(recordTetramino.Block2.X < 2 ? bgname : fgColor, recordTetramino.Block2.X * 30, recordTetramino.Block2.Y * 30, bgborder);
-            Blocks[recordTetramino.Block3.X * 10 + recordTetramino.Block3.Y] = new Block(recordTetramino.Block3.X < 2 ? bgname : fgColor, recordTetramino.Block3.X * 30, recordTetramino.Block3.Y * 30, bgborder);
-            Blocks[recordTetramino.Block4.X * 10 + recordTetramino.Block4.Y] = new Block(recordTetramino.Block4.X < 2 ? bgname : fgColor, recordTetramino.Block4.X * 30, recordTetramino.Block4.Y * 30, bgborder);
+            Blocks[record.Block1.X * 10 + record.Block1.Y] = new Block(record.Block1.X < 2 ? bgname : fgColor, record.Block1.X * 30, record.Block1.Y * 30, bgborder);
+            Blocks[record.Block2.X * 10 + record.Block2.Y] = new Block(record.Block2.X < 2 ? bgname : fgColor, record.Block2.X * 30, record.Block2.Y * 30, bgborder);
+            Blocks[record.Block3.X * 10 + record.Block3.Y] = new Block(record.Block3.X < 2 ? bgname : fgColor, record.Block3.X * 30, record.Block3.Y * 30, bgborder);
+            Blocks[record.Block4.X * 10 + record.Block4.Y] = new Block(record.Block4.X < 2 ? bgname : fgColor, record.Block4.X * 30, record.Block4.Y * 30, bgborder);
 
             //update the current position
-            Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, fgorder, !suite.CanLock ? true : false);
-            Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgorder, !suite.CanLock ? true : false);
-            Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgorder, !suite.CanLock ? true : false);
-            Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgorder, !suite.CanLock ? true : false);
+            Blocks[s.Tetramino.Block1.X * 10 + s.Tetramino.Block1.Y] = new Block(s.Tetramino.Color, s.Tetramino.Block1.X * 30, s.Tetramino.Block1.Y * 30, fgorder, !s.CanLock ? true : false);
+            Blocks[s.Tetramino.Block2.X * 10 + s.Tetramino.Block2.Y] = new Block(s.Tetramino.Color, s.Tetramino.Block2.X * 30, s.Tetramino.Block2.Y * 30, fgorder, !s.CanLock ? true : false);
+            Blocks[s.Tetramino.Block3.X * 10 + s.Tetramino.Block3.Y] = new Block(s.Tetramino.Color, s.Tetramino.Block3.X * 30, s.Tetramino.Block3.Y * 30, fgorder, !s.CanLock ? true : false);
+            Blocks[s.Tetramino.Block4.X * 10 + s.Tetramino.Block4.Y] = new Block(s.Tetramino.Color, s.Tetramino.Block4.X * 30, s.Tetramino.Block4.Y * 30, fgorder, !s.CanLock ? true : false);
 
-            recordTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
+
+            Tetramino res = Clone.CloneObject(suite.Tetramino) as Tetramino;
+            return res;
         }
 
         private void InitializeGrid()
