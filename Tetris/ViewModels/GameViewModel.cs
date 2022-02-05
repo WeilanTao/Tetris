@@ -50,6 +50,7 @@ namespace Tetris.ViewModels
 
         private bool newTetrinimo { get; set; } = true;
 
+        private bool canMove { get; set; }
         public GameViewModel(NavigationService mainMenuNavigationService)
         {
             game = new Game();
@@ -82,6 +83,7 @@ namespace Tetris.ViewModels
             {
                 if (newTetrinimo)
                 {
+                    canMove = true;
                     currentTetramino = new Tetramino();
                     recordTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
                     shadowTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
@@ -158,24 +160,30 @@ namespace Tetris.ViewModels
 
         private void Right()
         {
-            suite = new Suite(currentTetramino, Score, Line, Blocks);
-            game.Right(suite);
-            recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
-            UpdateShadow();
+            if (canMove)
+            {
+                suite = new Suite(currentTetramino, Score, Line, Blocks);
+                game.Right(suite);
+                recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
+                UpdateShadow();
+            }
         }
 
         private void Left()
         {
-            suite = new Suite(currentTetramino, Score, Line, Blocks);
-            game.Left(suite);
-            recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
-            UpdateShadow();
+            if (canMove)
+            {
+                suite = new Suite(currentTetramino, Score, Line, Blocks);
+                game.Left(suite);
+                recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
+                UpdateShadow();
 
+            }
         }
 
         private void RotateCCW()
         {
-            if (currentTetramino.Type != 'O')
+            if (currentTetramino.Type != 'O' && canMove)
             {
                 suite = new Suite(currentTetramino, Score, Line, Blocks);
                 game.RotateCCW(suite);
@@ -187,7 +195,7 @@ namespace Tetris.ViewModels
 
         private void RotateCW()
         {
-            if (currentTetramino.Type != 'O')
+            if (currentTetramino.Type != 'O' && canMove)
             {
                 suite = new Suite(currentTetramino, Score, Line, Blocks);
                 game.RotateCW(suite);
@@ -206,7 +214,7 @@ namespace Tetris.ViewModels
 
             recordTetramino  = Clone.CloneObject(UpdateGrid(recordTetramino , suite)) as Tetramino;
 
-
+            canMove = false;
             newTetrinimo = true;
         }
 
