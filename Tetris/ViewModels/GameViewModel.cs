@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Threading;
 using System.Collections;
+using Tetris.Utils;
 
 namespace Tetris.ViewModels
 {
@@ -37,21 +38,13 @@ namespace Tetris.ViewModels
         private int _gameState { get; set; } = 0; //0 for start, 1 for end, 2 for stop
 
         private Tetramino currentTetramino { get; set; }
+        private Tetramino recordTetramino { get; set; }
         //private Tetramino shadowTetramino { get; set; }
-
-        private int recordX1 { get; set; }
-        private int recordX2 { get; set; }
-        private int recordX3 { get; set; }
-        private int recordX4 { get; set; }
-        private int recordY1 { get; set; }
-        private int recordY2 { get; set; }
-        private int recordY3 { get; set; }
-        private int recordY4 { get; set; }
 
         private Game game { get; set; }
         private Suite suite { get; set; }
 
-        private bool newTetrinimo { get; set; } = true; 
+        private bool newTetrinimo { get; set; } = true;
 
         public GameViewModel(NavigationService mainMenuNavigationService)
         {
@@ -87,21 +80,15 @@ namespace Tetris.ViewModels
                 if (newTetrinimo)
                 {
                     currentTetramino = new Tetramino();
-                    recordX1 = currentTetramino.Block1.X;
-                    recordX2 = currentTetramino.Block2.X;
-                    recordX3 = currentTetramino.Block3.X;
-                    recordX4 = currentTetramino.Block4.X;
-                    recordY1 = currentTetramino.Block1.Y;
-                    recordY2 = currentTetramino.Block2.Y;
-                    recordY3 = currentTetramino.Block3.Y;
-                    recordY4 = currentTetramino.Block4.Y;
+                    recordTetramino = CloneUtil.CloneObject(currentTetramino) as Tetramino;
+
                     Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, fgorder);
                     Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgorder);
                     Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgorder);
                     Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgorder);
 
-                       
-                    
+
+
                     newTetrinimo = false;
                     OnPropertyChanged("Blocks");
 
@@ -140,7 +127,7 @@ namespace Tetris.ViewModels
         {
             suite = new Suite(currentTetramino, Score, Line, Blocks);
             game.Down(suite);
-           
+
             UpdateGrid();
             if (!suite.CanLock)
             {
@@ -169,7 +156,7 @@ namespace Tetris.ViewModels
                 game.RotateCCW(suite);
                 UpdateGrid();
             }
-          
+
         }
 
         private void RotateCW()
@@ -192,7 +179,7 @@ namespace Tetris.ViewModels
             suite = new Suite(currentTetramino, Score, Line, Blocks);
             Tetramino t = game.HardDrop(suite);
             currentTetramino.Block1.X = t.Block1.X;
-            currentTetramino.Block2.X = t.Block2.X; 
+            currentTetramino.Block2.X = t.Block2.X;
             currentTetramino.Block3.X = t.Block3.X;
             currentTetramino.Block4.X = t.Block4.X;
             currentTetramino.Block1.Y = t.Block1.Y;
@@ -205,11 +192,11 @@ namespace Tetris.ViewModels
 
         private void UpdateGrid()
         {
-             //change perivious position to background block
-            Blocks[recordX1 * 10 + recordY1] = new Block(recordX1 < 2 ? bgname : fgColor, recordX1 * 30, recordY1 * 30, bgborder);
-            Blocks[recordX2 * 10 + recordY2] = new Block(recordX2 < 2 ? bgname : fgColor, recordX2 * 30, recordY2 * 30, bgborder);
-            Blocks[recordX3 * 10 + recordY3] = new Block(recordX3 < 2 ? bgname : fgColor, recordX3 * 30, recordY3 * 30, bgborder);
-            Blocks[recordX4 * 10 + recordY4] = new Block(recordX4 < 2 ? bgname : fgColor, recordX4 * 30, recordY4 * 30, bgborder);
+            //change perivious position to background block
+            Blocks[recordTetramino.Block1.X * 10 + recordTetramino.Block1.Y] = new Block(recordTetramino.Block1.X < 2 ? bgname : fgColor, recordTetramino.Block1.X * 30, recordTetramino.Block1.Y * 30, bgborder);
+            Blocks[recordTetramino.Block2.X * 10 + recordTetramino.Block2.Y] = new Block(recordTetramino.Block2.X < 2 ? bgname : fgColor, recordTetramino.Block2.X * 30, recordTetramino.Block2.Y * 30, bgborder);
+            Blocks[recordTetramino.Block3.X * 10 + recordTetramino.Block3.Y] = new Block(recordTetramino.Block3.X < 2 ? bgname : fgColor, recordTetramino.Block3.X * 30, recordTetramino.Block3.Y * 30, bgborder);
+            Blocks[recordTetramino.Block4.X * 10 + recordTetramino.Block4.Y] = new Block(recordTetramino.Block4.X < 2 ? bgname : fgColor, recordTetramino.Block4.X * 30, recordTetramino.Block4.Y * 30, bgborder);
 
             //update the current position
             Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, fgorder, !suite.CanLock ? true : false);
@@ -217,14 +204,7 @@ namespace Tetris.ViewModels
             Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgorder, !suite.CanLock ? true : false);
             Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgorder, !suite.CanLock ? true : false);
 
-            recordX1 = currentTetramino.Block1.X;
-            recordX2 = currentTetramino.Block2.X;
-            recordX3 = currentTetramino.Block3.X;
-            recordX4 = currentTetramino.Block4.X;
-            recordY1 = currentTetramino.Block1.Y;
-            recordY2 = currentTetramino.Block2.Y;
-            recordY3 = currentTetramino.Block3.Y;
-            recordY4 = currentTetramino.Block4.Y;
+            recordTetramino = CloneUtil.CloneObject(currentTetramino) as Tetramino;
         }
 
         private void InitializeGrid()

@@ -34,17 +34,7 @@ namespace Tetris.Models
 
         public Tetramino HardDrop(Suite suite)
         {
-            Tetramino t = new Tetramino();
-            t.Block1.X = suite.Tetramino.Block1.X;
-            t.Block2.X = suite.Tetramino.Block2.X;
-            t.Block3.X = suite.Tetramino.Block3.X;
-            t.Block4.X = suite.Tetramino.Block4.X;
-            t.Block1.Y = suite.Tetramino.Block1.Y;
-            t.Block2.Y = suite.Tetramino.Block2.Y;
-            t.Block3.Y = suite.Tetramino.Block3.Y;
-            t.Block4.Y = suite.Tetramino.Block4.Y;
-            t.Color = suite.Tetramino.Color;
-            t.Type = suite.Tetramino.Type;
+            Tetramino t = CloneUtil.CloneObject(suite.Tetramino) as Tetramino;
 
             while (!IsStackCollision(t, suite.Blocks))
             {

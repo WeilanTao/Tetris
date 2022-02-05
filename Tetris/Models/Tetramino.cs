@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace Tetris.Models
 {
-
-    public class Tetramino 
+    [Serializable]
+    public class Tetramino : ICloneable
     {
         private enum TetraminoEnum
         {
@@ -41,11 +43,20 @@ namespace Tetris.Models
 
         public char Type { get { return _type; } set { _type = value; } }
 
-
-        //public Tetramino ShallowCopy()
-        //{
-        //    return (Tetramino)this.MemberwiseClone();
-        //}
+        public object Clone()
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                if (this.GetType().IsSerializable)
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(stream, this);
+                    stream.Position = 0;
+                    return formatter.Deserialize(stream);
+                }
+                return null;
+            }
+        }
 
         public Tetramino()
         {
