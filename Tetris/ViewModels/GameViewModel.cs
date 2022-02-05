@@ -46,6 +46,7 @@ namespace Tetris.ViewModels
         private Tetramino shadowTetramino { get; set; }
         private Tetramino shadowRecord { get; set; }
 
+        private bool initialize { get; set; }
 
         private Game game { get; set; }
         private Suite suite { get; set; }
@@ -56,8 +57,11 @@ namespace Tetris.ViewModels
         public GameViewModel(NavigationService mainMenuNavigationService)
         {
             game = new Game();
-            score = game.Score;
-            line = game.Line;
+            score = 0;
+            line = 0;
+            level = 0;
+
+            initialize = true;
 
             Blocks = new ObservableCollection<Block>();
 
@@ -86,6 +90,10 @@ namespace Tetris.ViewModels
                 if (newTetrinimo)
                 {
                     ScoreAndLineUpDate();
+                    OnPropertyChanged("Score");
+                    OnPropertyChanged("Line");
+                    OnPropertyChanged("Level");
+
 
                     canMove = true;
                     currentTetramino = new Tetramino();
@@ -93,15 +101,23 @@ namespace Tetris.ViewModels
                     shadowTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
                     shadowRecord = Clone.CloneObject(currentTetramino) as Tetramino;
 
+                    if (initialize)
+                    {
+                        await Task.Delay(1000);
+                        initialize = false;
+                    }
+
+
                     Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, fgborder);
                     Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgborder);
                     Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgborder);
                     Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgborder);
 
+
                     UpdateShadow();
 
                     newTetrinimo = false;
-                    OnPropertyChanged("Blocks");
+                    //OnPropertyChanged("Blocks");
 
                     for (int i = 0; i < 10; i++)
                     {
@@ -136,6 +152,50 @@ namespace Tetris.ViewModels
 
         private void ScoreAndLineUpDate()
         {
+            int count = 0;
+
+            bool checkRow = true;
+            for (int i = 21; i >= 2; i--)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    if (!Blocks[i * 10 + j].IsOccupied)
+                    {
+                        checkRow = false;
+                        goto Outer;
+                    }
+                }
+
+                if (checkRow)
+                {
+                    count++;
+                }
+
+            Outer:
+                checkRow = true;
+                ;
+            }
+
+            line += count;
+
+            switch (line)
+            {
+                case 1:
+                    score += 20;
+                    break;
+                case 2:
+                    score += 50;
+                    break;
+                case 3:
+                    score += 120;
+                    break;
+                case 4:
+                    score += 150;
+                    break;
+                default:
+                    score = score;
+                    break;
+            }
 
         }
 
@@ -174,8 +234,11 @@ namespace Tetris.ViewModels
             {
                 suite = new Suite(currentTetramino, Score, Line, Blocks);
                 game.Right(suite);
+
+
                 recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
                 UpdateShadow();
+
             }
         }
 

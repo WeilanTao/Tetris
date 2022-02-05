@@ -16,22 +16,6 @@ namespace Tetris.Models
         private const int leftbase = 0;
         private const int rightbase = 9;
 
-        private int _score = 0;
-        private int _line = 0;
-
-        public int Score
-        {
-            get { return _score; }
-            set { _score = value; }
-        }
-
-        public int Line
-        {
-            get { return _line; }
-            set { _line = value; }
-        }
-
-
         public Tetramino TetraminoMapping(Suite suite)
         {
             Tetramino t = Clone.CloneObject(suite.Tetramino) as Tetramino;
