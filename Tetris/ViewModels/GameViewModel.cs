@@ -93,7 +93,7 @@ namespace Tetris.ViewModels
                     OnPropertyChanged("Score");
                     OnPropertyChanged("Line");
                     OnPropertyChanged("Level");
-
+                    OnPropertyChanged("Blocks");
 
                     canMove = true;
                     currentTetramino = new Tetramino();
@@ -137,6 +137,9 @@ namespace Tetris.ViewModels
                         Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgborder, true);
                         Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgborder, true);
                         Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgborder, true);
+
+                      
+
                     }
                     else
                     {
@@ -146,12 +149,16 @@ namespace Tetris.ViewModels
 
                 }
 
+           
+
             }
 
         }
 
         private void ScoreAndLineUpDate()
         {
+            int firstCancel = 0;
+            bool isFirstCancel = true;
             int count = 0;
 
             bool checkRow = true;
@@ -169,6 +176,11 @@ namespace Tetris.ViewModels
                 if (checkRow)
                 {
                     count++;
+                    if (isFirstCancel)
+                    {
+                        firstCancel = i;
+                        isFirstCancel = false;
+                    }
                 }
 
             Outer:
@@ -181,24 +193,41 @@ namespace Tetris.ViewModels
             switch (line)
             {
                 case 1:
-                    score += 20;
+                    score += 20 * (level + 1);
                     break;
                 case 2:
-                    score += 50;
+                    score += 50 * (level + 1);
                     break;
                 case 3:
-                    score += 120;
+                    score += 120 * (level + 1);
                     break;
                 case 4:
-                    score += 150;
+                    score += 150 * (level + 1);
                     break;
                 default:
                     score = score;
                     break;
             }
 
+            level = line / 10;
+
+            clearLine(firstCancel, count);
         }
 
+        private void clearLine(int firstCancel, int count)
+        {
+
+            int lastCancel = firstCancel - count;
+            for(int i = firstCancel; i > lastCancel; i--)
+            {
+                for(int j = 0; j<10; j++)
+                {
+                    Blocks[i*10+j] = new Block(fgColor, i * 30, j * 30, bgborder);
+
+                }
+            }
+
+        }
 
         private void Down()
         {
