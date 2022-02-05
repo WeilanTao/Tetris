@@ -14,7 +14,7 @@ namespace Tetris.Utils
     /// </summary>
     /// 
 
-    public class VectorUtil
+    public class Vector
     {
         private static int[,] CWMatrix = { { 0, 1 }, { -1, 0 } };
         private static int[,] CCWMatrix = { { 0, -1 }, { 1, 0 } };

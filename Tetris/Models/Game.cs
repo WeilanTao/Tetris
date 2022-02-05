@@ -34,7 +34,7 @@ namespace Tetris.Models
 
         public Tetramino HardDrop(Suite suite)
         {
-            Tetramino t = CloneUtil.CloneObject(suite.Tetramino) as Tetramino;
+            Tetramino t = Clone.CloneObject(suite.Tetramino) as Tetramino;
 
             while (!IsStackCollision(t, suite.Blocks))
             {
@@ -102,20 +102,20 @@ namespace Tetris.Models
         }
 
         public void RotateCCW(Suite suite) {
-            VectorUtil.Transfer(suite.Tetramino,false);
+            Utils.Vector.Transfer(suite.Tetramino,false);
 
             if(IsStackCollision(suite.Tetramino,suite.Blocks) || IsWallCollision(suite.Tetramino, suite.Blocks))
             {
-                VectorUtil.Transfer(suite.Tetramino, true);
+                Utils.Vector.Transfer(suite.Tetramino, true);
             }
 
         }
 
         public void RotateCW(Suite suite) {
-            VectorUtil.Transfer(suite.Tetramino, true);
+            Utils.Vector.Transfer(suite.Tetramino, true);
             if (IsStackCollision(suite.Tetramino, suite.Blocks) || IsWallCollision(suite.Tetramino, suite.Blocks))
             {
-                VectorUtil.Transfer(suite.Tetramino, false);
+                Utils.Vector.Transfer(suite.Tetramino, false);
             }
         }
 

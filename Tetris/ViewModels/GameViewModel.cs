@@ -16,6 +16,7 @@ using System.Threading;
 using System.Collections;
 using Tetris.Utils;
 
+
 namespace Tetris.ViewModels
 {
     public class GameViewModel : ViewModelBase
@@ -39,6 +40,7 @@ namespace Tetris.ViewModels
 
         private Tetramino currentTetramino { get; set; }
         private Tetramino recordTetramino { get; set; }
+
         //private Tetramino shadowTetramino { get; set; }
 
         private Game game { get; set; }
@@ -80,7 +82,7 @@ namespace Tetris.ViewModels
                 if (newTetrinimo)
                 {
                     currentTetramino = new Tetramino();
-                    recordTetramino = CloneUtil.CloneObject(currentTetramino) as Tetramino;
+                    recordTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
 
                     Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, fgorder);
                     Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgorder);
@@ -178,7 +180,7 @@ namespace Tetris.ViewModels
         {
             suite = new Suite(currentTetramino, Score, Line, Blocks);
             Tetramino t = game.HardDrop(suite);
-            currentTetramino = CloneUtil.CloneObject(t) as Tetramino;
+            currentTetramino = Clone.CloneObject(t) as Tetramino;
             UpdateGrid();
             newTetrinimo = true;
         }
@@ -197,7 +199,7 @@ namespace Tetris.ViewModels
             Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgorder, !suite.CanLock ? true : false);
             Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgorder, !suite.CanLock ? true : false);
 
-            recordTetramino = CloneUtil.CloneObject(currentTetramino) as Tetramino;
+            recordTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
         }
 
         private void InitializeGrid()

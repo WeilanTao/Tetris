@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Tetris.Utils
 {
-    public class CloneUtil
+    public class Clone
     {
 
         public static object CloneObject(object objSource)
