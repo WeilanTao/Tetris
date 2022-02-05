@@ -27,6 +27,8 @@ namespace Tetris.ViewModels
         private const int fgborder = 1;
         private int score { get; set; } = 0;
         private int line { get; set; } = 0;
+        private int level { get; set; } = 0;
+
         public ObservableCollection<Block> Blocks { get; set; }
 
         public ICommand MainMenuCommand { get; private set; }
@@ -83,6 +85,8 @@ namespace Tetris.ViewModels
             {
                 if (newTetrinimo)
                 {
+                    ScoreAndLineUpDate();
+
                     canMove = true;
                     currentTetramino = new Tetramino();
                     recordTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
@@ -129,7 +133,13 @@ namespace Tetris.ViewModels
             }
 
         }
-        
+
+        private void ScoreAndLineUpDate()
+        {
+
+        }
+
+
         private void Down()
         {
             suite = new Suite(currentTetramino, Score, Line, Blocks);
@@ -146,11 +156,11 @@ namespace Tetris.ViewModels
         private void UpdateShadow()
         {
             shadowTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
-           
+
             suite = new Suite(shadowTetramino, Score, Line, Blocks);
             shadowTetramino = game.TetraminoMapping(suite);
 
-            
+
             Tetramino.StyleTetramino(shadowTetramino, fgColor, shadowTetramino.Color);
             suite = new Suite(shadowTetramino, Score, Line, Blocks);
             shadowRecord = Clone.CloneObject(UpdateGrid(shadowRecord, suite)) as Tetramino;
@@ -212,7 +222,7 @@ namespace Tetris.ViewModels
             currentTetramino = Clone.CloneObject(t) as Tetramino;
             suite = new Suite(currentTetramino, Score, Line, Blocks);
 
-            recordTetramino  = Clone.CloneObject(UpdateGrid(recordTetramino , suite)) as Tetramino;
+            recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
 
             canMove = false;
             newTetrinimo = true;
@@ -227,10 +237,10 @@ namespace Tetris.ViewModels
             Blocks[record.Block4.X * 10 + record.Block4.Y] = new Block(record.Block4.X < 2 ? bgname : fgColor, record.Block4.X * 30, record.Block4.Y * 30, bgborder);
 
             //update the current position
-            Blocks[s.Tetramino.Block1.X * 10 + s.Tetramino.Block1.Y] = new Block(s.Tetramino.Color, s.Tetramino.Block1.X * 30, s.Tetramino.Block1.Y * 30, fgborder, !s.CanLock ? true : false, s.Tetramino.Block1.BorderColor);
-            Blocks[s.Tetramino.Block2.X * 10 + s.Tetramino.Block2.Y] = new Block(s.Tetramino.Color, s.Tetramino.Block2.X * 30, s.Tetramino.Block2.Y * 30, fgborder, !s.CanLock ? true : false, s.Tetramino.Block1.BorderColor);
-            Blocks[s.Tetramino.Block3.X * 10 + s.Tetramino.Block3.Y] = new Block(s.Tetramino.Color, s.Tetramino.Block3.X * 30, s.Tetramino.Block3.Y * 30, fgborder, !s.CanLock ? true : false, s.Tetramino.Block1.BorderColor);
-            Blocks[s.Tetramino.Block4.X * 10 + s.Tetramino.Block4.Y] = new Block(s.Tetramino.Color, s.Tetramino.Block4.X * 30, s.Tetramino.Block4.Y * 30, fgborder, !s.CanLock ? true : false, s.Tetramino.Block1.BorderColor);
+            Blocks[s.Tetramino.Block1.X * 10 + s.Tetramino.Block1.Y] = new Block(s.Tetramino.Block1.X < 2 ? bgname : s.Tetramino.Color, s.Tetramino.Block1.X * 30, s.Tetramino.Block1.Y * 30, s.Tetramino.Block1.X < 2 ? bgborder : fgborder, !s.CanLock ? true : false, s.Tetramino.Block1.BorderColor);
+            Blocks[s.Tetramino.Block2.X * 10 + s.Tetramino.Block2.Y] = new Block(s.Tetramino.Block2.X < 2 ? bgname : s.Tetramino.Color, s.Tetramino.Block2.X * 30, s.Tetramino.Block2.Y * 30, s.Tetramino.Block2.X < 2 ? bgborder : fgborder, !s.CanLock ? true : false, s.Tetramino.Block1.BorderColor);
+            Blocks[s.Tetramino.Block3.X * 10 + s.Tetramino.Block3.Y] = new Block(s.Tetramino.Block3.X < 2 ? bgname : s.Tetramino.Color, s.Tetramino.Block3.X * 30, s.Tetramino.Block3.Y * 30, s.Tetramino.Block3.X < 2 ? bgborder : fgborder, !s.CanLock ? true : false, s.Tetramino.Block1.BorderColor);
+            Blocks[s.Tetramino.Block4.X * 10 + s.Tetramino.Block4.Y] = new Block(s.Tetramino.Block4.X < 2 ? bgname : s.Tetramino.Color, s.Tetramino.Block4.X * 30, s.Tetramino.Block4.Y * 30, s.Tetramino.Block4.X < 2 ? bgborder : fgborder, !s.CanLock ? true : false, s.Tetramino.Block1.BorderColor);
 
 
             Tetramino res = Clone.CloneObject(suite.Tetramino) as Tetramino;
@@ -263,6 +273,8 @@ namespace Tetris.ViewModels
                 line = value;
             }
         }
+
+        public int Level { get { return level; } set { this.level = value; } }
 
         public Suite Suite
         {

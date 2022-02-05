@@ -27,24 +27,31 @@
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+            <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
                 <Label x:Name="ScoreLabel" Width ="50" Content="Score"/>
                 <Label x:Name="ScoreText" Content="{Binding Score}"/>
 
             </StackPanel>
-            <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+            <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
                 <Label x:Name="LineLabel" Width ="50" Content="Line"/>
                 <Label x:Name="LineText" Content="{Binding Line}"/>
             </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal">
+                <Label x:Name="LevelLabel" Width ="50" Content="Level"/>
+                <Label x:Name="LevelText" Content="{Binding Level}"/>
 
-            <Label x:Name="NextLabel" Grid.Row="3" Content="Next"/>
+            </StackPanel>
+
+            <Label x:Name="NextLabel" Grid.Row="5" Content="Next"/>
 
 
         </Grid>
