@@ -8,7 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Resource\" />
+    <None Remove="Resource\dogica.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resource\dogica.ttf" />
   </ItemGroup>
 
 </Project>

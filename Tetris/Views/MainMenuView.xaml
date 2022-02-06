@@ -5,24 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tetris.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="960">
-    <Grid x:Name="_mainFrame" Background="White">
-
+             d:DesignHeight="720" d:DesignWidth="960">
+  
+    <Grid x:Name="_mainFrame" Background="Black">
 
         <Grid.RowDefinitions >
-            <RowDefinition Height="240" />
+            <RowDefinition Height="300" />
             <RowDefinition Height="80"/>
             <RowDefinition Height="80"/>
             <RowDefinition Height="80"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="TitleLabel"  Height="200" Width="300"
-               HorizontalAlignment="Center" VerticalAlignment="Center"
-               FontSize="50" 
+        <TextBlock x:Name="TitleLabel"  Height="200" Width="350"
+               HorizontalAlignment="Center" VerticalAlignment="Bottom"
+               FontSize="50"
                TextAlignment="Center"
-                   Padding="60"
-                   >
+               Padding="0 75"
+               FontFamily="/Resource/#dogica" 
+               Foreground="White">
             TETRIS
         </TextBlock>
 
@@ -38,10 +40,11 @@
 
         <TextBlock x:Name="CopyRightLabel" Height="30" Width ="300"
                    HorizontalAlignment ="Center"
-                   VerticalAlignment="Bottom"
+                   VerticalAlignment="Center"
                    FontSize ="10"
-                   Grid.Row="4"
-                   TextAlignment="Center">
+                   Grid.Row="5"
+                   TextAlignment="Center"
+                   Foreground="White">
             All Rights Reserved 2022 Emily Tao
         </TextBlock>
 

@@ -4,10 +4,55 @@
              xmlns:local="clr-namespace:Tetris"
              x:Name="App">
     <Application.Resources>
+
+
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Resource/#dogica"/>
+        </Style>
+        
         <Style TargetType="Button">
             <Setter  Property="Height" Value="30"/>
-            <Setter Property="Width" Value="100"/>
-            <!--<Setter Property="HorizontalAlignment" Value="Center"/>-->
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="FontFamily" Value="/Resource/#dogica"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="bg"
+                             Background="{TemplateBinding Background}"
+                             BorderThickness="0"
+                             >
+                            <ContentPresenter  HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                    Value="True">
+                                <Setter Property="Background" Value="{x:Null}"/>
+                                <Setter Property="Foreground" Value="red"/>
+
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+
+
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="/Resource/#dogica"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        
+        <Style TargetType="Hyperlink">
+            <Setter Property="FontFamily" Value="/Resource/#dogica"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="TextDecorations" Value=""/>
         </Style>
 
     </Application.Resources>

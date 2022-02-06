@@ -5,16 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tetris.Views"
              mc:Ignorable="d" 
-                d:DesignHeight="700" d:DesignWidth="960">
-    <Grid Background="LightYellow">
+                d:DesignHeight="720" d:DesignWidth="960">
+    <Grid Background="Black">
         <StackPanel>
-            <TextBlock TextAlignment="Center" Padding="120" FontSize="30">
-            Github: https://github.com/WeilanTao   <LineBreak/><LineBreak/>
-            Email: Twlemily@hotmail.com  <LineBreak/><LineBreak/>
-            LinkedIn: https://www.linkedin.com/in/emily-weilan-tao/  <LineBreak/>
-            </TextBlock>
+            <Border Padding="100 200 100 0">
+                <StackPanel >
+                    <Label Height="60" Width="373" >
+                     <Hyperlink NavigateUri="https://github.com/WeilanTao/Tetris" RequestNavigate="Hyperlink_RequestNavigate">
+                        GitHub Source Code
+                     </Hyperlink>
+                    </Label>
+                    <Label Height="60" Width="169">
+                    <Hyperlink NavigateUri="https://www.linkedin.com/in/emily-weilan-tao/" RequestNavigate="Hyperlink_RequestNavigate">
+                        LinkedIn
+                    </Hyperlink>
+                    </Label>
+                    <Label Height="60" Width="167">
+                    <Hyperlink NavigateUri="mailto:Twlemily@hotmail.com" RequestNavigate="Hyperlink_RequestNavigate">
+                        Email Me
+                    </Hyperlink>
+                    </Label>
+                </StackPanel>
+
+            </Border>
             <Button Content="Back"
-                Command="{Binding MainMenuNavCommand}"/>
+                Command="{Binding MainMenuNavCommand}"
+                    FontSize="20"/>
         </StackPanel>
     </Grid>
 </UserControl>

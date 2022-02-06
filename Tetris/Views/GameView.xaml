@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tetris.Views" xmlns:viewmodels="clr-namespace:Tetris.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:GameViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="960">
+             d:DesignHeight="720" d:DesignWidth="960">
+
+
 
     <UserControl.InputBindings>
         <KeyBinding Key="D" Command="{Binding KeyD}"/>
@@ -17,7 +19,7 @@
         <KeyBinding Key="W" Command="{Binding KeyW}"/>
     </UserControl.InputBindings>
 
-    <Grid Background="LightBlue">
+    <Grid Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="200"/>
@@ -39,27 +41,27 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
-                <Label x:Name="ScoreLabel" Width ="50" Content="Score"/>
+                <Label x:Name="ScoreLabel"  Content="Score"/>
                 <Label x:Name="ScoreText" Content="{Binding Score}"/>
 
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
-                <Label x:Name="LineLabel" Width ="50" Content="Line"/>
+                <Label x:Name="LineLabel"  Content="Line"/>
                 <Label x:Name="LineText" Content="{Binding Line}"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal">
-                <Label x:Name="LevelLabel" Width ="50" Content="Level"/>
+                <Label x:Name="LevelLabel"  Content="Level"/>
                 <Label x:Name="LevelText" Content="{Binding Level}"/>
 
             </StackPanel>
 
             <Grid Grid.Column="1" Grid.Row="5">
-                <Label x:Name="NextLabel" Content="Next"/>
-                <Grid>
-                    <ItemsControl x:Name="icnext" ItemsSource="{Binding NextList}">
+                <Label x:Name="NextLabel" Content="Next" Margin="0,0,117,0"/>
+                <Grid Margin="0,0,158,0">
+                    <ItemsControl x:Name="icnext" ItemsSource="{Binding NextList}" Margin="53,0,-18,0">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <Canvas Width="120" Height="120" Background="White" VerticalAlignment="top"/>
+                                <Canvas Width="120" Height="120" Background="Black" VerticalAlignment="top"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
@@ -80,9 +82,12 @@
                     </ItemsControl>
                 </Grid>
             </Grid>
+            
+            <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
+                <Label x:Name="GameOverLabel" Content="{Binding GameOver}" Width="200" FontSize="20" HorizontalContentAlignment="Center" Height="174"/>
+            </StackPanel>
 
-      
-            <Grid Grid.Column="1" Grid.Row="6">
+            <!--<Grid Grid.Column="1" Grid.Row="6">
                 <Label x:Name="HoldLabel" Content="Hold"/>
                 <Grid>
                     <ItemsControl x:Name="ichold" ItemsSource="{Binding HoldList}">
@@ -108,7 +113,7 @@
 
                     </ItemsControl>
                 </Grid>
-            </Grid>
+            </Grid>-->
 
 
         </Grid>
@@ -123,39 +128,38 @@
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="StopButton" Grid.Row="1" Content="Stop" Command="{Binding StopCommand}"/>
-            <Button x:Name="ResumeButton" Grid.Row="2" Content="Resume" Command="{Binding ResumeCommand}"/>
-            <Button x:Name="NewGameButton" Grid.Row="3" Content="NewGame" Command="{Binding NewGameCommand}"/>
-            <Button x:Name="ExitMainButton" Grid.Row="4" Content="Main Menu" Command="{Binding MainMenuCommand}"/>
+            <Button x:Name="StopButton" Grid.Row="1" Content="Stop" Command="{Binding StopCommand}" Width="Auto" Margin="10,35,55,35" />
+            <Button x:Name="ResumeButton" Grid.Row="2" Content="Resume" Command="{Binding ResumeCommand}"  Width="Auto" Margin="10,35,55,35"/>
+            <Button x:Name="NewGameButton" Grid.Row="3" Content="NewGame" Command="{Binding NewGameCommand}"  Width="Auto" Margin="10,35,55,35"/>
+            <Button x:Name="ExitMainButton" Grid.Row="4" Content="Main Menu" Command="{Binding MainMenuCommand}"  Width="Auto" Margin="10,35,55,35" />
         </Grid>
 
 
         <Grid Grid.Column="2">
             <StackPanel Orientation="Vertical">
-            <ItemsControl x:Name="icblocks" ItemsSource="{Binding Blocks}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas Width="300" Height="660" Background="White" VerticalAlignment="top"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Background="{Binding Color}" Width="30" Height="30">
-                            <Border BorderBrush="{Binding BorderColor}" BorderThickness="{Binding Border}"/>
+                <ItemsControl x:Name="icblocks" ItemsSource="{Binding Blocks}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas Width="300" Height="660" Background="White" VerticalAlignment="top"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Background="{Binding Color}" Width="30" Height="30">
+                                <Border BorderBrush="{Binding BorderColor}" BorderThickness="{Binding Border}"/>
 
-                        </Grid>
-                    </DataTemplate>
+                            </Grid>
+                        </DataTemplate>
 
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="Canvas.Left" Value="{Binding Y}" />
-                        <Setter Property="Canvas.Top" Value="{Binding X}" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Canvas.Left" Value="{Binding Y}" />
+                            <Setter Property="Canvas.Top" Value="{Binding X}" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
 
-            </ItemsControl>
-                <Label x:Name="GameOverLabel" Content="{Binding GameOver}" Width="300"  HorizontalContentAlignment="Center"></Label>
+                </ItemsControl>
             </StackPanel>
         </Grid>
 

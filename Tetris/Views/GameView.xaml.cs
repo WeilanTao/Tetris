@@ -27,5 +27,7 @@ namespace Tetris.Views
             Focusable = true;
             Loaded += (s, e) => Keyboard.Focus(this);
         }
+
+       
     }
 }

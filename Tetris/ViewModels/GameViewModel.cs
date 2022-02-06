@@ -21,7 +21,7 @@ namespace Tetris.ViewModels
 {
     public class GameViewModel : ViewModelBase
     {
-        private const String bgname = "lightblue";
+        private const String bgname = "black";
         private const String fgColor = "black";
         private const int bgborder = 0;
         private const int fgborder = 1;
@@ -30,15 +30,12 @@ namespace Tetris.ViewModels
         private int level { get; set; } = 0;
 
         public ObservableCollection<Block> Blocks { get; set; }
+
         public ObservableCollection<Block> NextList { get; set; }
         public ObservableCollection<Block> HoldList { get; set; }
-        private Queue<Tetramino> TetraminoQ;
 
 
         public ICommand MainMenuCommand { get; private set; }
-        public ICommand StopCommand { get; private set; }
-        public ICommand ResumeCommand { get; private set; }
-        public ICommand NewGameCommand { get; private set; }
         public ICommand KeyD { get; private set; }
         public ICommand KeyA { get; private set; }
         public ICommand KeyLeft { get; private set; }
@@ -46,31 +43,47 @@ namespace Tetris.ViewModels
         public ICommand KeyDown { get; private set; }
         public ICommand KeySpace { get; private set; }
         public ICommand KeyW { get; private set; }
+        private int _gameState { get; set; } = 0; //0 for start, 1 for end, 2 for stop
 
         private Tetramino currentTetramino { get; set; }
         private Tetramino recordTetramino { get; set; }
+
         private Tetramino shadowTetramino { get; set; }
         private Tetramino shadowRecord { get; set; }
-        private Tetramino nextTetramino { get; set; }
 
-      
+        private Tetramino nextTetramino { get; set; }
+        private bool initialize { get; set; }
+
         private Game game { get; set; }
         private Suite suite { get; set; }
 
         private bool newTetrinimo { get; set; } = true;
-        private bool initialize { get; set; }
-        private bool canMove { get; set; }
-
-        private int _gameState { get; set; } = 0; //0 for start, 1 for end, 2 for stop
 
         private String gameOver { get; set; }
-        public GameViewModel(NavigationService mainMenuNavigationService, NavigationService newGameService)
+        private bool canMove { get; set; }
+
+        private Queue<Tetramino> TetraminoQ;
+
+        public GameViewModel(NavigationService mainMenuNavigationService)
         {
-           
+            game = new Game();
+            score = 0;
+            line = 0;
+            level = 0;
+            gameOver = "";
+
+            initialize = true;
+
+            Blocks = new ObservableCollection<Block>();
+            NextList = new ObservableCollection<Block>();
+            HoldList = new ObservableCollection<Block>();
+
+            InitializeGrid(22, 10, Blocks, true);
+            InitializeGrid(4, 4, NextList, false);
+            InitializeGrid(4, 4, HoldList, false);
 
 
             MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
-            
             KeyA = new KeyCommand(RotateCW);
             KeyD = new KeyCommand(RotateCCW);
             KeyLeft = new KeyCommand(Left);
@@ -79,30 +92,6 @@ namespace Tetris.ViewModels
             KeySpace = new KeyCommand(HardDrop);
             KeyW = new KeyCommand(Hold);
 
-            NewGameCommand = new NavigateCommand(newGameService);
-
-            newGame();
-        }
-
-        private void newGame()
-        {
-            game = new Game();
-            score = 0;
-            line = 0;
-            level = 0;
-
-            initialize = true;
-
-            Blocks = new ObservableCollection<Block>();
-            NextList = new ObservableCollection<Block>();
-            HoldList = new ObservableCollection<Block>();
-
-            gameOver = "";
-
-            InitializeGrid(22, 10, Blocks, true);
-            InitializeGrid(4, 4, NextList, false);
-            InitializeGrid(4, 4, HoldList, false);
-
             TetraminoQ = new Queue<Tetramino>();
             TetraminoQ.Enqueue(new Tetramino());
             TetraminoQ.Enqueue(new Tetramino());
@@ -110,6 +99,7 @@ namespace Tetris.ViewModels
 
             gameRun();
         }
+
         private async void gameRun()
         {
             await gameLoop();
@@ -160,11 +150,10 @@ namespace Tetris.ViewModels
                     {
                         if (Blocks[i + 20].IsOccupied == true)
                         {
-                            gameOver = "Game Over";
-                            OnPropertyChanged("GameOver");
                             _gameState = 1;
+                            gameOver = "Game Over!";
+                            OnPropertyChanged("GameOver");
                         }
-
                     }
                 }
                 else
@@ -188,6 +177,8 @@ namespace Tetris.ViewModels
 
                 }
 
+
+
             }
 
         }
@@ -200,10 +191,7 @@ namespace Tetris.ViewModels
 
             cleanHolded();
         }
-        private void cleanHolded()
-        {
 
-        }
         private void drawNextHoldTetramino(ObservableCollection<Block> o, Tetramino t)
         {
             for (int i = 0; i < 4; i++)
@@ -220,7 +208,10 @@ namespace Tetris.ViewModels
 
         }
 
-       
+        private void cleanHolded()
+        {
+
+        }
         private async Task LineCancellation()
         {
             await ScoreAndLineUpDate();
@@ -463,6 +454,7 @@ namespace Tetris.ViewModels
         }
 
         public String GameOver { get { return gameOver; } set { gameOver = value; } }
+
     }
 
 }
