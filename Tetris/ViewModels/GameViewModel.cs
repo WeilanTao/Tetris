@@ -339,6 +339,10 @@ namespace Tetris.ViewModels
         private void UpdateShadow()
         {
             shadowTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
+            shadowTetramino.Block1.IsOccupied = false;
+            shadowTetramino.Block2.IsOccupied = false;
+            shadowTetramino.Block3.IsOccupied = false;
+            shadowTetramino.Block4.IsOccupied = false;
 
             suite = new Suite(shadowTetramino, Score, Line, Blocks);
             shadowTetramino = game.TetraminoMapping(suite);
@@ -402,10 +406,10 @@ namespace Tetris.ViewModels
         private Tetramino UpdateGrid(Tetramino record, Suite s)
         {
             //change perivious position to background block
-            Blocks[record.Block1.X * 10 + record.Block1.Y] = new Block(record.Block1.X < 2 ? bgname : fgColor, record.Block1.X * 30, record.Block1.Y * 30, bgborder);
-            Blocks[record.Block2.X * 10 + record.Block2.Y] = new Block(record.Block2.X < 2 ? bgname : fgColor, record.Block2.X * 30, record.Block2.Y * 30, bgborder);
-            Blocks[record.Block3.X * 10 + record.Block3.Y] = new Block(record.Block3.X < 2 ? bgname : fgColor, record.Block3.X * 30, record.Block3.Y * 30, bgborder);
-            Blocks[record.Block4.X * 10 + record.Block4.Y] = new Block(record.Block4.X < 2 ? bgname : fgColor, record.Block4.X * 30, record.Block4.Y * 30, bgborder);
+            Blocks[record.Block1.X * 10 + record.Block1.Y] = new Block(record.Block1.X < 2 ? bgname : fgColor, record.Block1.X * 30, record.Block1.Y * 30, bgborder, false);
+            Blocks[record.Block2.X * 10 + record.Block2.Y] = new Block(record.Block2.X < 2 ? bgname : fgColor, record.Block2.X * 30, record.Block2.Y * 30, bgborder, false);
+            Blocks[record.Block3.X * 10 + record.Block3.Y] = new Block(record.Block3.X < 2 ? bgname : fgColor, record.Block3.X * 30, record.Block3.Y * 30, bgborder, false);
+            Blocks[record.Block4.X * 10 + record.Block4.Y] = new Block(record.Block4.X < 2 ? bgname : fgColor, record.Block4.X * 30, record.Block4.Y * 30, bgborder, false);
 
             //update the current position
             Blocks[s.Tetramino.Block1.X * 10 + s.Tetramino.Block1.Y] = new Block(s.Tetramino.Block1.X < 2 ? bgname : s.Tetramino.Color, s.Tetramino.Block1.X * 30, s.Tetramino.Block1.Y * 30, s.Tetramino.Block1.X < 2 ? bgborder : fgborder, !s.CanLock ? true : false, s.Tetramino.Block1.BorderColor);
