@@ -190,7 +190,7 @@ namespace Tetris.Models
             }
             else if (value == TetraminoEnum.S)
             {
-                _color = "pink";
+                _color = "purple";
                 _block1 = new Block(Color, 0, 5, colorBorder);
                 _block2 = new Block(Color, 0, 4, colorBorder);
                 _block3 = new Block(Color, 1, 4, colorBorder);
