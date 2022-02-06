@@ -120,11 +120,13 @@
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Button x:Name="StopButton" Grid.Row="1" Content="Stop" Command="{Binding StopCommand}"/>
-            <Button x:Name="NewGameButton" Grid.Row="2" Content="NewGame" Command="{Binding NewGameCommand}"/>
-            <Button x:Name="ExitMainButton" Grid.Row="3" Content="Main Menu" Command="{Binding MainMenuCommand}"/>
+            <Button x:Name="ResumeButton" Grid.Row="2" Content="Resume" Command="{Binding ResumeCommand}"/>
+            <Button x:Name="NewGameButton" Grid.Row="3" Content="NewGame" Command="{Binding NewGameCommand}"/>
+            <Button x:Name="ExitMainButton" Grid.Row="4" Content="Main Menu" Command="{Binding MainMenuCommand}"/>
         </Grid>
 
 

@@ -30,12 +30,14 @@ namespace Tetris.ViewModels
         private int level { get; set; } = 0;
 
         public ObservableCollection<Block> Blocks { get; set; }
-
         public ObservableCollection<Block> NextList { get; set; }
         public ObservableCollection<Block> HoldList { get; set; }
+        private Queue<Tetramino> TetraminoQ;
 
 
         public ICommand MainMenuCommand { get; private set; }
+        public ICommand StopCommand { get; private set; }
+        public ICommand ResumeCommand { get; private set; }
         public ICommand NewGameCommand { get; private set; }
         public ICommand KeyD { get; private set; }
         public ICommand KeyA { get; private set; }
@@ -44,25 +46,23 @@ namespace Tetris.ViewModels
         public ICommand KeyDown { get; private set; }
         public ICommand KeySpace { get; private set; }
         public ICommand KeyW { get; private set; }
-        private int _gameState { get; set; } = 0; //0 for start, 1 for end, 2 for stop
 
         private Tetramino currentTetramino { get; set; }
         private Tetramino recordTetramino { get; set; }
-
         private Tetramino shadowTetramino { get; set; }
         private Tetramino shadowRecord { get; set; }
-
         private Tetramino nextTetramino { get; set; }
-        private bool initialize { get; set; }
 
+      
         private Game game { get; set; }
         private Suite suite { get; set; }
 
         private bool newTetrinimo { get; set; } = true;
-
+        private bool initialize { get; set; }
         private bool canMove { get; set; }
 
-        private Queue<Tetramino> TetraminoQ;
+        private int _gameState { get; set; } = 0; //0 for start, 1 for end, 2 for stop
+
 
         public GameViewModel(NavigationService mainMenuNavigationService, NavigationService newGameService)
         {
