@@ -123,7 +123,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Button x:Name="StopButton" Grid.Row="1" Content="Stop" Command="{Binding StopCommand}"/>
-            <Button x:Name="ResumeButton" Grid.Row="2" Content="Resume" Command="{Binding ResumeCommand}"/>
+            <Button x:Name="NewGameButton" Grid.Row="2" Content="NewGame" Command="{Binding NewGameCommand}"/>
             <Button x:Name="ExitMainButton" Grid.Row="3" Content="Main Menu" Command="{Binding MainMenuCommand}"/>
         </Grid>
 

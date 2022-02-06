@@ -36,6 +36,7 @@ namespace Tetris.ViewModels
 
 
         public ICommand MainMenuCommand { get; private set; }
+        public ICommand NewGameCommand { get; private set; }
         public ICommand KeyD { get; private set; }
         public ICommand KeyA { get; private set; }
         public ICommand KeyLeft { get; private set; }
@@ -63,7 +64,7 @@ namespace Tetris.ViewModels
 
         private Queue<Tetramino> TetraminoQ;
 
-        public GameViewModel(NavigationService mainMenuNavigationService)
+        public GameViewModel(NavigationService mainMenuNavigationService, NavigationService newGameService)
         {
             game = new Game();
             score = 0;
@@ -82,6 +83,7 @@ namespace Tetris.ViewModels
 
 
             MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
+            NewGameCommand = new NavigateCommand(newGameService);
             KeyA = new KeyCommand(RotateCW);
             KeyD = new KeyCommand(RotateCCW);
             KeyLeft = new KeyCommand(Left);
@@ -171,8 +173,6 @@ namespace Tetris.ViewModels
 
                 }
 
-
-
             }
 
         }
@@ -185,7 +185,10 @@ namespace Tetris.ViewModels
 
             cleanHolded();
         }
+        private void cleanHolded()
+        {
 
+        }
         private void drawNextHoldTetramino(ObservableCollection<Block> o, Tetramino t)
         {
             for (int i = 0; i < 4; i++)
@@ -202,10 +205,7 @@ namespace Tetris.ViewModels
 
         }
 
-        private void cleanHolded()
-        {
-           
-        }
+       
         private async Task LineCancellation()
         {
             await ScoreAndLineUpDate();
