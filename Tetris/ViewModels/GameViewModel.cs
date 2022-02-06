@@ -63,8 +63,28 @@ namespace Tetris.ViewModels
 
         private int _gameState { get; set; } = 0; //0 for start, 1 for end, 2 for stop
 
-
+        private String gameOver { get; set; }
         public GameViewModel(NavigationService mainMenuNavigationService, NavigationService newGameService)
+        {
+           
+
+
+            MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
+            
+            KeyA = new KeyCommand(RotateCW);
+            KeyD = new KeyCommand(RotateCCW);
+            KeyLeft = new KeyCommand(Left);
+            KeyRight = new KeyCommand(Right);
+            KeyDown = new KeyCommand(Down);
+            KeySpace = new KeyCommand(HardDrop);
+            KeyW = new KeyCommand(Hold);
+
+            NewGameCommand = new NavigateCommand(newGameService);
+
+            newGame();
+        }
+
+        private void newGame()
         {
             game = new Game();
             score = 0;
@@ -77,20 +97,11 @@ namespace Tetris.ViewModels
             NextList = new ObservableCollection<Block>();
             HoldList = new ObservableCollection<Block>();
 
+            gameOver = "";
+
             InitializeGrid(22, 10, Blocks, true);
             InitializeGrid(4, 4, NextList, false);
             InitializeGrid(4, 4, HoldList, false);
-
-
-            MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
-            NewGameCommand = new NavigateCommand(newGameService);
-            KeyA = new KeyCommand(RotateCW);
-            KeyD = new KeyCommand(RotateCCW);
-            KeyLeft = new KeyCommand(Left);
-            KeyRight = new KeyCommand(Right);
-            KeyDown = new KeyCommand(Down);
-            KeySpace = new KeyCommand(HardDrop);
-            KeyW = new KeyCommand(Hold);
 
             TetraminoQ = new Queue<Tetramino>();
             TetraminoQ.Enqueue(new Tetramino());
@@ -99,7 +110,6 @@ namespace Tetris.ViewModels
 
             gameRun();
         }
-
         private async void gameRun()
         {
             await gameLoop();
@@ -149,7 +159,12 @@ namespace Tetris.ViewModels
                     for (int i = 0; i < 10; i++)
                     {
                         if (Blocks[i + 20].IsOccupied == true)
+                        {
+                            gameOver = "Game Over";
+                            OnPropertyChanged("GameOver");
                             _gameState = 1;
+                        }
+
                     }
                 }
                 else
@@ -447,6 +462,7 @@ namespace Tetris.ViewModels
             set { suite = value; }
         }
 
+        public String GameOver { get { return gameOver; } set { gameOver = value; } }
     }
 
 }

@@ -131,6 +131,7 @@
 
 
         <Grid Grid.Column="2">
+            <StackPanel Orientation="Vertical">
             <ItemsControl x:Name="icblocks" ItemsSource="{Binding Blocks}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -154,6 +155,8 @@
                 </ItemsControl.ItemContainerStyle>
 
             </ItemsControl>
+                <Label x:Name="GameOverLabel" Content="{Binding GameOver}" Width="300"  HorizontalContentAlignment="Center"></Label>
+            </StackPanel>
         </Grid>
 
 
