@@ -112,7 +112,7 @@ namespace Tetris.ViewModels
             KeyRight = new KeyCommand(Right);
             KeyDown = new KeyCommand(Down);
             KeySpace = new KeyCommand(HardDrop);
-            KeyW = new KeyCommand(Hold);
+            //KeyW = new KeyCommand(Hold);
 
             NewGameCommand = new NavigateCommand(newGameViewSerivce, NewGameGenerate);
             ResumeCommand = new KeyCommand(Resume);
@@ -230,7 +230,7 @@ namespace Tetris.ViewModels
                 else
                 {
                     Down();
-                    await Task.Delay(200);
+                    await Task.Delay(300);
 
                     //if keyright/keyleft/keyrotation is after the keydown...
                     if (game.IsStackCollision(currentTetramino, Blocks))

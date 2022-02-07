@@ -15,7 +15,7 @@
         <KeyBinding Key="Left" Command="{Binding KeyLeft}"/>
         <KeyBinding Key="Right" Command="{Binding KeyRight}"/>
         <KeyBinding Key="Down" Command="{Binding KeyDown}"/>
-        <KeyBinding Key="shift" Command="{Binding KeySpace}"/>
+        <KeyBinding Key="W" Command="{Binding KeySpace}"/>
         <!--<KeyBinding Key="W" Command="{Binding KeyW}"/>-->
     </UserControl.InputBindings>
 
