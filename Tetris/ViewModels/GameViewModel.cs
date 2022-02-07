@@ -540,8 +540,10 @@ namespace Tetris.ViewModels
         {
             for (int i = 0; i < row; i++) //row 22
                 for (int j = 0; j < col; j++)//col 10
-
+                {
                     o.Add(new Block((i < 2 && isGridField) ? bgname : fgColor, i * 30, j * 30, bgborder));
+
+                }
         }
 
         public int Score

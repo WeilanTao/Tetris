@@ -168,6 +168,12 @@
                     </ItemsControl.ItemContainerStyle>
 
                 </ItemsControl>
+                <Line
+        X1="0" Y1="0"
+        X2="300" Y2="0"
+        Stroke="white"
+        StrokeThickness="1" Height="100" Width="297" />
+
             </StackPanel>
         </Grid>
 
