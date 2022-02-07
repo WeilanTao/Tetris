@@ -13,13 +13,19 @@ namespace Tetris.Commands
     {
         private readonly NavigationService _navigateService;
 
-        public NavigateCommand(NavigationService _navigateService)
+        private Action _execute;
+
+        public NavigateCommand(NavigationService _navigateService, Action execte = null)
         {
             this._navigateService = _navigateService;
+            this._execute = execte;
         }
 
         public override void Execute(object? parameter)
         {
+            if (_execute != null)
+                _execute.Invoke();
+
             _navigateService.Navigate();
         }
     }

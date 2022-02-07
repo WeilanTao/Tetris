@@ -70,7 +70,11 @@ namespace Tetris.ViewModels
 
         private Queue<Tetramino> TetraminoQ;
 
-        public GameViewModel(NavigationService mainMenuNavigationService)
+        public CancellationTokenSource _tokenSource { get; set; }
+        public CancellationToken token { get; set; }
+
+        //public NavigationService newGameViewSerivce { get; set; }
+        public GameViewModel(NavigationService mainMenuNavigationService, NavigationService newGameViewSerivce)
         {
             game = new Game();
             score = 0;
@@ -88,8 +92,10 @@ namespace Tetris.ViewModels
             InitializeGrid(4, 4, NextList, false);
             InitializeGrid(4, 4, HoldList, false);
 
+            _tokenSource = new CancellationTokenSource();
+            token = _tokenSource.Token;
 
-            MainMenuCommand = new NavigateCommand(mainMenuNavigationService);
+            MainMenuCommand = new NavigateCommand(mainMenuNavigationService, NewGameGenerate);
             KeyA = new KeyCommand(RotateCW);
             KeyD = new KeyCommand(RotateCCW);
             KeyLeft = new KeyCommand(Left);
@@ -97,7 +103,8 @@ namespace Tetris.ViewModels
             KeyDown = new KeyCommand(Down);
             KeySpace = new KeyCommand(HardDrop);
             KeyW = new KeyCommand(Hold);
-            NewGameCommand = new KeyCommand(NewGameGenerate);
+
+            NewGameCommand = new NavigateCommand(newGameViewSerivce, NewGameGenerate);
 
 
             TetraminoQ = new Queue<Tetramino>();
@@ -105,17 +112,27 @@ namespace Tetris.ViewModels
             TetraminoQ.Enqueue(new Tetramino());
             TetraminoQ.Enqueue(new Tetramino());
 
+
             gameRun();
         }
 
-        private void NewGameGenerate() { }
+        private void NewGameGenerate()
+        {
+            //stop the async task -- gameloop 
+            _tokenSource.Cancel();
+            _tokenSource.Dispose();
+        }
 
         private async void gameRun()
         {
-            await gameLoop();
+
+
+            await gameLoop(token);
+
+            //_tokenSource.Dispose();
         }
 
-        private async Task gameLoop()
+        private async Task gameLoop(CancellationToken token)
         {
             while (_gameState == 0)
             {
@@ -168,6 +185,11 @@ namespace Tetris.ViewModels
                 }
                 else
                 {
+                    if (token.IsCancellationRequested)
+                    {
+                        return;
+                    }
+
                     Down();
                     await Task.Delay(900);
                     //if keyright/keyleft/keyrotation is after the keydown...
