@@ -76,7 +76,7 @@ namespace Tetris.ViewModels
         public CancellationToken cancelToken { get; set; }
 
         public volatile bool isPaused = false;
-
+        public volatile bool isStopMusic = false;
         private MediaPlayer mediaPlayer { get; set; }
         private void NotifyOfPropertyChange(Func<MediaElement> p)
         {
@@ -126,23 +126,32 @@ namespace Tetris.ViewModels
             TetraminoQ.Enqueue(new Tetramino());
 
 
-            //Thread music = new Thread();
+            //Thread music = new Thread(PlayMusic);
             //music.Start();
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.Open(new Uri(@"Resource/Tetris.mp3", UriKind.RelativeOrAbsolute));
 
-            mediaPlayer  = new MediaPlayer();
-            mediaPlayer.Open (new Uri(@"Resource/Tetris.mp3", UriKind.RelativeOrAbsolute));
             mediaPlayer.Play();
+
+            mediaPlayer.MediaEnded += new EventHandler(MediaElement_MediaEnded);
 
             gameRun();
         }
 
-       
+     
+        private void MediaElement_MediaEnded(object sender, EventArgs e)
+        {
+            mediaPlayer.Position = TimeSpan.FromMilliseconds(2);
+            mediaPlayer.Play();
+        }
 
         private void NewGameGenerate()
         {
             //stop the async task -- gameloop 
             _tokenSource.Cancel();
             _tokenSource.Dispose();
+            mediaPlayer.Stop();
+            mediaPlayer.Close();
         }
 
         private void Stop()
