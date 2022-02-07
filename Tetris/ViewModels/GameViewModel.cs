@@ -118,7 +118,7 @@ namespace Tetris.ViewModels
             TetraminoQ.Enqueue(new Tetramino());
             TetraminoQ.Enqueue(new Tetramino());
 
-           
+
             gameRun();
         }
 
@@ -132,7 +132,7 @@ namespace Tetris.ViewModels
         private void Stop()
         {
             isPaused = true;
-           
+
         }
 
         private void Resume()
@@ -140,7 +140,7 @@ namespace Tetris.ViewModels
             isPaused = false;
         }
 
-        private void  gameRun()
+        private void gameRun()
         {
 
 
@@ -154,78 +154,78 @@ namespace Tetris.ViewModels
             while (_gameState == 0)
             {
 
-               
-                    if (newTetrinimo)
+
+                if (newTetrinimo)
+                {
+                    await LineCancellation();
+
+                    canMove = true;
+
+                    currentTetramino = Clone.CloneObject(TetraminoQ.Dequeue()) as Tetramino;
+                    nextTetramino = Clone.CloneObject(TetraminoQ.Peek()) as Tetramino;
+                    TetraminoQ.Enqueue(new Tetramino());
+
+                    nextTetramino = Tetramino.NextHoldTetraminTransfer(nextTetramino);
+
+                    drawNextHoldTetramino(NextList, nextTetramino);
+
+
+                    recordTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
+                    shadowTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
+                    shadowRecord = Clone.CloneObject(currentTetramino) as Tetramino;
+
+                    if (initialize)
                     {
-                        await LineCancellation();
-
-                        canMove = true;
-
-                        currentTetramino = Clone.CloneObject(TetraminoQ.Dequeue()) as Tetramino;
-                        nextTetramino = Clone.CloneObject(TetraminoQ.Peek()) as Tetramino;
-                        TetraminoQ.Enqueue(new Tetramino());
-
-                        nextTetramino = Tetramino.NextHoldTetraminTransfer(nextTetramino);
-
-                        drawNextHoldTetramino(NextList, nextTetramino);
+                        await Task.Delay(1000);
+                        initialize = false;
+                    }
 
 
-                        recordTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
-                        shadowTetramino = Clone.CloneObject(currentTetramino) as Tetramino;
-                        shadowRecord = Clone.CloneObject(currentTetramino) as Tetramino;
+                    Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, fgborder);
+                    Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgborder);
+                    Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgborder);
+                    Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgborder);
 
-                        if (initialize)
+
+                    UpdateShadow();
+
+                    newTetrinimo = false;
+                    //OnPropertyChanged("Blocks");
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        if (Blocks[i + 20].IsOccupied == true)
                         {
-                            await Task.Delay(1000);
-                            initialize = false;
-                        }
-
-
-                        Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, fgborder);
-                        Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgborder);
-                        Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgborder);
-                        Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgborder);
-
-
-                        UpdateShadow();
-
-                        newTetrinimo = false;
-                        //OnPropertyChanged("Blocks");
-
-                        for (int i = 0; i < 10; i++)
-                        {
-                            if (Blocks[i + 20].IsOccupied == true)
-                            {
-                                _gameState = 1;
-                                gameOver = "Game Over!";
-                                OnPropertyChanged("GameOver");
-                            }
+                            _gameState = 1;
+                            gameOver = "Game Over!";
+                            OnPropertyChanged("GameOver");
                         }
                     }
-                    else
-                    {
+                }
+                else
+                {
                     Down();
                     await Task.Delay(900);
 
                     //if keyright/keyleft/keyrotation is after the keydown...
                     if (game.IsStackCollision(currentTetramino, Blocks))
-                        {
-                            //if after the keyright/keyleft/keyrotation, the tetraminio reaches its button position...
-                            Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, fgborder, true);
-                            Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgborder, true);
-                            Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgborder, true);
-                            Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgborder, true);
-                        }
-                        else
-                        {
-                            //if after the keyright/keyleft/keyrotation, the tetraminio doesn't reach its button position...then we will go back to the down loop instead of creating a new tetramino
-                            newTetrinimo = false;
-                        }
-
-
+                    {
+                        //if after the keyright/keyleft/keyrotation, the tetraminio reaches its button position...
+                        Blocks[currentTetramino.Block1.X * 10 + currentTetramino.Block1.Y] = new Block(currentTetramino.Color, currentTetramino.Block1.X * 30, currentTetramino.Block1.Y * 30, fgborder, true);
+                        Blocks[currentTetramino.Block2.X * 10 + currentTetramino.Block2.Y] = new Block(currentTetramino.Color, currentTetramino.Block2.X * 30, currentTetramino.Block2.Y * 30, fgborder, true);
+                        Blocks[currentTetramino.Block3.X * 10 + currentTetramino.Block3.Y] = new Block(currentTetramino.Color, currentTetramino.Block3.X * 30, currentTetramino.Block3.Y * 30, fgborder, true);
+                        Blocks[currentTetramino.Block4.X * 10 + currentTetramino.Block4.Y] = new Block(currentTetramino.Color, currentTetramino.Block4.X * 30, currentTetramino.Block4.Y * 30, fgborder, true);
+                    }
+                    else
+                    {
+                        //if after the keyright/keyleft/keyrotation, the tetraminio doesn't reach its button position...then we will go back to the down loop instead of creating a new tetramino
+                        newTetrinimo = false;
                     }
 
-                
+
+                }
+
+
 
             }
 
@@ -364,12 +364,12 @@ namespace Tetris.ViewModels
         {
             if (isPaused)
             {
-;                return;
+                return;
             }
-                suite = new Suite(currentTetramino, Score, Line, Blocks);
-            
-                game.Down(suite);
-           
+            suite = new Suite(currentTetramino, Score, Line, Blocks);
+
+            game.Down(suite);
+
 
             recordTetramino = Clone.CloneObject(UpdateGrid(recordTetramino, suite)) as Tetramino;
 
