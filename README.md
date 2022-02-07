@@ -1,4 +1,4 @@
-#Tetris in C#
+# Tetris in C#
 
 ## Description
 
@@ -19,12 +19,12 @@ WPF-MVVM, C#
 | D | Rotation right |
 | W | HardDrop |
 
-##Lisence
+## Lisence
 MIT lisence
 
 ## Assets
 Sound track from: https://archive.org/details/TetrisThemeMusic
-
+Font from: https://www.dafont.com/dogica.font
 ## Installation 
 Windows
 
