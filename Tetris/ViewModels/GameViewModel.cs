@@ -201,7 +201,7 @@ namespace Tetris.ViewModels
 
                     if (initialize)
                     {
-                        await Task.Delay(1000);
+                        await Task.Delay(50);
                         initialize = false;
                     }
 
@@ -230,7 +230,7 @@ namespace Tetris.ViewModels
                 else
                 {
                     Down();
-                    await Task.Delay(900);
+                    await Task.Delay(200);
 
                     //if keyright/keyleft/keyrotation is after the keydown...
                     if (game.IsStackCollision(currentTetramino, Blocks))
@@ -435,7 +435,7 @@ namespace Tetris.ViewModels
 
             Tetramino.StyleTetramino(shadowTetramino, fgColor, shadowTetramino.Color);
             suite = new Suite(shadowTetramino, Score, Line, Blocks);
-            shadowRecord = Clone.CloneObject(UpdateGrid(shadowRecord, suite)) as Tetramino;
+            shadowRecord = Clone.CloneObject(UpdateGrid(shadowRecord, suite,true)) as Tetramino;
 
         }
 
@@ -504,13 +504,26 @@ namespace Tetris.ViewModels
             }
         }
 
-        private Tetramino UpdateGrid(Tetramino record, Suite s)
+        private Tetramino UpdateGrid(Tetramino record, Suite s , bool isRecordShadow=false)
         {
             //change perivious position to background block
-            Blocks[record.Block1.X * 10 + record.Block1.Y] = new Block(record.Block1.X < 2 ? bgname : fgColor, record.Block1.X * 30, record.Block1.Y * 30, bgborder, false);
-            Blocks[record.Block2.X * 10 + record.Block2.Y] = new Block(record.Block2.X < 2 ? bgname : fgColor, record.Block2.X * 30, record.Block2.Y * 30, bgborder, false);
-            Blocks[record.Block3.X * 10 + record.Block3.Y] = new Block(record.Block3.X < 2 ? bgname : fgColor, record.Block3.X * 30, record.Block3.Y * 30, bgborder, false);
-            Blocks[record.Block4.X * 10 + record.Block4.Y] = new Block(record.Block4.X < 2 ? bgname : fgColor, record.Block4.X * 30, record.Block4.Y * 30, bgborder, false);
+            if(!(isRecordShadow && Blocks[record.Block1.X * 10 + record.Block1.Y].Color != fgColor))
+            {
+                Blocks[record.Block1.X * 10 + record.Block1.Y] = new Block(record.Block1.X < 2 ? bgname : fgColor, record.Block1.X * 30, record.Block1.Y * 30, bgborder, false);
+            }
+            if (!(isRecordShadow && Blocks[record.Block2.X * 10 + record.Block2.Y].Color != fgColor))
+            {
+                Blocks[record.Block2.X * 10 + record.Block2.Y] = new Block(record.Block2.X < 2 ? bgname : fgColor, record.Block2.X * 30, record.Block2.Y * 30, bgborder, false);
+            }
+            if (!(isRecordShadow && Blocks[record.Block3.X * 10 + record.Block3.Y].Color != fgColor))
+            {
+                Blocks[record.Block3.X * 10 + record.Block3.Y] = new Block(record.Block3.X < 2 ? bgname : fgColor, record.Block3.X * 30, record.Block3.Y * 30, bgborder, false);
+            }
+            if (!(isRecordShadow && Blocks[record.Block4.X * 10 + record.Block4.Y].Color != fgColor))
+            {
+                Blocks[record.Block4.X * 10 + record.Block4.Y] = new Block(record.Block4.X < 2 ? bgname : fgColor, record.Block4.X * 30, record.Block4.Y * 30, bgborder, false);
+
+            }
 
             //update the current position
             Blocks[s.Tetramino.Block1.X * 10 + s.Tetramino.Block1.Y] = new Block(s.Tetramino.Block1.X < 2 ? bgname : s.Tetramino.Color, s.Tetramino.Block1.X * 30, s.Tetramino.Block1.Y * 30, s.Tetramino.Block1.X < 2 ? bgborder : fgborder, !s.CanLock ? true : false, s.Tetramino.Block1.BorderColor);
