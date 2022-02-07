@@ -1,7 +1,4 @@
 # Tetris in C#
-
-## Description
-
 ## Tech Stack
 WPF-MVVM, C#
 
