@@ -17,6 +17,7 @@ using System.Collections;
 using Tetris.Utils;
 using System.Media;
 using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace Tetris.ViewModels
 {
@@ -76,6 +77,12 @@ namespace Tetris.ViewModels
 
         public volatile bool isPaused = false;
 
+        private MediaPlayer mediaPlayer { get; set; }
+        private void NotifyOfPropertyChange(Func<MediaElement> p)
+        {
+            throw new NotImplementedException();
+        }
+
         public GameViewModel(NavigationService mainMenuNavigationService, NavigationService newGameViewSerivce)
         {
             game = new Game();
@@ -118,28 +125,18 @@ namespace Tetris.ViewModels
             TetraminoQ.Enqueue(new Tetramino());
             TetraminoQ.Enqueue(new Tetramino());
 
-            Thread music = new Thread(playMusic);
-            music.Start();
+
+            //Thread music = new Thread();
+            //music.Start();
+
+            mediaPlayer  = new MediaPlayer();
+            mediaPlayer.Open (new Uri(@"Resource/Tetris.mp3", UriKind.RelativeOrAbsolute));
+            mediaPlayer.Play();
+
             gameRun();
         }
 
-        private void playMusic()
-        {
-            //the wav filename
-            string file = "/Resource/Tetris.mp3";
-
-            //get the current assembly
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-
-            //load the embedded resource as a stream
-            var stream = assembly.GetManifestResourceStream(string.Format("{0}.Resources.{1}", assembly.GetName().Name, file));
-
-            //load the stream into the player
-            var player = new System.Media.SoundPlayer(stream);
-
-            //play the sound
-            player.Play();
-        }
+       
 
         private void NewGameGenerate()
         {

@@ -9,12 +9,16 @@
 
   <ItemGroup>
     <None Remove="Resource\dogica.ttf" />
-    <None Remove="Resource\Tetris.mp3" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resource\dogica.ttf" />
-    <Resource Include="Resource\Tetris.mp3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resource\Tetris.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
