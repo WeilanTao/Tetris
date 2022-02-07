@@ -38,14 +38,14 @@
                 Grid.Row="3"
                 Command="{Binding ExitCommand}" />
 
-        <TextBlock x:Name="CopyRightLabel" Height="30" Width ="300"
+        <TextBlock x:Name="CopyRightLabel" Height="30" Width ="500"
                    HorizontalAlignment ="Center"
                    VerticalAlignment="Center"
                    FontSize ="10"
                    Grid.Row="5"
                    TextAlignment="Center"
                    Foreground="White">
-            All Rights Reserved 2022 Emily Tao
+            All Rights Reserved 2022 Emily Weilan Tao
         </TextBlock>
 
 

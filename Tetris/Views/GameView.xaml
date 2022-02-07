@@ -82,10 +82,16 @@
                     </ItemsControl>
                 </Grid>
             </Grid>
-            
+
             <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
                 <Label x:Name="GameOverLabel" Content="{Binding GameOver}" Width="200" FontSize="20" HorizontalContentAlignment="Center" Height="174"/>
             </StackPanel>
+
+            <!--<Grid Grid.Column="1" Grid.Row="6">
+             
+                    <MediaElement x:Name="myMediaElement" Source="/Resource/Tetris.mp3" IsMuted="False"></MediaElement>
+           
+            </Grid>-->
 
             <!--<Grid Grid.Column="1" Grid.Row="6">
                 <Label x:Name="HoldLabel" Content="Hold"/>
