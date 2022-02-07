@@ -43,6 +43,12 @@ namespace Tetris.ViewModels
         public ICommand KeyDown { get; private set; }
         public ICommand KeySpace { get; private set; }
         public ICommand KeyW { get; private set; }
+
+        public ICommand NewGameCommand { get; private set; }
+        public ICommand StopCommand { get; private set; }
+        public ICommand ResumeCommand { get; private set; }
+
+
         private int _gameState { get; set; } = 0; //0 for start, 1 for end, 2 for stop
 
         private Tetramino currentTetramino { get; set; }
@@ -91,6 +97,8 @@ namespace Tetris.ViewModels
             KeyDown = new KeyCommand(Down);
             KeySpace = new KeyCommand(HardDrop);
             KeyW = new KeyCommand(Hold);
+            NewGameCommand = new KeyCommand(NewGameGenerate);
+
 
             TetraminoQ = new Queue<Tetramino>();
             TetraminoQ.Enqueue(new Tetramino());
@@ -99,6 +107,8 @@ namespace Tetris.ViewModels
 
             gameRun();
         }
+
+        private void NewGameGenerate() { }
 
         private async void gameRun()
         {
