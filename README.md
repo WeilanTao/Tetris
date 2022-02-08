@@ -5,13 +5,13 @@ Classic Tetris game using WPF MVVM. Users can move and rotate tetraminos in a 10
 WPF-MVVM, C#
 
 ## Scoring
-level = cancelled lines / 10
+level = (cancelled lines / 10) + 1
 | cancelled lines | Score |
 |---|---|
-| 1 | 20*(level+1)|
-| 2 | 50*(level+1)|
-| 3 | 120*(level+1)|
-| 4 | 150*(level+1)|
+| 1 | 20\*level|
+| 2 | 50\*level|
+| 3 | 120\*level|
+| 4 | 150\*level|
 
 ## KeyBoard Setting
 | Key |  |
