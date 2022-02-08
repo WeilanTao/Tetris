@@ -1,10 +1,17 @@
 # Tetris in C#
+Classic Tetris game using WPF MVVM. Users can move and rotate tetraminos in a 10\*20 grid. Tetraminos falls automatically. There is a panel that displays the next tetramino.
+
 ## Tech Stack
 WPF-MVVM, C#
 
-## Feature
-
 ## Scoring
+level = (cancelled lines / 10) + 1
+| cancelled lines | Score |
+|---|---|
+| 1 | 20\*level|
+| 2 | 50\*level|
+| 3 | 120\*level|
+| 4 | 150\*level|
 
 ## KeyBoard Setting
 | Key |  |
@@ -20,8 +27,9 @@ WPF-MVVM, C#
 MIT lisence
 
 ## Assets
-Sound track from: https://archive.org/details/TetrisThemeMusic
+Sound track from: https://archive.org/details/TetrisThemeMusic </br>
 Font from: https://www.dafont.com/dogica.font
+
 ## Installation 
 Windows
 
