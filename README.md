@@ -3,6 +3,7 @@ Classic Tetris game using WPF MVVM. Users can move and rotate tetraminos in a 10
 
 ![mainmenu](https://github.com/WeilanTao/Tetris/blob/main/Tetris/ScreenShot/main_page.png)
 ![game](https://github.com/WeilanTao/Tetris/blob/main/Tetris/ScreenShot/Game.png)
+![gameover](https://github.com/WeilanTao/Tetris/blob/main/Tetris/ScreenShot/gameover.PNG)
 <!-- ![contact](https://github.com/WeilanTao/Tetris/blob/main/Tetris/ScreenShot/Contact_author.png) -->
 ## Tech Stack
 WPF-MVVM, C#
