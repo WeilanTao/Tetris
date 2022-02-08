@@ -1,24 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<RuntimeIdentifier>
+			win-x64
+		</RuntimeIdentifier>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Resource\dogica.ttf" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Resource\dogica.ttf" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="Resource\dogica.ttf" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resource\dogica.ttf" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Resource\Tetris.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Resource\Tetris.mp3">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
 </Project>
