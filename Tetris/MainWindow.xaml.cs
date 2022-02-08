@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using Tetris.ViewModels;
+using Tetris.Utils;
 
 namespace Tetris
 {
@@ -25,6 +26,7 @@ namespace Tetris
         public MainWindow()
         {
             InitializeComponent();
+            CloseWindow.WinObject = (Window)this;
         }
 
     }
