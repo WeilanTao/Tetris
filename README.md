@@ -12,10 +12,10 @@ WPF-MVVM, C#
 level = (cancelled lines / 10) + 1
 | cancelled lines | Score |
 |---|---|
-| 1 | 20\*level|
-| 2 | 50\*level|
-| 3 | 120\*level|
-| 4 | 150\*level|
+| 1 | 20|
+| 2 | 50|
+| 3 | 120|
+| 4 | 150|
 
 ## KeyBoard Setting
 | Key |  |
