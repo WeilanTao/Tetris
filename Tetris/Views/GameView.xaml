@@ -138,7 +138,7 @@
             </Grid.RowDefinitions>
             <Button x:Name="StopButton" Grid.Row="1" Content="Stop" Command="{Binding StopCommand}" Width="Auto" Margin="10,35,55,35" />
             <Button x:Name="ResumeButton" Grid.Row="2" Content="Resume" Command="{Binding ResumeCommand}"  Width="Auto" Margin="10,35,55,35"/>
-            <Button x:Name="NewGameButton" Grid.Row="3" Content="NewGame" Command="{Binding NewGameCommand}"  Width="Auto" Margin="10,35,55,35"/>
+            <Button x:Name="NewGameButton" Grid.Row="3" Content="New Game" Command="{Binding NewGameCommand}"  Width="Auto" Margin="10,35,55,35"/>
             <Button x:Name="ExitMainButton" Grid.Row="4" Content="Main Menu" Command="{Binding MainMenuCommand}"  Width="Auto" Margin="10,35,55,35" />
         </Grid>
 
