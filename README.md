@@ -36,6 +36,8 @@ Font from: https://www.dafont.com/dogica.font
 
 ## Installation 
 Windows
+</br>
+Linux: needs wine and dotnet pre installed
 
 ## Author
 Emily Weilan Tao
