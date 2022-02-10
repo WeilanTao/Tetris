@@ -25,7 +25,7 @@ level = (cancelled lines / 10) + 1
 | → | Move right |
 | A | Rotation left |
 | D | Rotation right |
-| W | HardDrop |
+| W | Hard Drop |
 
 ## Lisence
 MIT lisence
